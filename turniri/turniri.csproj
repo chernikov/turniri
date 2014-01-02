@@ -1,0 +1,1436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DCC199C3-B819-4A0C-9AC7-EDDDCD769959}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>turniri</RootNamespace>
+    <AssemblyName>turniri</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActionMailer.Net, Version=0.7.0.0, Culture=neutral, PublicKeyToken=e62db3114c02a1c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>needed\ActionMailer.net\ActionMailer.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ActionMailer.Net.Mvc, Version=0.7.0.0, Culture=neutral, PublicKeyToken=e62db3114c02a1c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>needed\ActionMailer.net\ActionMailer.Net.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=2.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Bootstrapper">
+      <HintPath>..\packages\Bootstrapper.2.0.3.2\lib\Bootstrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Contrib.Mvc">
+      <HintPath>..\packages\Elmah.Contrib.Mvc.1.0\lib\net40\Elmah.Contrib.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.4.1.10715.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.0.87\lib\net40\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc3">
+      <HintPath>..\packages\Glimpse.Mvc3.0.87\lib\net40\Glimpse.Mvc3.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer">
+      <HintPath>..\packages\ImageResizer.3.4.1\lib\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Optimization">
+      <HintPath>..\packages\Microsoft.Web.Optimization.0.1\lib\net40\Microsoft.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler">
+      <HintPath>..\packages\MiniProfiler.2.0.1\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\packages\Ninject.Web.Common.3.0.0.7\lib\net40-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.MVC3.3.0.0.6\lib\net40-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.0.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.2.0.1.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\AspNetWebPagesCore.2.0.10906.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\AspNetMvc.4.0.10906.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\System.Web.Providers.1.0.1\lib\Net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\AspNetWebPagesCore.2.0.10906.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\AspNetWebPagesCore.2.0.10906.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\AspNetWebPagesCore.2.0.10906.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\AspNetWebPagesCore.2.0.10906.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.5.2\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AvatarController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AwardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BackgroundController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannedWordController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BlogController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CameraController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CartController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CatalogController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChatController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ConnectController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LeagueController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MoneyController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MoneyFeeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MoneyNotifyController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MoneyWithdrawController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NoticeDistributionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EditorController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GroupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NoticeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PromoActionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RechargeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SellerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SocialGroupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SocialPostController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TeamController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MailController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MatchController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PhotoAlbumController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PollController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DistributionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubscriberController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UrlController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ForumMessageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FileController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ForumController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GameController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NewController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NewTypeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PlatformController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TournamentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VendorController.cs" />
+    <Compile Include="Areas\Admin\Controllers\VideoController.cs" />
+    <Compile Include="Areas\Default\Controllers\AwardController.cs" />
+    <Compile Include="Areas\Default\Controllers\BlogController.cs" />
+    <Compile Include="Areas\Default\Controllers\CameraController.cs" />
+    <Compile Include="Areas\Default\Controllers\CartController.cs" />
+    <Compile Include="Areas\Default\Controllers\ChatController.cs" />
+    <Compile Include="Areas\Default\Controllers\CommentController.cs" />
+    <Compile Include="Areas\Default\Controllers\ConnectController.cs" />
+    <Compile Include="Areas\Default\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Default\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\Default\Controllers\FileController.cs" />
+    <Compile Include="Areas\Default\Controllers\ForumController.cs" />
+    <Compile Include="Areas\Default\Controllers\FriendController.cs" />
+    <Compile Include="Areas\Default\Controllers\GameController.cs" />
+    <Compile Include="Areas\Default\Controllers\GroupController.cs" />
+    <Compile Include="Areas\Default\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Default\Controllers\LeagueController.cs" />
+    <Compile Include="Areas\Default\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Default\Controllers\MatchController.cs" />
+    <Compile Include="Areas\Default\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Default\Controllers\MoneyController.cs" />
+    <Compile Include="Areas\Default\Controllers\NewController.cs" />
+    <Compile Include="Areas\Default\Controllers\NoticeController.cs" />
+    <Compile Include="Areas\Default\Controllers\OauthController.cs" />
+    <Compile Include="Areas\Default\Controllers\PageController.cs" />
+    <Compile Include="Areas\Default\Controllers\PhotoController.cs" />
+    <Compile Include="Areas\Default\Controllers\PollController.cs" />
+    <Compile Include="Areas\Default\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Default\Controllers\PublicPhotoController.cs" />
+    <Compile Include="Areas\Default\Controllers\RoundController.cs" />
+    <Compile Include="Areas\Default\Controllers\ShopController.cs" />
+    <Compile Include="Attributes\Validation\FilterBadWord.cs" />
+    <Compile Include="Models\Info\AddLeagueTournaments.cs" />
+    <Compile Include="Models\Info\ProductFilter.cs" />
+    <Compile Include="Models\Info\ProductImageInfo.cs" />
+    <Compile Include="Models\Info\QiwiRechargeInfo.cs" />
+    <Compile Include="Models\Info\YandexAcceptMoney.cs" />
+    <Compile Include="Models\Info\YandexRechargeInfo.cs" />
+    <Compile Include="Models\ViewModels\BannedWordView.cs" />
+    <Compile Include="Models\ViewModels\CartDeliverView.cs" />
+    <Compile Include="Models\ViewModels\CatalogView.cs" />
+    <Compile Include="Models\ViewModels\CartProductCodeView.cs" />
+    <Compile Include="Models\ViewModels\CategoryView.cs" />
+    <Compile Include="Models\ViewModels\GroupMoneyDetailView.cs" />
+    <Compile Include="Models\ViewModels\LeagueLevelView.cs" />
+    <Compile Include="Models\ViewModels\LeagueSeasonView.cs" />
+    <Compile Include="Models\ViewModels\LeagueView.cs" />
+    <Compile Include="Models\ViewModels\MoneyDetailView.cs" />
+    <Compile Include="Models\ViewModels\MainCameraView.cs" />
+    <Compile Include="Models\ViewModels\AdminMoneyDetailView.cs" />
+    <Compile Include="Models\ViewModels\MoneyFeeView.cs" />
+    <Compile Include="Models\ViewModels\MoneyNotifyView.cs" />
+    <Compile Include="Models\ViewModels\MoneyWithdrawView.cs" />
+    <Compile Include="Models\ViewModels\ProductCodeView.cs" />
+    <Compile Include="Models\ViewModels\ProductImageView.cs" />
+    <Compile Include="Models\ViewModels\ProductPriceView.cs" />
+    <Compile Include="Models\ViewModels\ProductRestView.cs" />
+    <Compile Include="Models\ViewModels\ProductVariationView.cs" />
+    <Compile Include="Models\ViewModels\ProductVideoView.cs" />
+    <Compile Include="Models\ViewModels\ProductView.cs" />
+    <Compile Include="Models\ViewModels\PromoActionView.cs" />
+    <Compile Include="Models\ViewModels\PromoCodeView.cs" />
+    <Compile Include="Models\ViewModels\RechargeView.cs" />
+    <Compile Include="Models\ViewModels\SocialGroupView.cs" />
+    <Compile Include="Models\ViewModels\SocialPostImageView.cs" />
+    <Compile Include="Models\ViewModels\SocialPostView.cs" />
+    <Compile Include="Models\ViewModels\SocialView.cs" />
+    <Compile Include="Areas\Default\Controllers\TeamController.cs" />
+    <Compile Include="Areas\Default\Controllers\TournamentController.cs" />
+    <Compile Include="Areas\Default\Controllers\UserCommentController.cs" />
+    <Compile Include="Areas\Default\Controllers\UserController.cs" />
+    <Compile Include="Areas\Default\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Default\Controllers\UserVideoController.cs" />
+    <Compile Include="Areas\Default\Controllers\VideoController.cs" />
+    <Compile Include="Areas\Default\DefaultAreaRegistration.cs" />
+    <Compile Include="Attributes\AutoMapAttribute.cs" />
+    <Compile Include="Attributes\CompressFilter.cs" />
+    <Compile Include="Attributes\MinValueIfAttribute.cs" />
+    <Compile Include="Attributes\IsDateFutureAttribute.cs" />
+    <Compile Include="Attributes\IsDateAfterAttribute.cs" />
+    <Compile Include="Attributes\RequiredIfAttribute.cs" />
+    <Compile Include="Attributes\Validation\UserLogin.cs" />
+    <Compile Include="Attributes\Validation\IsUserPassword.cs" />
+    <Compile Include="Attributes\Validation\UniqueValidationAttribute.cs" />
+    <Compile Include="Attributes\Validation\UserEmail.cs" />
+    <Compile Include="Attributes\Validation\ValidEmail.cs" />
+    <Compile Include="Attributes\Validation\ValidLatin.cs" />
+    <Compile Include="Attributes\Validation\ValidPhone.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\IModelMapperController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Global\Auth\CustomAuthentication.cs" />
+    <Compile Include="Global\Auth\HttpContextCookieProvider.cs" />
+    <Compile Include="Global\Auth\IAuthCookieProvider.cs" />
+    <Compile Include="Global\Auth\IAuthentication.cs" />
+    <Compile Include="Global\Auth\IUserable.cs" />
+    <Compile Include="Global\Auth\UserIndentity.cs" />
+    <Compile Include="Global\Auth\UserProvider.cs" />
+    <Compile Include="Global\Config\Config.cs" />
+    <Compile Include="Global\Config\IConfig.cs" />
+    <Compile Include="Global\Config\IconSizes.cs" />
+    <Compile Include="Global\Config\ISmsConfig.cs" />
+    <Compile Include="Global\Config\MailSettings.cs" />
+    <Compile Include="Global\Config\MailTemplateConfig.cs" />
+    <Compile Include="Global\Config\MimeType.cs" />
+    <Compile Include="Global\Config\OAuth\FacebookAppConfig.cs" />
+    <Compile Include="Global\Config\OAuth\GoogleAppConfig.cs" />
+    <Compile Include="Global\Config\OAuth\TwitterAppConfig.cs" />
+    <Compile Include="Global\Config\OAuth\VkontakteAppConfig.cs" />
+    <Compile Include="Global\Error.cs" />
+    <Compile Include="Global\IErrorList.cs" />
+    <Compile Include="Global\IResources.cs" />
+    <Compile Include="Global\Resources.cs" />
+    <Compile Include="Global\SearchEngine.cs" />
+    <Compile Include="Global\TrimModelBinder.cs" />
+    <Compile Include="Helpers\CustomHelpers.cs" />
+    <Compile Include="Helpers\LangUrl.cs" />
+    <Compile Include="CodeTemplates\Mappers\CommonMapper.cs" />
+    <Compile Include="CodeTemplates\Mappers\IMapper.cs" />
+    <Compile Include="CodeTemplates\Mappers\MapperCollection.cs" />
+    <Compile Include="Models\ViewModels\VendorView.cs" />
+    <Compile Include="Tools\ErrorSerialize.cs" />
+    <Compile Include="Tools\FineUploaderResult.cs" />
+    <Compile Include="Tools\FineUploader\FineUpload.cs" />
+    <Compile Include="Tools\Qiwi\HttpFetch.cs" />
+    <Compile Include="Tools\Qiwi\QiwiInvoiceStatusReply.cs" />
+    <Compile Include="Tools\Qiwi\QiwiInvoiceStatusRequest.cs" />
+    <Compile Include="Tools\Qiwi\QiwiProcessorJob.cs" />
+    <Compile Include="Tools\Qiwi\Utilities.cs" />
+    <Compile Include="Tools\SocialTool.cs" />
+    <Content Include="Media\css\bootstrap-responsive.css" />
+    <Content Include="Media\css\bootstrap-responsive.min.css" />
+    <Content Include="Media\css\bootstrap.min.css" />
+    <Content Include="Media\css\chosen.css" />
+    <Content Include="Media\css\fineuploader.css" />
+    <Content Include="Media\css\scrollbars.css" />
+    <Content Include="Media\css\bbCodeEditor.css" />
+    <Content Include="Media\files\smiles\01.gif" />
+    <Content Include="Media\files\smiles\02.gif" />
+    <Content Include="Media\files\smiles\03.gif" />
+    <Content Include="Media\files\smiles\04.gif" />
+    <Content Include="Media\files\smiles\05.gif" />
+    <Content Include="Media\files\smiles\06.gif" />
+    <Content Include="Media\files\smiles\07.gif" />
+    <Content Include="Media\files\smiles\08.gif" />
+    <Content Include="Media\files\smiles\09.gif" />
+    <Content Include="Media\files\smiles\10.gif" />
+    <Content Include="Media\files\smiles\11.gif" />
+    <Content Include="Media\files\smiles\12.gif" />
+    <Content Include="Media\files\smiles\13.gif" />
+    <Content Include="Media\files\smiles\14.gif" />
+    <Content Include="Media\files\smiles\15.gif" />
+    <Content Include="Media\files\smiles\16.gif" />
+    <Content Include="Media\files\smiles\17.gif" />
+    <Content Include="Media\files\smiles\18.gif" />
+    <Content Include="Media\files\smiles\19.gif" />
+    <Content Include="Media\files\smiles\20.gif" />
+    <Content Include="Media\files\smiles\21.gif" />
+    <Content Include="Media\files\smiles\22.gif" />
+    <Content Include="Media\files\smiles\23.gif" />
+    <Content Include="Media\files\smiles\24.gif" />
+    <Content Include="Media\files\smiles\25.gif" />
+    <Content Include="Media\files\smiles\26.gif" />
+    <Content Include="Media\files\smiles\27.gif" />
+    <Content Include="Media\files\smiles\28.gif" />
+    <Content Include="Media\files\smiles\29.gif" />
+    <Content Include="Media\files\smiles\30.gif" />
+    <Content Include="Media\files\smiles\31.gif" />
+    <Content Include="Media\files\smiles\32.gif" />
+    <Content Include="Media\files\smiles\33.gif" />
+    <Content Include="Media\files\smiles\34.gif" />
+    <Content Include="Media\files\smiles\35.gif" />
+    <Content Include="Media\files\smiles\36.gif" />
+    <Content Include="Media\files\smiles\37.gif" />
+    <Content Include="Media\files\smiles\38.gif" />
+    <Content Include="Media\files\smiles\39.gif" />
+    <Content Include="Media\files\smiles\40.gif" />
+    <Content Include="Media\files\smiles\41.gif" />
+    <Content Include="Media\files\smiles\42.gif" />
+    <Content Include="Media\files\smiles\43.gif" />
+    <Content Include="Media\files\smiles\44.gif" />
+    <Content Include="Media\files\smiles\45.gif" />
+    <Content Include="Media\files\smiles\46.gif" />
+    <Content Include="Media\files\smiles\47.gif" />
+    <Content Include="Media\files\smiles\48.gif" />
+    <Content Include="Media\files\smiles\49.gif" />
+    <Content Include="Media\files\smiles\50.gif" />
+    <Content Include="Media\files\smiles\51.gif" />
+    <Content Include="Media\files\smiles\52.gif" />
+    <Content Include="Media\files\smiles\53.gif" />
+    <Content Include="Media\files\smiles\54.gif" />
+    <Content Include="Media\files\smiles\55.gif" />
+    <Content Include="Media\files\smiles\56.gif" />
+    <Content Include="Media\files\smiles\57.gif" />
+    <Content Include="Media\files\smiles\58.gif" />
+    <Content Include="Media\files\smiles\59.gif" />
+    <Content Include="Media\files\smiles\60.gif" />
+    <Content Include="Media\files\smiles\61.gif" />
+    <Content Include="Media\files\smiles\62.gif" />
+    <Content Include="Media\files\smiles\63.gif" />
+    <Content Include="Media\files\smiles\64.gif" />
+    <Content Include="Media\files\smiles\65.gif" />
+    <Content Include="Media\files\smiles\66.gif" />
+    <Content Include="Media\files\smiles\67.gif" />
+    <Content Include="Media\files\smiles\68.gif" />
+    <Content Include="Media\files\smiles\69.gif" />
+    <Content Include="Media\files\smiles\70.gif" />
+    <Content Include="Media\files\smiles\71.gif" />
+    <Content Include="Media\files\smiles\72.gif" />
+    <Content Include="Media\files\smiles\73.gif" />
+    <Content Include="Media\files\smiles\74.gif" />
+    <Content Include="Media\files\smiles\75.gif" />
+    <Content Include="Media\files\smiles\76.gif" />
+    <Content Include="Media\files\smiles\77.gif" />
+    <Content Include="Media\files\smiles\78.gif" />
+    <Content Include="Media\files\smiles\79.gif" />
+    <Content Include="Media\files\smiles\80.gif" />
+    <Content Include="Media\files\smiles\81.gif" />
+    <Content Include="Media\files\smiles\82.gif" />
+    <Content Include="Media\files\smiles\83.gif" />
+    <Content Include="Media\files\smiles\84.gif" />
+    <Content Include="Media\images\agerestrict.png" />
+    <Content Include="Media\images\battle_message.gif" />
+    <Content Include="Media\images\chat.png" />
+    <Content Include="Media\images\chosen-sprite.png" />
+    <Content Include="Media\images\default.png" />
+    <Content Include="Media\images\default_avatar_30.png" />
+    <Content Include="Media\images\default_award.png" />
+    <Content Include="Media\images\default_catalog.png" />
+    <Content Include="Media\images\default_game.jpg" />
+    <Content Include="Media\images\default_game103.jpg" />
+    <Content Include="Media\images\default_game144.jpg" />
+    <Content Include="Media\images\default_game22.jpg" />
+    <Content Include="Media\images\default_game47.jpg" />
+    <Content Include="Media\images\default_group_173.png" />
+    <Content Include="Media\images\default_group_18.png" />
+    <Content Include="Media\images\default_group_26.png" />
+    <Content Include="Media\images\default_group_30.png" />
+    <Content Include="Media\images\default_group_57.png" />
+    <Content Include="Media\images\default_group_84.jpg" />
+    <Content Include="Media\images\default_group_96.jpg" />
+    <Content Include="Media\images\folder.png" />
+    <Content Include="Media\images\forum_default_preview_g.png" />
+    <Content Include="Media\images\friend_message.gif" />
+    <Content Include="Media\images\icons.png" />
+    <Content Include="Media\images\layout_grid.gif" />
+    <Content Include="Media\images\likes.png" />
+    <Content Include="Media\images\logo_mail.png" />
+    <Content Include="Media\images\main_image_bg.png" />
+    <Content Include="Media\images\main_page_message.gif" />
+    <Content Include="Media\images\message.gif" />
+    <Content Include="Media\images\no-preview199.jpg" />
+    <Content Include="Media\images\qiwi-gorizontal.png" />
+    <Content Include="Media\images\social-logo.jpg" />
+    <Content Include="Media\images\superBtBlueshort.jpg" />
+    <Content Include="Media\images\yandex-money.png" />
+    <Content Include="Media\scripts\admin\cart-item.js" />
+    <Content Include="Media\scripts\admin\catalog-list.js" />
+    <Content Include="Media\scripts\admin\edit-league-level.js" />
+    <Content Include="Media\scripts\admin\edit-league-season.js" />
+    <Content Include="Media\scripts\admin\edit-league.js" />
+    <Content Include="Media\scripts\admin\index-seller.js" />
+    <Content Include="Media\scripts\admin\edit-catalog.js" />
+    <Content Include="Media\scripts\admin\edit-product.js" />
+    <Content Include="Media\scripts\admin\edit-promoaction.js" />
+    <Content Include="Media\scripts\admin\edit-vendor.js" />
+    <Content Include="Media\scripts\admin\index-promoaction.js" />
+    <Content Include="Media\scripts\admin\league-group.js" />
+    <Content Include="Media\scripts\admin\league-matches.js" />
+    <Content Include="Media\scripts\admin\league-players.js" />
+    <Content Include="Media\scripts\admin\league-tournaments.js" />
+    <Content Include="Media\scripts\admin\product-code.js" />
+    <Content Include="Media\scripts\default\cart.js" />
+    <Content Include="Media\scripts\default\league.js" />
+    <Content Include="Media\scripts\default\product-item.js" />
+    <Content Include="Media\scripts\default\shop.js" />
+    <Content Include="Media\scripts\jquery.fineuploader-3.0.js" />
+    <Content Include="Media\scripts\jquery.fineuploader-3.0.min.js" />
+    <Content Include="Media\scripts\jquery.maskedinput.min.js" />
+    <Content Include="Media\scripts\admin\index-group.js" />
+    <Content Include="Media\scripts\admin\index-user.js" />
+    <Content Include="Media\scripts\admin\index-chat.js" />
+    <Content Include="Media\scripts\admin\index-video.js" />
+    <Content Include="Media\scripts\admin\index-photoalbum.js" />
+    <Content Include="Media\scripts\admin\index-new.js" />
+    <Content Include="Media\scripts\admin\index-tournament.js" />
+    <Content Include="Media\scripts\admin\index-blog.js" />
+    <Content Include="Media\scripts\admin\notice.js" />
+    <Content Include="Media\scripts\admin\notice-distribution.js" />
+    <Content Include="Media\scripts\admin\edit-background.js" />
+    <Content Include="Media\scripts\admin\edit-banner.js" />
+    <Content Include="Media\scripts\admin\edit-blog.js" />
+    <Content Include="Media\scripts\admin\edit-group.js" />
+    <Content Include="Media\scripts\admin\edit-roster.js" />
+    <Content Include="Media\scripts\admin\distribution.js" />
+    <Content Include="Media\scripts\admin\edit-photos.js" />
+    <Content Include="Media\scripts\admin\comment.js" />
+    <Content Include="Media\scripts\admin\edit-page.js" />
+    <Content Include="Media\scripts\admin\edit-avatar.js" />
+    <Content Include="Media\scripts\admin\edit-award.js" />
+    <Content Include="Media\scripts\admin\edit-poll.js" />
+    <Content Include="Media\scripts\admin\edit-team.js" />
+    <Content Include="Media\scripts\admin\edit-tournament.js" />
+    <Content Include="Media\scripts\admin\edit-forum-message.js" />
+    <Content Include="Media\scripts\admin\edit-forum.js" />
+    <Compile Include="Models\Info\BothTexts.cs" />
+    <Compile Include="Models\Info\EnumerableOfSelectListItem.cs" />
+    <Compile Include="Models\Info\NoticeUserSearch.cs" />
+    <Compile Include="Models\Info\PageableData.cs" />
+    <Compile Include="Models\Info\SubscriberSearch.cs" />
+    <Compile Include="Models\Info\TournamentSearch.cs" />
+    <Compile Include="Models\Info\TournamentStatistic.cs" />
+    <Compile Include="Models\ViewModels\AwardView.cs" />
+    <Compile Include="Models\ViewModels\BackgroundView.cs" />
+    <Compile Include="Models\ViewModels\BannerView.cs" />
+    <Compile Include="Models\ViewModels\Blog\AdminBlogView.cs" />
+    <Compile Include="Models\ViewModels\Blog\BlogView.cs" />
+    <Compile Include="Models\ViewModels\CameraView.cs" />
+    <Compile Include="Models\ViewModels\ChatBannedUserView.cs" />
+    <Compile Include="Models\ViewModels\CommentView.cs" />
+    <Compile Include="Models\ViewModels\NoticeDistributionView.cs" />
+    <Compile Include="Models\ViewModels\DistributionView.cs" />
+    <Compile Include="Models\ViewModels\FightMessageView.cs" />
+    <Compile Include="Models\ViewModels\ForumMessageView.cs" />
+    <Compile Include="Models\ViewModels\ForumView.cs" />
+    <Compile Include="Models\ViewModels\GameView.cs" />
+    <Compile Include="Models\ViewModels\Group\AdminGroupView.cs" />
+    <Compile Include="Models\ViewModels\Group\BaseGroupView.cs" />
+    <Compile Include="Models\ViewModels\Group\GroupView.cs" />
+    <Compile Include="Models\ViewModels\InvoiceMessageView.cs" />
+    <Compile Include="Models\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\MatchView.cs" />
+    <Compile Include="Models\ViewModels\MessageView.cs" />
+    <Compile Include="Models\ViewModels\NewTypeView.cs" />
+    <Compile Include="Models\ViewModels\NewView.cs" />
+    <Compile Include="Models\ViewModels\PageView.cs" />
+    <Compile Include="Models\ViewModels\PhotoAlbumView.cs" />
+    <Compile Include="Models\ViewModels\PhotoView.cs" />
+    <Compile Include="Models\ViewModels\PlatformView.cs" />
+    <Compile Include="Models\ViewModels\PollItemView.cs" />
+    <Compile Include="Models\ViewModels\PollView.cs" />
+    <Compile Include="Models\ViewModels\RatingDetailView.cs" />
+    <Compile Include="Models\ViewModels\RatingView.cs" />
+    <Compile Include="Models\ViewModels\ReputationView.cs" />
+    <Compile Include="Models\ViewModels\RoundView.cs" />
+    <Compile Include="Models\ViewModels\User\SocialRegisterUserView.cs" />
+    <Compile Include="Models\ViewModels\TeamView.cs" />
+    <Compile Include="Models\ViewModels\TournamentConditionView.cs" />
+    <Compile Include="Models\ViewModels\TournamentPlayerView.cs" />
+    <Compile Include="Models\ViewModels\TournamentView.cs" />
+    <Compile Include="Models\ViewModels\UserGroupView.cs" />
+    <Compile Include="Models\ViewModels\UserTeamView.cs" />
+    <Compile Include="Models\ViewModels\UserVideoView.cs" />
+    <Compile Include="Models\ViewModels\User\UserCode.cs" />
+    <Compile Include="Models\ViewModels\User\UserView.cs" />
+    <Compile Include="Models\ViewModels\User\BaseUserView.cs" />
+    <Compile Include="Models\ViewModels\User\ChangePasswordView.cs" />
+    <Compile Include="Models\ViewModels\User\ForgotPasswordView.cs" />
+    <Compile Include="Models\ViewModels\User\RegisterUserView.cs" />
+    <Compile Include="Models\ViewModels\VideoView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\CaptchaImage.cs" />
+    <Compile Include="Tools\Excel\ExcelControllerExtensions.cs" />
+    <Compile Include="Tools\Excel\ExcelResult.cs" />
+    <Compile Include="Tools\MailProcessor.cs" />
+    <Compile Include="Tools\Mail\MailSender.cs" />
+    <Compile Include="Tools\Mail\NotifyMail.cs" />
+    <Compile Include="Tools\SiteMap.cs" />
+    <Compile Include="Tools\Sms\SmsSender.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Readme\glimpse.mvc3.readme.txt" />
+    <Content Include="App_Readme\glimpse.readme.txt" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Media\css\admin.css" />
+    <Content Include="Media\css\bootstrap.css" />
+    <Content Include="Media\css\html-editor.css" />
+    <Content Include="Media\css\ie-main.css" />
+    <Content Include="Media\css\ie9-main.css" />
+    <Content Include="Media\css\jquery-ui-1.8.14.custom.css" />
+    <Content Include="Media\css\jquery.jscrollpane.css" />
+    <Content Include="Media\css\main.css" />
+    <Content Include="Media\images\actions\add.png" />
+    <Content Include="Media\images\actions\add_folder.png" />
+    <Content Include="Media\images\actions\edit.png" />
+    <Content Include="Media\images\actions\edit2.png" />
+    <Content Include="Media\images\actions\preview.png" />
+    <Content Include="Media\images\actions\remove.png" />
+    <Content Include="Media\images\actions\tree_move.png" />
+    <Content Include="Media\images\body_bg.png" />
+    <Content Include="Media\images\default_avatar_173.png" />
+    <Content Include="Media\images\default_avatar_18.png" />
+    <Content Include="Media\images\default_avatar_26.png" />
+    <Content Include="Media\images\default_avatar_57.png" />
+    <Content Include="Media\images\default_avatar_84.png" />
+    <Content Include="Media\images\default_avatar_96.png" />
+    <Content Include="Media\images\files\albom_main_preview.png" />
+    <Content Include="Media\images\files\albom_other_preview.png" />
+    <Content Include="Media\images\files\banner_left.jpg" />
+    <Content Include="Media\images\files\banner_right.jpg" />
+    <Content Include="Media\images\files\captcha.png" />
+    <Content Include="Media\images\files\fifa_preview.png" />
+    <Content Include="Media\images\files\forum_default_preview.png" />
+    <Content Include="Media\images\files\forum_default_userpic.png" />
+    <Content Include="Media\images\files\gallery_main.png" />
+    <Content Include="Media\images\files\gallery_photo.png" />
+    <Content Include="Media\images\files\gallery_vertical_photo.png" />
+    <Content Include="Media\images\files\gamer_logo.png" />
+    <Content Include="Media\images\files\game_image.png" />
+    <Content Include="Media\images\files\game_preview.png" />
+    <Content Include="Media\images\files\game_preview_micro.png" />
+    <Content Include="Media\images\files\image_103x103.png" />
+    <Content Include="Media\images\files\image_preview_135x91.png" />
+    <Content Include="Media\images\files\main_userpic.png" />
+    <Content Include="Media\images\files\popup_image.png" />
+    <Content Include="Media\images\files\preview_1.png" />
+    <Content Include="Media\images\files\preview_battlefield.png" />
+    <Content Include="Media\images\files\preview_crisis.png" />
+    <Content Include="Media\images\files\preview_mafia.png" />
+    <Content Include="Media\images\files\preview_news.png" />
+    <Content Include="Media\images\files\userpic_26x26.png" />
+    <Content Include="Media\images\files\userpic_57x57.png" />
+    <Content Include="Media\images\files\userpic_micro.png" />
+    <Content Include="Media\images\files\userpic_mini.png" />
+    <Content Include="Media\images\files\user_preview.png" />
+    <Content Include="Media\images\files\video_preview.png" />
+    <Content Include="Media\images\flags\ru.png" />
+    <Content Include="Media\images\flags\en.png" />
+    <Content Include="Media\images\forum_default_preview.png" />
+    <Content Include="Media\images\glyphicons-halflings-white.png" />
+    <Content Include="Media\images\glyphicons-halflings.png" />
+    <Content Include="Media\images\header_bg.png" />
+    <Content Include="Media\images\icons\add.png" />
+    <Content Include="Media\images\icons\arrows.png" />
+    <Content Include="Media\images\icons\bullets.png" />
+    <Content Include="Media\images\icons\cancelbutton.gif" />
+    <Content Include="Media\images\icons\delete.png" />
+    <Content Include="Media\images\icons\delete_image.png" />
+    <Content Include="Media\images\icons\down.png" />
+    <Content Include="Media\images\icons\edit.png" />
+    <Content Include="Media\images\icons\edit_image.png" />
+    <Content Include="Media\images\icons\eye.png" />
+    <Content Include="Media\images\icons\gray_bg.png" />
+    <Content Include="Media\images\icons\loading_file.gif" />
+    <Content Include="Media\images\icons\paste_image.png" />
+    <Content Include="Media\images\icons\paste_link.png" />
+    <Content Include="Media\images\icons\preview.png" />
+    <Content Include="Media\images\icons\progressbar.gif" />
+    <Content Include="Media\images\icons\progressbg_black.gif" />
+    <Content Include="Media\images\icons\progressbg_green.gif" />
+    <Content Include="Media\images\icons\progressbg_orange.gif" />
+    <Content Include="Media\images\icons\progressbg_red.gif" />
+    <Content Include="Media\images\icons\progressbg_yellow.gif" />
+    <Content Include="Media\images\icons\strike-line.png" />
+    <Content Include="Media\images\icons\ui-bg_diagonals-thick_75_f3d8d8_40x40.png" />
+    <Content Include="Media\images\icons\ui-bg_dots-small_65_a6a6a6_2x2.png" />
+    <Content Include="Media\images\icons\ui-bg_flat_0_333333_40x100.png" />
+    <Content Include="Media\images\icons\ui-bg_flat_15_b20000_40x100.png" />
+    <Content Include="Media\images\icons\ui-bg_flat_65_ffffff_40x100.png" />
+    <Content Include="Media\images\icons\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Media\images\icons\ui-bg_flat_80_a6a6a6_40x100.png" />
+    <Content Include="Media\images\icons\ui-bg_glass_55_fbf8ee_1x400.png" />
+    <Content Include="Media\images\icons\ui-bg_highlight-hard_100_eeeeee_1x100.png" />
+    <Content Include="Media\images\icons\ui-bg_highlight-hard_100_f6f6f6_1x100.png" />
+    <Content Include="Media\images\icons\ui-bg_highlight-soft_15_cc0000_1x100.png" />
+    <Content Include="Media\images\icons\ui-icons_004276_256x240.png" />
+    <Content Include="Media\images\icons\ui-icons_b20000_256x240.png" />
+    <Content Include="Media\images\icons\ui-icons_cc0000_256x240.png" />
+    <Content Include="Media\images\icons\ui-icons_ffffff_256x240.png" />
+    <Content Include="Media\images\icons\uneye.png" />
+    <Content Include="Media\images\icons\visible.png" />
+    <Content Include="Media\images\jqueryui\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Media\images\jqueryui\ui-bg_flat_0_eeeeee_40x100.png" />
+    <Content Include="Media\images\jqueryui\ui-bg_flat_55_ffffff_40x100.png" />
+    <Content Include="Media\images\jqueryui\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Media\images\jqueryui\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Media\images\jqueryui\ui-bg_highlight-soft_100_f6f6f6_1x100.png" />
+    <Content Include="Media\images\jqueryui\ui-bg_highlight-soft_25_0073ea_1x100.png" />
+    <Content Include="Media\images\jqueryui\ui-bg_highlight-soft_50_dddddd_1x100.png" />
+    <Content Include="Media\images\jqueryui\ui-icons_0073ea_256x240.png" />
+    <Content Include="Media\images\jqueryui\ui-icons_454545_256x240.png" />
+    <Content Include="Media\images\jqueryui\ui-icons_666666_256x240.png" />
+    <Content Include="Media\images\jqueryui\ui-icons_ff0084_256x240.png" />
+    <Content Include="Media\images\jqueryui\ui-icons_ffffff_256x240.png" />
+    <Content Include="Media\images\main_image.png" />
+    <Content Include="Media\images\mime\application-msword.png" />
+    <Content Include="Media\images\mime\application-pdf.png" />
+    <Content Include="Media\images\mime\application-vnd-ms-excel.png" />
+    <Content Include="Media\images\mime\application-vnd-ms-powerpoint.png" />
+    <Content Include="Media\images\mime\application-x-compressed.png" />
+    <Content Include="Media\images\mime\application-x-gzip.png" />
+    <Content Include="Media\images\mime\application-x-msdownload.png" />
+    <Content Include="Media\images\mime\application-x-rar-compressed.png" />
+    <Content Include="Media\images\mime\application-x-stuffit.png" />
+    <Content Include="Media\images\mime\application-x-tar.png" />
+    <Content Include="Media\images\mime\application-x-zip-compressed.png" />
+    <Content Include="Media\images\mime\audio-aiff.png" />
+    <Content Include="Media\images\mime\audio-mpeg.png" />
+    <Content Include="Media\images\mime\audio-ogg.png" />
+    <Content Include="Media\images\mime\audio-wav.png" />
+    <Content Include="Media\images\mime\audio-x-ms-wma.png" />
+    <Content Include="Media\images\mime\default.png" />
+    <Content Include="Media\images\mime\image-bmp.png" />
+    <Content Include="Media\images\mime\small\application-exe.png" />
+    <Content Include="Media\images\mime\small\application-msword.png" />
+    <Content Include="Media\images\mime\small\application-pdf.png" />
+    <Content Include="Media\images\mime\small\application-vnd-ms-excel.png" />
+    <Content Include="Media\images\mime\small\application-vnd-ms-powerpoint.png" />
+    <Content Include="Media\images\mime\small\application-x-compressed.png" />
+    <Content Include="Media\images\mime\small\audio-aiff.png" />
+    <Content Include="Media\images\mime\small\audio-mpeg.png" />
+    <Content Include="Media\images\mime\small\audio-ogg.png" />
+    <Content Include="Media\images\mime\small\audio-wav.png" />
+    <Content Include="Media\images\mime\small\audio-x-ms-wma.png" />
+    <Content Include="Media\images\mime\small\default.png" />
+    <Content Include="Media\images\mime\small\image-bmp.png" />
+    <Content Include="Media\images\mime\small\image-gif.png" />
+    <Content Include="Media\images\mime\small\image-jpg.png" />
+    <Content Include="Media\images\mime\small\image-png.png" />
+    <Content Include="Media\images\mime\small\text-html.png" />
+    <Content Include="Media\images\mime\small\text-plain.png" />
+    <Content Include="Media\images\mime\small\video-avi.png" />
+    <Content Include="Media\images\mime\small\video-mpeg.png" />
+    <Content Include="Media\images\mime\small\video-quicktime.png" />
+    <Content Include="Media\images\mime\small\video-x-ms-wmv.png" />
+    <Content Include="Media\images\mime\text-html.png" />
+    <Content Include="Media\images\mime\text-plain.png" />
+    <Content Include="Media\images\mime\video-avi.png" />
+    <Content Include="Media\images\mime\video-mpeg.png" />
+    <Content Include="Media\images\mime\video-quicktime.png" />
+    <Content Include="Media\images\mime\video-x-ms-wmv.png" />
+    <Content Include="Media\images\no-image.png" />
+    <Content Include="Media\images\sprite.png" />
+    <Content Include="Media\scripts\admin\common.js" />
+    <Content Include="Media\scripts\admin\edit-game.js" />
+    <Content Include="Media\scripts\admin\edit-video.js" />
+    <Content Include="Media\scripts\admin\edit-new.js" />
+    <Content Include="Media\scripts\admin\forum-list.js" />
+    <Content Include="Media\scripts\admin\index-editor.js" />
+    <Content Include="Media\scripts\admin\roles.js" />
+    <Content Include="Media\scripts\admin\social-post.js" />
+    <Content Include="Media\scripts\admin\tournament-matches.js" />
+    <Content Include="Media\scripts\admin\subscriber.js" />
+    <Content Include="Media\scripts\admin\toss.js" />
+    <Content Include="Media\scripts\ajax-chosen.js" />
+    <Content Include="Media\scripts\ajax-chosen.min.js" />
+    <Content Include="Media\scripts\aplweb.scrollbars.js" />
+    <Content Include="Media\scripts\bootstrap.js" />
+    <Content Include="Media\scripts\bootstrap.min.js" />
+    <Content Include="Media\scripts\chosen.jquery.js" />
+    <Content Include="Media\scripts\chosen.jquery.min.js" />
+    <Content Include="Media\scripts\common.js" />
+    <Content Include="Media\scripts\debug.js" />
+    <Content Include="Media\scripts\default\add-photos.js" />
+    <Content Include="Media\scripts\default\camera.js" />
+    <Content Include="Media\scripts\default\chat.js" />
+    <Content Include="Media\scripts\default\comment.js" />
+    <Content Include="Media\scripts\default\common-chat.js" />
+    <Content Include="Media\scripts\default\common-tournament.js" />
+    <Content Include="Media\scripts\default\common.js" />
+    <Content Include="Media\scripts\default\connect.js" />
+    <Content Include="Media\scripts\default\group.js" />
+    <Content Include="Media\scripts\default\money.js" />
+    <Content Include="Media\scripts\default\notify-group.js" />
+    <Content Include="Media\scripts\default\edit-group.js" />
+    <Content Include="Media\scripts\default\friends.js" />
+    <Content Include="Media\scripts\default\messages.js" />
+    <Content Include="Media\scripts\default\gamers.js" />
+    <Content Include="Media\scripts\default\game-tournaments.js" />
+    <Content Include="Media\scripts\default\game.js" />
+    <Content Include="Media\scripts\default\live-tournament.js" />
+    <Content Include="Media\scripts\default\index-user.js" />
+    <Content Include="Media\scripts\default\match.js" />
+    <Content Include="Media\scripts\default\notice.js" />
+    <Content Include="Media\scripts\default\poll.js" />
+    <Content Include="Media\scripts\default\roster-group.js" />
+    <Content Include="Media\scripts\default\team.js" />
+    <Content Include="Media\scripts\default\tournament.js" />
+    <Content Include="Media\scripts\jquery.bbCodeEditor.js" />
+    <Content Include="Media\scripts\jquery.hotkeys.min.js" />
+    <Content Include="Media\scripts\jquery.jscrollpane.js" />
+    <Content Include="Media\scripts\default\user-videos.js" />
+    <Content Include="Media\scripts\default\edit-user-video.js" />
+    <Content Include="Media\scripts\default\create-comment.js" />
+    <Content Include="Media\scripts\default\create-forum-subject.js" />
+    <Content Include="Media\scripts\default\edit-blog.js" />
+    <Content Include="Media\scripts\default\edit-forum-message.js" />
+    <Content Include="Media\scripts\default\edit-user.js" />
+    <Content Include="Media\scripts\default\index.js" />
+    <Content Include="Media\scripts\jquery.ba-resize.min.js" />
+    <Content Include="Media\scripts\jquery.event.drag-2.0.min.js" />
+    <Content Include="Media\scripts\jquery.loupe.js" />
+    <Content Include="Media\scripts\jquery.loupe.min.js" />
+    <Content Include="Media\scripts\jquery.mousewheel.js" />
+    <Content Include="Media\scripts\default\videos.js" />
+    <Content Include="Media\scripts\dragscrollable.js" />
+    <Content Include="Media\scripts\jquery-1.7.2.min.js" />
+    <Content Include="Media\scripts\jquery-ui-1.8.14.custom.min.js" />
+    <Content Include="Media\scripts\jquery.blockUI.js" />
+    <Content Include="Media\scripts\jquery.mousewheel.min.js" />
+    <Content Include="Media\scripts\jquery.nivo.slider.js" />
+    <Content Include="Media\scripts\jquery.progressbar.min.js" />
+    <Content Include="Media\scripts\jquery.scrollto.min.js" />
+    <Content Include="Media\scripts\jquery.synctranslit.js" />
+    <Content Include="Media\scripts\jquery.synctranslit.min.js" />
+    <Content Include="Media\scripts\jquery.synctranslit.pack.js" />
+    <Content Include="Media\scripts\jquery.ui.datepicker-ru.js" />
+    <Content Include="Media\scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Media\scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Media\scripts\jquery.validate.js" />
+    <Content Include="Media\scripts\jquery.validate.min.js" />
+    <Content Include="Media\scripts\knockout-1.3.0beta.debug.js" />
+    <Content Include="Media\scripts\knockout-1.3.0beta.js" />
+    <Content Include="Media\scripts\modernizr-1.7.min.js" />
+    <Content Include="Media\scripts\modernizr-2.0.6-development-only.js" />
+    <Content Include="Media\scripts\mousehold.js" />
+    <Content Include="Media\scripts\scrollsync.js" />
+    <Content Include="Media\scripts\yoxview\data\flickr.js" />
+    <Content Include="Media\scripts\yoxview\data\flickr.source.js" />
+    <Content Include="Media\scripts\yoxview\data\picasa.js" />
+    <Content Include="Media\scripts\yoxview\data\picasa.source.js" />
+    <Content Include="Media\scripts\yoxview\data\youtube.js" />
+    <Content Include="Media\scripts\yoxview\data\youtube.source.js" />
+    <Content Include="Media\scripts\yoxview\images\empty.gif" />
+    <Content Include="Media\scripts\yoxview\images\help_panel.png" />
+    <Content Include="Media\scripts\yoxview\images\left.png" />
+    <Content Include="Media\scripts\yoxview\images\left_empty.png" />
+    <Content Include="Media\scripts\yoxview\images\left_eng.png" />
+    <Content Include="Media\scripts\yoxview\images\left_prev.png" />
+    <Content Include="Media\scripts\yoxview\images\popup_ajax_loader.gif" />
+    <Content Include="Media\scripts\yoxview\images\right.png" />
+    <Content Include="Media\scripts\yoxview\images\right_empty.png" />
+    <Content Include="Media\scripts\yoxview\images\right_eng.png" />
+    <Content Include="Media\scripts\yoxview\images\sprites.png" />
+    <Content Include="Media\scripts\yoxview\install.htm" />
+    <Content Include="Media\scripts\yoxview\jquery.yoxthumbs.js" />
+    <Content Include="Media\scripts\yoxview\jquery.yoxview-2.21.js" />
+    <Content Include="Media\scripts\yoxview\jquery.yoxview-2.21.min.js" />
+    <Content Include="Media\scripts\yoxview\lang\ar.js" />
+    <Content Include="Media\scripts\yoxview\lang\bg.js" />
+    <Content Include="Media\scripts\yoxview\lang\ca.js" />
+    <Content Include="Media\scripts\yoxview\lang\cs.js" />
+    <Content Include="Media\scripts\yoxview\lang\de.js" />
+    <Content Include="Media\scripts\yoxview\lang\dk.js" />
+    <Content Include="Media\scripts\yoxview\lang\en.js" />
+    <Content Include="Media\scripts\yoxview\lang\es.js" />
+    <Content Include="Media\scripts\yoxview\lang\fr.js" />
+    <Content Include="Media\scripts\yoxview\lang\gr.js" />
+    <Content Include="Media\scripts\yoxview\lang\he.js" />
+    <Content Include="Media\scripts\yoxview\lang\hu.js" />
+    <Content Include="Media\scripts\yoxview\lang\ie.js" />
+    <Content Include="Media\scripts\yoxview\lang\ir.js" />
+    <Content Include="Media\scripts\yoxview\lang\it.js" />
+    <Content Include="Media\scripts\yoxview\lang\ja.js" />
+    <Content Include="Media\scripts\yoxview\lang\mk.js" />
+    <Content Include="Media\scripts\yoxview\lang\nl.js" />
+    <Content Include="Media\scripts\yoxview\lang\pl.js" />
+    <Content Include="Media\scripts\yoxview\lang\pt-br.js" />
+    <Content Include="Media\scripts\yoxview\lang\pt.js" />
+    <Content Include="Media\scripts\yoxview\lang\ro.js" />
+    <Content Include="Media\scripts\yoxview\lang\ru.js" />
+    <Content Include="Media\scripts\yoxview\lang\sk.js" />
+    <Content Include="Media\scripts\yoxview\lang\sl.js" />
+    <Content Include="Media\scripts\yoxview\lang\sv.js" />
+    <Content Include="Media\scripts\yoxview\lang\tr.js" />
+    <Content Include="Media\scripts\yoxview\lang\ua.js" />
+    <Content Include="Media\scripts\yoxview\lang\zh-cn.js" />
+    <Content Include="Media\scripts\yoxview\lang\zh-tw.js" />
+    <Content Include="Media\scripts\yoxview\skins\top_menu\sprites.png" />
+    <Content Include="Media\scripts\yoxview\skins\top_menu\yoxview.top_menu.css" />
+    <Content Include="Media\scripts\yoxview\skins\top_menu\yoxview.top_menu.js" />
+    <Content Include="Media\scripts\yoxview\yox.js" />
+    <Content Include="Media\scripts\yoxview\yoxview-init.js" />
+    <Content Include="Media\scripts\yoxview\yoxview-nojquery.js" />
+    <Content Include="Media\scripts\yoxview\yoxview.css" />
+    <Content Include="needed\ActionMailer.net\ActionMailer.Net.dll" />
+    <Content Include="needed\ActionMailer.net\ActionMailer.Net.Mvc.dll" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_LocalResources\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Default\Models\" />
+    <Folder Include="Media\files\avatars\" />
+    <Folder Include="Media\files\award\" />
+    <Folder Include="Media\files\backgrounds\" />
+    <Folder Include="Media\files\banners\" />
+    <Folder Include="Media\files\blog\" />
+    <Folder Include="Media\files\catalog\" />
+    <Folder Include="Media\files\code\" />
+    <Folder Include="Media\files\comment\" />
+    <Folder Include="Media\files\forum\" />
+    <Folder Include="Media\files\game\" />
+    <Folder Include="Media\files\groups\" />
+    <Folder Include="Media\files\images\" />
+    <Folder Include="Media\files\league\" />
+    <Folder Include="Media\files\news\" />
+    <Folder Include="Media\files\photos\" />
+    <Folder Include="Media\files\product\" />
+    <Folder Include="Media\files\product_background\" />
+    <Folder Include="Media\files\screenshot\" />
+    <Folder Include="Media\files\socials\" />
+    <Folder Include="Media\files\team\" />
+    <Folder Include="Media\files\test\" />
+    <Folder Include="Media\files\tournament\" />
+    <Folder Include="Media\files\variation\" />
+    <Folder Include="Media\files\videos\" />
+    <Folder Include="Media\files\video\" />
+    <Folder Include="Media\logs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Home\AdminMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="Areas\Default\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Default\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ManageAttribute\ManageAttribute.csproj">
+      <Project>{05960685-9a37-4b71-a94e-d009358aba71}</Project>
+      <Name>ManageAttribute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\turniri.Model\turniri.Model.csproj">
+      <Project>{54305171-F603-4070-9E75-1F7173681E8A}</Project>
+      <Name>turniri.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\turniri.Social\turniri.Social.csproj">
+      <Project>{1d3422d3-eff0-4795-8488-453817e09d91}</Project>
+      <Name>turniri.Social</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\turniri.Tools\turniri.Tools.csproj">
+      <Project>{acaca979-4b2b-4ec8-8e4a-825c2a5377b1}</Project>
+      <Name>turniri.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Default\Views\Error\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Error\NotFoundPage.cshtml" />
+    <Content Include="Areas\Default\Views\User\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Login\ForgotPassword.cshtml" />
+    <Content Include="Areas\Default\Views\Login\ForgotPasswordSuccess.cshtml" />
+    <Content Include="Areas\Default\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\User\Register.cshtml" />
+    <Content Include="Areas\Default\Views\User\RegisterSuccess.cshtml" />
+    <Content Include="Areas\Default\Views\User\ActivateSuccess.cshtml" />
+    <Content Include="Areas\Default\Views\User\ChangePassword.cshtml" />
+    <Content Include="Areas\Default\Views\Home\UserLogin.cshtml" />
+    <Content Include="Areas\Default\Views\Login\LoginPartial.cshtml" />
+    <Content Include="Areas\Default\Views\User\Games.cshtml" />
+    <Content Include="Areas\Default\Views\User\Matches.cshtml" />
+    <Content Include="Areas\Default\Views\User\Tournaments.cshtml" />
+    <Content Include="Areas\Default\Views\User\Reputation.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\UserMenu.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\ControlPanel.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NewType\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NewType\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\New\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\New\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Video\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Video\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Platform\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Platform\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Ok.cshtml" />
+    <Content Include="Areas\Admin\Views\ForumMessage\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\Main.cshtml" />
+    <Content Include="Areas\Default\Views\Home\Menu.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\UserOnline.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\Topic.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\Ok.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\CreateMessage.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\Create.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\PleaseLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\Game\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Game\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Game\GetForum.cshtml" />
+    <Content Include="Areas\Default\Views\Game\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Game\Menu.cshtml" />
+    <Content Include="Areas\Default\Views\Game\PartialMatches.cshtml" />
+    <Content Include="Areas\Default\Views\Game\PartialForumUpdate.cshtml" />
+    <Content Include="Areas\Default\Views\Game\PartialTournaments.cshtml" />
+    <Content Include="Areas\Default\Views\Home\MainNewsList.cshtml" />
+    <Content Include="Areas\Default\Views\Home\MainNewsGallery.cshtml" />
+    <Content Include="Areas\Default\Views\Home\NewsList.cshtml" />
+    <Content Include="Areas\Default\Views\New\Index.cshtml" />
+    <Content Include="Areas\Default\Views\New\CreateComment.cshtml" />
+    <Content Include="Areas\Default\Views\Video\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Video\Item.cshtml" />
+    <Content Include="Areas\Default\Views\Video\CreateComment.cshtml" />
+    <Content Include="Areas\Default\Views\Blog\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Blog\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Blog\Item.cshtml" />
+    <Content Include="Areas\Default\Views\Blog\LastComments.cshtml" />
+    <Content Include="Areas\Default\Views\Blog\CreateComment.cshtml" />
+    <Content Include="Areas\Default\Views\Photo\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Photo\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Photo\Item.cshtml" />
+    <Content Include="Areas\Default\Views\Photo\View.cshtml" />
+    <Content Include="Areas\Default\Views\Photo\CreateComment.cshtml" />
+    <Content Include="Areas\Default\Views\PublicPhoto\Index.cshtml" />
+    <Content Include="Areas\Default\Views\UserVideo\Index.cshtml" />
+    <Content Include="Areas\Default\Views\UserVideo\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\UserVideo\Item.cshtml" />
+    <Content Include="Areas\Default\Views\UserVideo\CreateComment.cshtml" />
+    <Content Include="Areas\Default\Views\UserComment\Index.cshtml" />
+    <Content Include="Areas\Default\Views\UserComment\CreateComment.cshtml" />
+    <Content Include="Areas\Default\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Default\Views\User\PlatformGames.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\ProfileControlPanel.cshtml" />
+    <Content Include="Areas\Admin\Views\Tournament\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tournament\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tournament\CreateGamesSelect.cshtml" />
+    <Content Include="Areas\Admin\Views\Tournament\GetForum.cshtml" />
+    <Content Include="Areas\Admin\Views\Award\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Award\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tournament\Matches.cshtml" />
+    <Content Include="Areas\Admin\Views\Tournament\Toss.cshtml" />
+    <Content Include="Areas\Admin\Views\Avatar\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Avatar\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\DoubleElimination64.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\_GamePair.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\_GamePair0.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\_GamePair1.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\_GamePair2.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\_GamePair3.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\_GamePair4.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SingleElimination64.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\DoubleElimination32.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SingleElimination32.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\DoubleElimination16.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SingleElimination16.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\DoubleElimination8.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SingleElimination8.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\DoubleElimination4.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SingleElimination4.cshtml" />
+    <Content Include="Areas\Default\Views\Game\UserRating.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Default\Views\User\_ShowReputation.cshtml" />
+    <Content Include="Areas\Default\Views\Game\_ShowReputation.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\All.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\List.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\UserRating.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\_ShowReputation.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\Table.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SingleElimination.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\DoubleElimination.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\RoundRobin.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\StatisticRoundRobin.cshtml" />
+    <Content Include="Areas\Default\Views\Game\TournamentsList.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\GroupTournament.cshtml" />
+    <Content Include="Areas\Default\Views\Match\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Match\ShowMatch.cshtml" />
+    <Content Include="Areas\Default\Views\Match\EmptyMatch.cshtml" />
+    <Content Include="Areas\Default\Views\Match\PublishMatch.cshtml" />
+    <Content Include="Areas\Default\Views\User\TournamentReputation.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\_OK.cshtml" />
+    <Content Include="Areas\Default\Views\Match\_RoundInfo.cshtml" />
+    <Content Include="Areas\Default\Views\Match\CreateComment.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SelectListTours.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\Tours.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\Group.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\StatisticGroup.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SelectListGroups.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\GroupPart.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\PlayoffPart.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\Winner.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\SpecialPrized.cshtml" />
+    <Content Include="Areas\Default\Views\Game\Achieve.cshtml" />
+    <Content Include="Areas\Default\Views\Game\Tournaments.cshtml" />
+    <Content Include="Areas\Default\Views\Game\Gamers.cshtml" />
+    <Content Include="Areas\Default\Views\Game\SearchGamers.cshtml" />
+    <Content Include="Areas\Default\Views\Award\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Message\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Message\IncomeSubjects.cshtml" />
+    <Content Include="Areas\Default\Views\Message\FightSubjects.cshtml" />
+    <Content Include="Areas\Default\Views\Message\WriteMessage.cshtml" />
+    <Content Include="Areas\Default\Views\Message\Messages.cshtml" />
+    <Content Include="Areas\Default\Views\Message\ReplyMessage.cshtml" />
+    <Content Include="Areas\Default\Views\Message\OutcomeSubjects.cshtml" />
+    <Content Include="Areas\Default\Views\Message\WriteFightMessage.cshtml" />
+    <Content Include="Areas\Default\Views\Message\CreateGamesSelect.cshtml" />
+    <Content Include="Areas\Default\Views\Friend\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Friend\Friends.cshtml" />
+    <Content Include="Areas\Default\Views\Friend\Orders.cshtml" />
+    <Content Include="Areas\Default\Views\Friend\AddFriend.cshtml" />
+    <Content Include="Areas\Default\Views\User\_MatchItem.cshtml" />
+    <Content Include="Areas\Default\Views\Users\SearchUsers.cshtml" />
+    <Content Include="Areas\Default\Views\Users\_ShowReputation.cshtml" />
+    <Content Include="Areas\Default\Views\Game\HowToPlay.cshtml" />
+    <Content Include="Areas\Default\Views\Home\Instruction.cshtml" />
+    <Content Include="Areas\Default\Views\Home\CurrentMatches.cshtml" />
+    <Content Include="Areas\Default\Views\Home\FutureMatches.cshtml" />
+    <Content Include="Areas\Default\Views\Home\CurrentTournaments.cshtml" />
+    <Content Include="Areas\Default\Views\Home\FutureTournaments.cshtml" />
+    <Content Include="Areas\Default\Views\Home\PlayedOutTournaments.cshtml" />
+    <Content Include="Areas\Default\Views\Home\Newbie.cshtml" />
+    <Content Include="Areas\Default\Views\Home\ForumLastSubject.cshtml" />
+    <Content Include="Areas\Default\Views\Game\CurrentMatches.cshtml" />
+    <Content Include="Areas\Default\Views\Game\FutureMatches.cshtml" />
+    <Content Include="Areas\Admin\Views\Award\Award.cshtml" />
+    <Content Include="Areas\Admin\Views\Page\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Page\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Page\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PhotoAlbum\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PhotoAlbum\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PhotoAlbum\Photos.cshtml" />
+    <Content Include="Areas\Admin\Views\Match\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Match\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\User\_MatchItemTournament.cshtml" />
+    <Content Include="Areas\Default\Views\Friend\AlreadyAddedFriend.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\SubForum.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Home\TestEditor.cshtml" />
+    <Content Include="Areas\Default\Views\Home\AllTexts.cshtml" />
+    <Content Include="Areas\Default\Views\Home\OneText.cshtml" />
+    <Content Include="Areas\Admin\Views\Poll\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Poll\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Poll\GetPollItem.cshtml" />
+    <Content Include="Areas\Admin\Views\ForumMessage\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\Poll.cshtml" />
+    <Content Include="Areas\Default\Views\Poll\Voted.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\EditMessage.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\Item.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\TinyIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Forum\TinySubForum.cshtml" />
+    <Content Include="Areas\Admin\Views\Distribution\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Distribution\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Subscriber\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Subscriber\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Mail\Subscription.html.cshtml" />
+    <Content Include="Areas\Admin\Views\Match\Count.cshtml" />
+    <Content Include="Areas\Admin\Views\Chat\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Chat\CommonChat.cshtml" />
+    <Content Include="Areas\Default\Views\Chat\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Chat\Update.cshtml" />
+    <Content Include="Areas\Default\Views\Chat\BanUser.cshtml" />
+    <Content Include="Areas\Default\Views\Chat\CommonBanUser.cshtml" />
+    <Content Include="Areas\Default\Views\Match\RoundPublish_1.cshtml" />
+    <Content Include="Areas\Default\Views\Match\RoundPublish_2.cshtml" />
+    <Content Include="Areas\Default\Views\Match\_RoundsHeaders.cshtml" />
+    <Content Include="Areas\Default\Views\Match\RoundSubmit.cshtml" />
+    <Content Include="Areas\Default\Views\Home\ShowError.cshtml" />
+    <Content Include="Areas\Default\Views\Match\_TechInfo.cshtml" />
+    <Content Include="Areas\Admin\Views\Tournament\Players.cshtml" />
+    <Content Include="Areas\Admin\Views\Match\Unplayed.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\VisitersOnline.cshtml" />
+    <Content Include="Areas\Default\Views\Team\Register.cshtml" />
+    <Content Include="Areas\Default\Views\Team\SetName.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\Teams.cshtml" />
+    <Content Include="Areas\Default\Views\Team\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\__GamePairPlayerView.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\__PlayerView.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\__StatisticPlayerView.cshtml" />
+    <Content Include="Areas\Default\Views\Match\__MatchPlayerView.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\__WinnerPlayerView.cshtml" />
+    <Content Include="Areas\Admin\Views\Team\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Team\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Team\Roster.cshtml" />
+    <Content Include="Areas\Admin\Views\Team\AddUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Camera\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Camera\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Camera\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Camera\Match.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\AddGame.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Item.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\GroupMenu.cshtml" />
+    <Content Include="Areas\Default\Views\Group\GroupControlPanel.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\UserGroupItem.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\UserList.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\__GroupListItem.cshtml" />
+    <Content Include="Areas\Default\Views\User\Group.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\Count.cshtml" />
+    <Content Include="Areas\Default\Views\Group\GroupViewControlPanel.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Roster.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Users.cshtml" />
+    <Content Include="Areas\Default\Views\Group\InvoiceControlPart.cshtml" />
+    <Content Include="Areas\Default\Views\Message\WriteInvoiceMessage.cshtml" />
+    <Content Include="Areas\Default\Views\Message\InvoiceSubjects.cshtml" />
+    <Content Include="Areas\Default\Views\User\GroupsList.cshtml" />
+    <Content Include="Areas\Default\Views\Game\Group.cshtml" />
+    <Content Include="Areas\Default\Views\Game\PartialGroups.cshtml" />
+    <Content Include="Areas\Default\Views\Game\PartialTournamentsList.cshtml" />
+    <Content Include="Areas\Default\Views\Game\TournamentItem.cshtml" />
+    <Content Include="Areas\Default\Views\Team\_RosterItem.cshtml" />
+    <Content Include="Areas\Default\Views\Team\GroupRoster.cshtml" />
+    <Content Include="Areas\Default\Views\Team\Replacements.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Transfers.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Award.cshtml" />
+    <Content Include="Areas\Default\Views\Blog\Group.cshtml" />
+    <Content Include="Areas\Default\Views\UserVideo\Group.cshtml" />
+    <Content Include="Areas\Default\Views\Photo\Group.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Home\Banner.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Background\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Background\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Editor\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Editor\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Blog\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Blog\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Home\BlogsList.cshtml" />
+    <Content Include="Areas\Default\Views\Chat\LoadOld.cshtml" />
+    <Content Include="Areas\Default\Views\Match\ShowComments.cshtml" />
+    <Content Include="Areas\Admin\Views\NoticeDistribution\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NoticeDistribution\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Notice\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Notice\Item.cshtml" />
+    <Content Include="Areas\Default\Views\Notice\Count.cshtml" />
+    <Content Include="Areas\Default\Views\Notice\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Notice\Notice.cshtml" />
+    <Content Include="Areas\Default\Views\Notice\NoticeAction.cshtml" />
+    <Content Include="Areas\Admin\Views\Tournament\CreateNotice.cshtml" />
+    <Content Include="Areas\Admin\Views\Game\CreateNotice.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Notify.cshtml" />
+    <Content Include="Areas\Default\Views\Home\UnreadMessages.cshtml" />
+    <Content Include="Areas\Default\Views\Forum\IsNoticed.cshtml" />
+    <Content Include="Areas\Default\Views\Oauth\CantInitialize.cshtml" />
+    <Content Include="Areas\Default\Views\Oauth\RegisterSuccess.cshtml" />
+    <Content Include="Areas\Default\Views\User\VerifyEmail.cshtml" />
+    <Content Include="Areas\Default\Views\User\ResendVerifyEmail.cshtml" />
+    <Content Include="Areas\Default\Views\Connect\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Connect\CantInitialize.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\_SocialLikesScripts.cshtml" />
+    <Content Include="Areas\Default\Views\Connect\VkConfirm.cshtml" />
+    <Content Include="Areas\Admin\Views\SocialGroup\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SocialGroup\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Connect\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SocialPost\SocialPost.cshtml" />
+    <Content Include="Areas\Admin\Views\SocialPost\UpdateGroupsSelect.cshtml" />
+    <Content Include="Areas\Admin\Views\SocialPost\VkConnect.cshtml" />
+    <Content Include="Areas\Admin\Views\Camera\Main.cshtml" />
+    <Content Include="Areas\Default\Views\Home\MainCameraAct.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ChangeMoney.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\ChangeMoney.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\MoneyAward.cshtml" />
+    <Content Include="Areas\Default\Views\User\Money.cshtml" />
+    <Content Include="Areas\Admin\Views\MoneyFee\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MoneyFee\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Money\Money.cshtml" />
+    <Content Include="Areas\Admin\Views\Money\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Money\Balance.cshtml" />
+    <Content Include="Areas\Default\Views\Shared\MoneyAward.cshtml" />
+    <Content Include="Areas\Default\Views\Money\MoneyReturn.cshtml" />
+    <Content Include="Areas\Default\Views\User\MoneyList.cshtml" />
+    <Content Include="Areas\Default\Views\Money\SendMoney.cshtml" />
+    <Content Include="Areas\Default\Views\Group\Money.cshtml" />
+    <Content Include="Areas\Default\Views\Group\MoneyList.cshtml" />
+    <Content Include="Areas\Default\Views\Money\SendMoneyGroup.cshtml" />
+    <Content Include="Areas\Default\Views\User\MoneyRecharge.cshtml" />
+    <Content Include="Areas\Default\Views\User\Yandex.cshtml" />
+    <Content Include="Areas\Admin\Views\Recharge\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Recharge\Balance.cshtml" />
+    <Content Include="Areas\Default\Views\User\MoneyWithdraw.cshtml" />
+    <Content Include="Areas\Default\Views\User\WithdrawOk.cshtml" />
+    <Content Include="Areas\Admin\Views\MoneyWithdraw\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MoneyWithdraw\Count.cshtml" />
+    <Content Include="Areas\Default\Views\User\Qiwi.cshtml" />
+    <Content Include="Areas\Default\Views\Money\AcceptQiwiMoney.cshtml" />
+    <Content Include="Areas\Default\Views\Money\FailQiwiMoney.cshtml" />
+    <Content Include="Areas\Admin\Views\BannedWord\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BannedWord\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Catalog\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Catalog\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Catalog\SubCatalog.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PromoAction\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PromoAction\GeneratePromoCode.cshtml" />
+    <Content Include="Areas\Admin\Views\PromoAction\Edit.cshtml" />
+    <Content Include="Areas\Default\Views\Shop\ProductShortItem.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\TopCart.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\Cart.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\Process.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\Yandex.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\Qiwi.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\GoldMoney.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\CantProcess.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Codes.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\CodeTable.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\EditProductCode.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\History.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\PopupCodeImage.cshtml" />
+    <Content Include="Areas\Admin\Views\Cart\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Cart\Item.cshtml" />
+    <Content Include="Areas\Admin\Views\Cart\Count.cshtml" />
+    <Content Include="Areas\Admin\Views\Cart\AddCode.cshtml" />
+    <Content Include="Areas\Default\Views\Cart\Success.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Vendor\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Vendor\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductPriceItem.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductImageItem.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductVariationItem.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ProductVideoItem.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\EditProductRest.cshtml" />
+    <Content Include="Areas\Default\Views\Shop\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Shop\ShopFilter.cshtml" />
+    <Content Include="Areas\Default\Views\Shop\Content.cshtml" />
+    <Content Include="Areas\Default\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Product\AlsoProduct.cshtml" />
+    <Content Include="Areas\Default\Views\Product\ViewScreenshot.cshtml" />
+    <Content Include="Areas\Admin\Views\Seller\Index.cshtml" />
+    <Content Include="Areas\Default\Views\Tournament\TableMatch.cshtml" />
+    <Content Include="Areas\Admin\Views\MoneyNotify\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MoneyNotify\Item.cshtml" />
+    <Content Include="Areas\Admin\Views\League\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\League\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\League\Levels.cshtml" />
+    <Content Include="Areas\Admin\Views\League\EditLevel.cshtml" />
+    <Content Include="Areas\Admin\Views\League\Seasons.cshtml" />
+    <Content Include="Areas\Admin\Views\League\EditSeason.cshtml" />
+    <Content Include="Areas\Admin\Views\League\Groups.cshtml" />
+    <Content Include="Areas\Admin\Views\League\SelectListGroupLeagueLevel.cshtml" />
+    <Content Include="Areas\Admin\Views\League\Players.cshtml" />
+    <Content Include="Areas\Admin\Views\League\SelectListUserLeagueLevel.cshtml" />
+    <Content Include="Areas\Admin\Views\League\Tournaments.cshtml" />
+    <Content Include="Areas\Admin\Views\League\AddTournaments.cshtml" />
+    <Content Include="Areas\Admin\Views\League\SelectListUserTournament.cshtml" />
+    <Content Include="Areas\Admin\Views\League\PlayerRow.cshtml" />
+    <Content Include="Areas\Admin\Views\League\GroupRow.cshtml" />
+    <Content Include="Areas\Admin\Views\League\SelectListGroupTournament.cshtml" />
+    <Content Include="Areas\Admin\Views\League\Matches.cshtml" />
+    <Content Include="Areas\Default\Views\League\Index.cshtml" />
+    <Content Include="Areas\Default\Views\League\Level.cshtml" />
+    <Content Include="Areas\Default\Views\League\Rating.cshtml" />
+    <Content Include="Areas\Default\Views\League\Tournaments.cshtml" />
+    <Content Include="Areas\Default\Views\League\Matches.cshtml" />
+    <None Include="CodeTemplates\Scaffolders\Controller\Controller.ps1" />
+    <None Include="CodeTemplates\Scaffolders\Controller\ControllerTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\EditView\EditView.ps1" />
+    <None Include="CodeTemplates\Scaffolders\EditView\EditViewTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\IndexView\IndexView.ps1" />
+    <None Include="CodeTemplates\Scaffolders\IndexView\IndexViewTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Model\CommonMapper.ps1" />
+    <None Include="CodeTemplates\Scaffolders\Model\CommonMapper.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Model\MapperCollectionItemTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Model\MapperCollectionTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Model\MapperCollection.ps1" />
+    <None Include="CodeTemplates\Scaffolders\Model\Model.ps1" />
+    <None Include="CodeTemplates\Scaffolders\Model\ModelTemplate.cs.t4" />
+    <Content Include="CodeTemplates\Scaffolders\SelectReference\SelectReference.ps1" />
+    <Content Include="CodeTemplates\Scaffolders\SelectReference\SelectReferenceTemplate.cs.t4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Messages.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>46889</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

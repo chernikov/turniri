@@ -1,0 +1,53 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Group>
+@{
+    ViewBag.Title = "Команды";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@if (Model.List.Any())
+{
+    <div class="group-wrapper">
+        <div class="groups-list">
+            <ul>
+                @{
+    var i = 0;
+                }
+                @foreach (var group in Model.List)
+                {
+                    <li class="@(i % 2 == 1 ? "second" : "")">
+                        @Html.Partial("__GroupListItem", group)
+                    </li>
+                    i++;
+                }
+            </ul>
+        </div>
+        <div class="paging light-paging">
+            <div class="title">
+                Страницы:
+            </div>
+            <div class="paging-list">
+                @Html.PageLinksTurniri(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { type = ViewBag.Type, page = x }))
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="blog long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>Команды
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="empty">
+            Нет ни одной команды. 
+    @if (currentUser != null && currentUser.HasAnyGame)
+    {
+        <br />
+        <text> Будьте первыми. </text>
+        <a href="@Url.Action("Create", "Group")">Создать команду</a>
+    }
+        </div>
+    </div>
+}

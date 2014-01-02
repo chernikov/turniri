@@ -1,0 +1,71 @@
+﻿@model turniri.Model.TournamentGroup
+
+<div class="header-user">
+    Игроки
+</div>
+<div class="top-panel-wrapper">
+    <div class="top-panel" style="width : @(85 * Model.ParticipantsCount)px;">
+        @{
+            var i = 1;
+        }
+        @foreach (var player in Model.SubPlayers)
+        {
+            <div class="item">
+                <div class="number" title="@player.ID">
+                    @i
+                </div>
+            </div>
+            i++;
+        }
+    </div>
+</div>
+<div class="left-panel-wrapper @(Model.ParticipantsCount > 8 ? "" : "no-height")">
+    <div class="left-panel">
+        @{
+            var j = 1;
+        }
+        @foreach (var player in Model.SubPlayers)
+        {
+            <div class="item">
+                <div class="number" title="@player.ID">
+                    @j
+                </div>
+                <div class="name">
+                    @Html.Partial("__PlayerView", player, new ViewDataDictionary())
+                </div>
+            </div>
+            j++;
+        }
+    </div>
+</div>
+<div class="tournament @(Model.ParticipantsCount > 8 ? "scroll-bars" : "no-height") ">
+    <div class="container" style="width : @(85 * Model.ParticipantsCount)px;">
+        @foreach (var player in Model.SubPlayers)
+        {
+            <div class="col">
+                @foreach (var player2 in Model.SubPlayers)
+                {
+                    if (player.UserID == player2.UserID)
+                    {
+                        <div class="empty-item">&nbsp;</div>
+                    }
+                    else
+                    {
+                        var match = Model.RoundMatch(player.ID, player2.ID);
+                        if (match != null)
+                        {
+                            if (player2.ID == match.Participant1ID)
+                            {
+                                @Html.Partial("TableMatch", match, new ViewDataDictionary() { { "type", 1 } })
+                            }
+                            else
+                            {
+                                @Html.Partial("TableMatch", match, new ViewDataDictionary() { { "type", 2 } })
+                            }
+                        }
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>

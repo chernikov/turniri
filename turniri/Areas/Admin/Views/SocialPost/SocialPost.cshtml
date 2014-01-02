@@ -1,0 +1,83 @@
+﻿@model turniri.Models.ViewModels.SocialPostView
+
+<script type="text/javascript">
+    var socialPost = null;
+    $().ready(function () {
+        socialPost = new SocialPost();
+        socialPost.init();
+    });
+</script>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Разместить в соц.сети</h3>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("SocialPost", "SocialPost", FormMethod.Post, new { @class = "form-vertical", id = "PublishSocialForm" }))
+    {
+        @Html.Hidden("ID", Model.ID)
+        @Html.Hidden("ForeignID", Model.ForeignID)
+        @Html.Hidden("ForeignType", Model.ForeignType)
+        @Html.Hidden("Preview", Model.Preview)
+        @Html.Hidden("Link", Model.Link)
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">
+                    Заголовок</label>
+                <div class="controls">
+                    @Html.TextBox("Title", Model.Title, new { @class = "social-header" })
+                    @Html.ValidationMessage("Title")
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="row">
+                    <div class="span4">
+                        <label class="control-label">
+                            Изображение</label>
+                        <img src="@Model.Preview" alt="avatar" id="PreviewImage" class="social-image" />
+                        <br />
+                        <div class="btn btn-danger" id="DeletePreview">
+                            удалить
+                        </div>
+                        <div class="btn" id="ChangePreview">
+                            загрузить фото
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="controls">
+                            Текст
+                    @Html.TextArea("Teaser", Model.Teaser, new { @class = "social-description" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    Куда</label>
+                <div class="controls">
+                    @Html.DropDownList("Provider", Model.ProviderSelectList, new { @class = "social-header" })
+                    @Html.ValidationMessage("Provider")
+                </div>
+            </div>
+            <div id="GroupSelectWrapper">
+                <div class="control-group">
+                    <label class="control-label">
+                        Группа</label>
+                    <div class="controls">
+                        @Html.DropDownList("SocialGroupID", Model.SocialGroupSelectList, new { @class = "social-header" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                </label>
+                <div class="controls">
+                </div>
+            </div>
+
+        </fieldset>
+    }
+</div>
+<div class="modal-footer">
+    <button id="PublishSocialBtn" class="btn btn-primary">Опубликовать</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+</div>

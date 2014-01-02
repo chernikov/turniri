@@ -1,0 +1,5 @@
+﻿@model IList<SelectListItem>
+@{
+    var id = (int)ViewBag.ID;
+}
+@Html.DropDownList("LeagueParticipant", Model, new { data_id = id, @class="participant-level"})

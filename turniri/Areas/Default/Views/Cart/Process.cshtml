@@ -1,0 +1,85 @@
+﻿@model turniri.Models.ViewModels.CartDeliverView
+@{
+    ViewBag.Title = "Оформление";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="main-bootom">
+    <div class="turnir long-box big-box">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_cart_1" class="current">Оформление заказа</li>
+            </ul>
+        </div>
+        <div class="turnirs-wrapper">
+            <div id="tab_cart_1_content" class="edit-main-profile switcher-content clear cart">
+                <div class=" main-profile-wrapper">
+                    @using (Html.BeginForm("Process", "Cart", FormMethod.Post))
+                    {
+                        @Html.Hidden("IsCodes", Model.IsCodes)
+                        @Html.Hidden("IsReal", Model.IsReal)
+                        @Html.Hidden("IsGold", Model.IsGold)
+                        @Html.Hidden("TotalSum", Model.TotalSum)
+                        <div class="input-block top-border-none bottom-border-none">
+
+                            @if (Model.IsCodes)
+                            {
+                                <div class="input-item clear">
+                                    <div class="lable-name">
+                                        Email
+                                    </div>
+                                    <div class="input">
+                                        @Html.TextBox("Email", Model.Email)
+                                    </div>
+                                    @Html.ValidationMessage("Email")
+                                </div>
+                            }
+                            <div class="input-item clear">
+                                <div class="lable-name">
+                                    Телефон
+                                </div>
+                                <div class="input">
+                                    @Html.TextBox("Phone", Model.Phone)
+                                </div>
+                                @Html.ValidationMessage("Phone")
+                            </div>
+                            @if (Model.IsReal)
+                            {
+                                <div class="input-item clear">
+                                    <div class="lable-name">
+                                        Адрес доставки
+                                    </div>
+                                    <div class="input">
+                                        @Html.TextArea("Address", Model.Address, new { @class = "address" })
+                                    </div>
+                                    @Html.ValidationMessage("Address")
+                                </div>
+                            }
+                            <div class="input-item clear">
+                                <div class="lable-name">
+                                    Тип оплаты
+                                </div>
+                                <div class="input">
+                                    @Html.DropDownList("PaymentType", Model.PaymentTypeSelectList, new { @class = "input-xlarge" })
+                                </div>
+                            </div>
+                            <div class="input-item clear">
+                                <div class="lable-name">
+                                    Комментарий 
+                                </div>
+                                <div class="input">
+                                    @Html.TextArea("Notice", Model.Notice, new { @class = "address" })
+                                </div>
+                                @Html.ValidationMessage("Notice")
+                            </div>
+                        </div>
+                        <div class="form-button clear">
+                            <input class="gray-28-submit" type="submit" value="НАЗАД">
+                            <input class="blue-28-submit" type="submit" value="К ОПЛАТЕ (@Model.TotalSum.ToString("0,0.00") руб.)">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TestEditor</title>
+    <link href="@Url.Content("/Media/css/bbCodeEditor.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("/Media/scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/Media/scripts/default/common.js")" type="text/javascript"></script>
+    <script src="@Url.Content("/Media/scripts/jquery.bbCodeEditor.js")" type="text/javascript"></script>
+
+</head>
+<body>
+    <div>
+        @Html.TextArea("Editor", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer odio magna, vehicula ut fermentum at, scelerisque eget sem. Vivamus pellentesque sagittis tellus, vel rhoncus velit molestie ut. Sed scelerisque auctor velit, ut consectetur velit placerat sit amet. Sed eu diam eget turpis malesuada sagittis a sit amet felis. Phasellus et tristique massa. Pellentesque quis nisi dignissim lacus tincidunt cursus. Donec ultricies, dolor nec gravida sollicitudin, ipsum mi dapibus nisl, ut lobortis nisi purus non enim. Nulla quam lectus, vehicula vel ultricies ut, condimentum id nisl. Donec consectetur, justo a consequat cursus, urna purus sodales nibh, at congue mauris velit et velit. Fusce at magna sed tortor lacinia placerat. Nam auctor, velit vel vulputate auctor, nulla nisi aliquam augue, quis aliquam orci leo non sem. Suspendisse in placerat nunc. Curabitur posuere urna eget felis varius quis sagittis diam tincidunt.\n\r\n\rCurabitur vitae ligula urna. Aenean sit amet volutpat risus. Aliquam mollis sagittis lorem, vel condimentum lacus lacinia sit amet. Proin blandit euismod ullamcorper. Nam iaculis suscipit mauris. Nullam sagittis, arcu vitae consectetur tempor, lorem elit tempor justo, adipiscing posuere urna nisi vel enim. Donec nec elit odio. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce in tristique diam. Sed eu eros mauris, luctus viverra massa. Nunc vulputate magna a ligula dapibus sit amet molestie mi commodo. Mauris nisl ligula, tincidunt quis hendrerit sed, sodales suscipit mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus nec libero vel lorem hendrerit dapibus. Sed sed purus odio, at tempor sapien.\n\r\n\rQuisque et consectetur lectus. Maecenas luctus hendrerit risus suscipit tincidunt. Duis lorem leo, gravida sit amet pretium vitae, pretium vel lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc id sem ligula, non feugiat dui. Pellentesque sed purus et est semper vestibulum eget in metus. Fusce ultrices nisl in mi mollis fringilla. Aenean interdum mauris massa, quis congue justo. Duis a augue sit amet diam lacinia luctus.\n\r\n\rNullam placerat dolor ac erat euismod ac congue velit adipiscing. Maecenas elementum metus at mauris faucibus sit amet mattis leo vestibulum. Donec gravida porta magna sit amet euismod. Quisque sodales consequat rhoncus. Nulla ac est et nisi dignissim tempus ac sed risus. Proin egestas suscipit lacus, nec ullamcorper ipsum eleifend eu. Cras in semper nisi. Proin adipiscing molestie nisl eget adipiscing. Aliquam a arcu tortor, sed iaculis sem. Nunc vel molestie mi.\n\r\n\rClass aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In non arcu tortor, sed viverra augue. Nunc congue risus sit amet nibh malesuada ac convallis ligula viverra. Nam vitae ipsum at erat tristique interdum ut vel tortor. Sed dignissim, urna in venenatis rhoncus, arcu ipsum blandit elit, ut facilisis elit massa venenatis urna. Nullam non augue sapien, eget pulvinar enim. In hac habitasse platea dictumst. Quisque condimentum massa a libero dapibus non eleifend erat tristique. Mauris quis imperdiet erat. In lorem leo, auctor et mollis sed, sodales eu nunc. Curabitur dictum purus eu mauris volutpat et facilisis nisl commodo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque ac tempor eros. Nam volutpat ante eget leo hendrerit ullamcorper at a augue. Ut ac lorem justo.", new { style = "height : 400px; width : 500px;", onresize="alert('sd')"})
+    </div>
+    <script type="text/javascript">
+        $().ready(function () {
+            $("#Editor").queryBBCodeEditor();
+
+            var editor = $.data($("#Editor")[0]);
+        });
+    </script>
+</body>
+</html>

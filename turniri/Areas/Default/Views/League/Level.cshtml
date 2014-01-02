@@ -1,0 +1,12 @@
+﻿@model turniri.Model.LeagueLevel
+@{
+    var leagueSeason = Model.League.LastStartedSeason;
+}
+    <div class="left">
+        @Html.Action("Rating", "League", new { id = Model.ID, seasonId = leagueSeason.ID })
+    </div>
+    <div class="right">
+        @Html.Action("Tournaments", "League", new { id = Model.ID, seasonId = leagueSeason.ID })
+
+        @Html.Action("Matches", "League", new { id = Model.ID, seasonId = leagueSeason.ID })
+    </div>

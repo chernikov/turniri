@@ -1,0 +1,42 @@
+﻿@model turniri.Models.ViewModels.AdminMoneyDetailView
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Деньги</h3>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("ChangeMoney", "User", FormMethod.Post, new { @class = "form-horizontal", id = "ChangeMoneyForm" }))
+    {
+        @Html.Hidden("ID", Model.ID)
+        @Html.Hidden("UserID", Model.UserID)
+  
+        <fieldset>
+         <div class="control-group">
+                <label class="control-label">
+                    Тип денег</label>
+                <div class="controls">
+                    @Html.DropDownList("Type", Model.SelectListMoneyType, new { @class = "input-xlarge" })
+                </div>
+            </div>
+             <div class="control-group">
+                <label class="control-label">
+                    Сумма</label>
+                <div class="controls">
+                    @Html.TextBox("Sum", Model.Sum, new { @class = "input-xlarge" })
+                    @Html.ValidationMessage("Sum")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    Комментарий</label>
+                <div class="controls">
+                    @Html.ValidationMessage("Description")
+                    @Html.TextArea("Description", Model.Description, new { @class = "money-description" })
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+<div class="modal-footer">
+    <button id="ChangeMoneyBtn" class="btn btn-primary">Изменить</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+</div>

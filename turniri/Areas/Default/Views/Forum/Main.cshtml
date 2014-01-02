@@ -1,0 +1,66 @@
+﻿@model IEnumerable<turniri.Model.Forum>
+@{
+    ViewBag.Title = "Форум";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header {
+    <script src="/Media/scripts/default/chat.js" type="text/javascript"></script>
+}
+@Html.Partial("UserMenu", "")
+
+@Html.Action("Forum", "Chat")
+<div class="main-bootom">
+    @foreach (var forum in Model)
+    {
+        <div class="box-forum box-forum-update box">
+            <div class="top-bar">
+                <h3>
+                    @forum.Name
+                </h3>
+                <div class="bar-arrow-down sprite">
+                </div>
+            </div>
+            <div class="forum-wrapper clear">
+                <ul>
+                    @foreach (var subForum in forum.SubForums)
+                    {
+                        <li class="clear">
+                            <div class="preview-image">
+                                <img src="@subForum.FullImagePathRead(currentUser)" alt="icon" />
+                            </div>
+                            <div class="main-info">
+                                <div class="title">
+                                    <h3>
+                                        @Html.ActionLink(subForum.Name, "Index", "Forum", new { url = subForum.Url }, null)
+                                    </h3>
+                                </div>
+                                <div class="description">
+                                    @subForum.SubTitle
+                                </div>
+                                <div class="forum-info">
+                                    Темы: @subForum.SubForumsCount &nbsp;&nbsp;Сообщения: @subForum.MessagesCount
+                                </div>
+                            </div>
+                            @{
+                        var lastForumMessage = subForum.TotalLastForumMessage;
+                            }
+                            @if (lastForumMessage != null)
+                            {
+                                <div class="about-category">
+                                    Последнее: 
+                                     @Html.ActionLink(lastForumMessage.Message.StripBBCode().Teaser(20), "Index", "Forum", null, null, lastForumMessage.ID.ToString(), new { url = lastForumMessage.Forum.Url, lastMessage = true }, null)
+                                    <br />
+                                    @lastForumMessage.AddedDate.ForumDateNamed()
+                                </div>
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    <div class="box-forum box-forum-update box">
+        @Html.Action("UserOnline", "Forum")
+    </div>
+</div>

@@ -1,0 +1,13 @@
+﻿@model KeyValuePair<string, turniri.Models.ViewModels.ProductImageView>
+
+<li class="span2 ProductImageWrapper">
+    @Html.Hidden("ProductImages.index", Model.Key)
+    @Html.Hidden("ProductImages[" + Model.Key + "].Key", Model.Key)
+    @Html.Hidden("ProductImages[" + Model.Key + "].Value.Image", Model.Value.Image)
+    <div class="thumbnail normalsize">
+        <div class="remove-image">
+            <i class="icon-remove"></i>
+        </div>
+        <img src="@(Model.Value.Image)?width=200&height=200&mode=crop" />
+    </div>
+</li>

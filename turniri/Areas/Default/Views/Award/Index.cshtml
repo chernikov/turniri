@@ -1,0 +1,100 @@
+﻿@model turniri.Model.User
+@{
+    ViewBag.Title = "Достижения пользователя “" + Model.Login + "”";
+    var page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/team.js"></script>
+}
+@Html.Partial("UserMenu", Model.Login)
+<div class="main-bootom">
+    <div class="achieve-board long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>ДОСТИЖЕНИЯ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        @if (Model.AwardsCount > 0)
+        {
+            <div class="achieve-wrapper clear">
+                <div class="top-grid">
+                    <div class="prize">
+                        Награда
+                    </div>
+                    <div class="turnir-name">
+                        Название турнира
+                    </div>
+                    <div class="game">
+                        Игра
+                    </div>
+                    <div class="platform">
+                        Платформа
+                    </div>
+                    <div class="turnir-achieve">
+                        Достижение в турнире
+                    </div>
+                </div>
+                <div class="achieve-list">
+                    <ul class="clear">
+                        @{  var i = 0; }
+                        @foreach (var award in Model.AwardPage(page))
+                        {
+                            <li class="@(i % 2 == 0 ? "first" : "") clear">
+                                <div class="prize">
+
+                                    <div class="preview-image">
+                                        <img src="@award.FullIconPath" alt="avatar" title="@award.Name">
+                                    </div>
+                                    <a class="user">
+                                        @award.Name.Teaser(25)
+                                    </a>
+                                </div>
+                                <div class="turnir-name" title="@award.Tournament.Name">
+                                    @award.Tournament.Name.Teaser(25)
+                                </div>
+                                <div class="game" title="@award.Tournament.Game.Name">
+                                    @award.Tournament.Game.Name.Teaser(12)
+                                </div>
+                                <div class="platform">
+                                    @award.Tournament.Game.Platform.Name
+                                </div>
+                                <div class="turnir-achieve">
+                                    @if (award.IsSpecial)
+                                    {
+                                        @award.Name
+                                    }
+                                    else
+                                    {
+                                        <text>@award.Place-е место</text>
+                                    }
+                                    @if (award.TeamID.HasValue)
+                                    {
+                                       <text>в команде<a href="/show-team" class="user show-team" data-id="@award.TeamID"> @award.Team.Name</a></text>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="empty">Нет ни одного достижения</div>
+        }
+    </div>
+    @if (Model.AwardsCount > 0)
+    {
+        <div class="photo-paging paging light-paging">
+            <div class="title">
+                Страницы:
+            </div>
+            <div class="paging-list">
+                @Html.PageLinksTurniri(page, Model.AwardCountPage(), x => Url.Action("Index", new { page = x }))
+            </div>
+        </div>
+    }
+</div>

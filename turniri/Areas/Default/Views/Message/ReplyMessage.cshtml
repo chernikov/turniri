@@ -1,0 +1,41 @@
+﻿@model turniri.Models.ViewModels.MessageView
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@using (Html.BeginForm("ReplyMessage", "Message", FormMethod.Post, new { id = "ReplyMessageForm" }))
+{
+    @Html.Hidden("GameID", Model.GameID)
+    @Html.Hidden("MatchID", Model.MatchID)
+    @Html.Hidden("GroupID", Model.GroupID)
+    @Html.Hidden("ReceiverID", Model.ReceiverID)
+    @Html.Hidden("SubjectID", Model.SubjectID)
+    @Html.Hidden("SubjectName", Model.SubjectName)
+    <div class="title">
+        Ответить:
+    </div>
+    <div class="comment-input">
+        @Html.ValidationMessage("Text")
+        @Html.TextArea("Text", Model.Text)
+    </div>
+    <input class="blue-28-submit" type="submit" value="ОТВЕТИТЬ" id="ReplyMessageButton" />
+    if (Model.MatchID != null && Model.Subject.FirstMessage.SenderID != currentUser.ID)
+    {
+        if (Model.Match.Status == (int)turniri.Model.Match.MatchStatusEnum.Created)
+        {
+    <input class="blue-28-submit" type="submit" value="ПРИНЯТЬ" id="SubmitMatchButton" />
+    <input class="gray-28-submit" type="submit" value="ОТКЛОНИТЬ" id="CancelMatchButton" />
+            
+        }
+    }
+    if (Model.GroupID != null && Model.Subject.FirstMessage.ReceiverID == currentUser.ID)
+    {
+
+        if (currentUser.CanBeMemberOfGroup(Model.Group))
+        {
+    <input class="blue-28-submit" type="submit" value="ПРИНЯТЬ" id="SubmitGroupButton" />
+    <input class="gray-28-submit" type="submit" value="ОТКЛОНИТЬ" id="CancelGroupButton" />
+        } else {
+                <span class="error">Вы состоите в другой команде и не можете пока принять это приглашение</span>
+        }
+    }
+}

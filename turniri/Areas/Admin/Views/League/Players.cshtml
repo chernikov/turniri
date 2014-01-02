@@ -1,0 +1,66 @@
+﻿@model IList<turniri.Model.User>
+
+@{
+    var league = (turniri.Model.League)ViewBag.League;
+    ViewBag.Title = "Участники лиги " + league.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var lastSeason = league.LastSeason;
+    var beforeSeason = league.BeforeSeason;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/admin/league-players.js"></script>
+}
+
+@Html.ActionLink("← К лигам", "Index", "League", null, new { @class = "btn btn-mini" })
+
+@if (league.AnyPlayer)
+{
+    @Html.ActionLink("К Турнирам →", "Tournaments", "League", new { id = league.ID }, new { @class = "btn btn-mini" })
+}
+
+
+<h2>Участники лиги @league.Name</h2>
+
+@Html.Hidden("SeasonID", lastSeason.ID)
+
+@if (lastSeason != null && beforeSeason != null && lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Created)
+{
+    @Html.ActionLink("Заполнить сезон автоматически", "FillSeason", "League", new { id = lastSeason.ID }, new { @class = "btn btn-primary" })
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Участник
+            </th>
+            <th>
+                Уровень
+            </th>
+            @if (lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.FinishedMainTour ||
+                lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Finished)
+            {
+                <th>
+                    Место
+                </th>
+            }
+            else
+            {
+                <th>
+                    Турнир
+                </th>
+            }
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr class="player-row" id="PlayerRow_@item.ID">
+            @Html.Partial("PlayerRow", item)
+        </tr>
+    }
+</table>

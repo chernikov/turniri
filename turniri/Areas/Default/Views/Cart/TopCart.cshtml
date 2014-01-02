@@ -1,0 +1,13 @@
+﻿@model turniri.Model.Cart
+
+
+    <div class="sprite icon-cart"></div>
+       
+    <a href="@Url.Action("Index", "Cart")">
+    @if (Model.IsEmpty)
+    {
+        <text>Корзина пуста</text>
+    } else {
+        <text>@Model.Count @Model.Count.CountWord("товар", "товара", "товаров") на сумму @Model.TotalSum.ToString("0,0.00") руб.</text>
+    }
+    </a>

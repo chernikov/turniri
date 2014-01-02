@@ -1,0 +1,37 @@
+﻿.box-new .switcher li {
+	padding: 0 9px 0 8px;
+}
+
+.box-stat .switcher li {
+	padding: 0 17px 0 18px;
+}
+
+.box-tur .switcher li {
+	padding: 0 12px;
+}
+
+.box-tur .switcher li:last-child {
+	padding: 0 14px 0 15px;
+}
+
+.box-newest .switcher li {
+	padding: 0 18px 0 19px;
+}
+
+.gamers-rating .gamers-list .gamers-scroll li {
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C4C4C 77%, endColorstr=#3D3D3D 93%, GradientType=1)";
+	background : #4c4c4c;
+}
+
+.gamers-rating .gamers-list .gamers-scroll li.second {
+	background : #3D3D3D;
+}
+
+.big-box .turnirs-wrapper .turnirs-list li.second {
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C4C4C 77%, endColorstr=#3D3D3D 93%, GradientType=1)";
+	background : #4c4c4c;
+}
+
+.long-box .turnirs-wrapper .turnirs-list li.second {
+	background : #4c4c4c;
+}

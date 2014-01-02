@@ -1,0 +1,62 @@
+﻿@model turniri.Model.League
+
+@{
+    ViewBag.Title = "Лига " + Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var leagueSeason = Model.LastStartedSeason;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/team.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/league.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/match.js"></script>
+}
+@Html.Action("Menu", "Game", new { id = Model.GameID })
+
+<div class="league-wrapper">
+    <div class="season-image"><img src="@leagueSeason.Image?width=930&height=300&mode=crop" /></div>
+    <div class="info">
+        <h1>@leagueSeason.Name</h1>
+        <div class="dates">
+            @leagueSeason.StartDate.ToString("dd MMMM yyyy") &mdash; @leagueSeason.EndDate.ToString("dd MMMM yyyy")
+        </div>
+    </div>
+</div>
+<div class="league">
+    @if (Model.SubLevelsWithPlayers.Any() && leagueSeason != null)
+    {
+        <div class="turnir long-box big-box">
+            <div class="psiswitcher clear">
+                <ul>
+                    @foreach (var level in Model.SubLevelsWithPlayers)
+                    {
+                        
+                        <li class="levelContentSwitch @(currentUser != null && currentUser.GetLeagueLevelPart(level, leagueSeason) ? "in-level" : "")" data-id="@level.ID">@level.Name</li>
+                    }
+                </ul>
+            </div>
+            <div class="turnirs-wrapper" id="LeagueWrapper">
+                @Html.Action("Level", "League", new { id = Model.SubLevelsWithPlayers.First().ID })
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="main-bootom">
+            <div class="howtoplay long-gamers-rating gamers-rating">
+                <div class="top-bar">
+                    <h3>
+                        ЛИГА НЕ ДООФОРМЛЕНА
+                    </h3>
+                    <div class="bar-arrow-down sprite">
+                    </div>
+                </div>
+                <div class="text">
+                    Лига не дооформлена
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

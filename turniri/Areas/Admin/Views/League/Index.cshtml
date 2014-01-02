@@ -1,0 +1,92 @@
+@model IEnumerable<turniri.Model.League>
+
+@{
+    ViewBag.Title = "Лиги";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Лиги
+</h2>
+@Html.ActionLink("Создать", "Create", "League", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID
+            </th>
+            <th>Игра
+            </th>
+            <th>Наименование
+            </th>
+            <th>Уровни
+            </th>
+            <th>Сезон
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Game.Name @item.Game.Platform.Name
+            </td>
+            <td>
+                <img src="@item.Image?width=32&height=32&mode=crop" alt=""/>
+                @item.Name
+            </td>
+            <td>
+                @foreach (var level in item.SubLevels)
+                {
+                    <span class="label label-info">@level.Name</span>
+                }
+            </td>
+            <td>
+                @if (item.LastSeason != null)
+                {
+                    <span class="label label-info">@item.LastSeason.Name</span>
+                }
+            </td>
+            <td>
+                <div class="btn-group pull-right">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Действия<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Html.ActionLink("Уровни", "Levels", "League", new { id = item.ID }, new { @class = "" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Сезоны", "Seasons", "League", new { id = item.ID }, new { @class = "" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Изменить", "Edit", "League", new { id = item.ID }, new { @class = "" })
+                        </li>
+                        @if (item.LastSeason != null && item.AnyLevel)
+                        {
+                            <li>
+                                @if (item.IsGroup)
+                                {
+                                    @Html.ActionLink("Группы", "Groups", "League", new { id = item.ID }, new { @class = "" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Участники", "Players", "League", new { id = item.ID }, new { @class = "" })
+                                }
+                            </li>
+                            if (item.AnyPlayer)
+                            {
+                                <li>
+                                    @Html.ActionLink("Турниры", "Tournaments", "League", new { id = item.ID }, new { @class = "" })
+                                </li>
+                            }
+                        }
+                        <li>
+                            @Html.ActionLink("Удалить", "Delete", "League", new { id = item.ID }, new { @class = "delete-action" })
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

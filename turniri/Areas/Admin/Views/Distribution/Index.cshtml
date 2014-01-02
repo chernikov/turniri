@@ -1,0 +1,63 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Distribution>
+@{
+    ViewBag.Title = "Рассылки";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Рассылки</h2>
+
+@Html.ActionLink("Создать", "Create", "Distribution", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Автор
+            </th>
+            <th>Название
+            </th>
+            <th>Дата добавления
+            </th>
+            <th>Кол-во 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.User.Login
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.AddedDate.ToString("dd.MM.yyyy")
+            </td>
+            <td>
+                @item.CountDeliveredMails&nbsp;/&nbsp;@item.CountMails
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Distribution", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Distribution", new { id = item.ID }, new { @class = "btn btn-danger" })
+                @if (item.AnyMails && !item.IsStart)
+                { 
+                    @Html.ActionLink("Старт!", "Start", "Distribution", new { id = item.ID }, new { @class = "btn btn-primary" })
+                }
+                @if (item.AnyMails)
+                {
+                    @Html.ActionLink("Очистить", "ClearAll", "Subscriber", new { id = item.ID }, new { @class = "btn" })
+                }
+                @Html.ActionLink("Подписчики", "Index", "Subscriber", new { id = item.ID }, new { @class = "btn" })
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>

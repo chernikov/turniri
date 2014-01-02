@@ -1,0 +1,44 @@
+﻿@model turniri.Model.Game
+@if (Model.SubTournaments.Any())
+{
+    <div class="main-bootom">
+        <div class="big-box turnirs">
+            <div class="switcher clear">
+                <ul>
+                    @if (Model.SubFutureTournaments.Any())
+                    {
+                        <li id="tab_turnir_1">Предстоящие турниры</li>
+                    }
+                    @if (Model.SubPlaingTournaments.Any())
+                    {
+                        <li id="tab_turnir_2">Текущие турниры</li>
+                    }
+                    @if (Model.SubPlayedOutTournaments.Any())
+                    {
+                        <li id="tab_turnir_3">Завершенные турниры</li>
+                    }
+                </ul>
+            </div>
+            <div class="turnirs-wrapper">
+                @if (Model.SubFutureTournaments.Any())
+                {
+                    <div id="tab_turnir_1_content" class="switcher-content">
+                        @Html.Action("PartialTournamentsList", "Game", new { id = Model.ID, type = 1 })
+                    </div>
+                }
+                @if (Model.SubPlaingTournaments.Any())
+                {
+                    <div id="tab_turnir_2_content" class="switcher-content">
+                        @Html.Action("PartialTournamentsList", "Game", new { id = Model.ID, type = 2 })
+                    </div>
+                }
+                @if (Model.SubPlayedOutTournaments.Any())
+                {
+                    <div id="tab_turnir_3_content" class="switcher-content">
+                        @Html.Action("PartialTournamentsList", "Game", new { id = Model.ID, type = 3 })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

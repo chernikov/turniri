@@ -1,0 +1,64 @@
+﻿@model turniri.Model.Tournament
+@if (Model.SpecialAwards.Any())
+{
+    <div class="turnir-competitors turnir-winners gamers-rating">
+        <div class="top-bar">
+            <h3>Участники
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="gamers-list clear">
+            <div class="top-grid">
+                <div class="name">
+                    ИМЯ
+                </div>
+                <div class="progress">
+                    ДОСТИЖЕНИЯ В ТУРНИРЕ
+                </div>
+                <div class="score">
+                    ЗАРАБОТАННЫЕ ОЧКИ
+                </div>
+                <div class="prize">
+                    СПЕЦИАЛЬНЫЙ ПРИЗ
+                </div>
+            </div>
+            <div class="gamers-scroll">
+                <ul class="clear">
+                    @foreach (var award in Model.SpecialAwards)
+                    {
+                        <li>
+                            <div class="name">
+                                <div class="preview-image">
+                                    <a href="@Url.Action("Index", "User", new { login = award.Player.User.Login })">
+                                        <img src="@award.Player.FullImagePath30" alt="preview" title=" @award.Player.User.Login"/>
+                                    </a>
+                                    @if (award.Player.User.IsOnline)
+                                    {
+                                        <div class="dot"></div>
+                                    }
+                                </div>
+                                <div class="text">
+                                    <a href="@Url.Action("Index", "User", new { login = award.Player.User.Login })" class="user">
+                                        @award.User.Login
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="progress">
+                                @award.Name
+                            </div>
+                            <div class="score">
+                                @award.Point
+                            </div>
+                            <div class="prize">
+                                <div class="preview-image">
+                                    <img src="@award.FullIconPath" alt="preview" title="@award.Description" />
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

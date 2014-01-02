@@ -1,0 +1,39 @@
+﻿@model turniri.Models.ViewModels.GroupView
+@{
+    var controllerName = ViewContext.RequestContext.RouteData.Values["controller"] as string;
+    var actionName = ViewContext.RequestContext.RouteData.Values["action"] as string;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+@if (currentUser != null && currentUser.ID == Model.UserID && Model.ID != 0)
+{
+    <div class="controll-box box-forum-update box">
+        <div class="top-bar">
+            <h3>КОНТРОЛЬНАЯ ПАНЕЛЬ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="box-wrapper box-wrapper-scroll group">
+            <div class="content">
+                @if (Model.ID != 0) {
+                    @Html.Action("InvoiceControlPart", "Group", new {id = Model.ID})        
+                }
+                <div class="buttons-wrapper">
+                    <div class="gray-28-button-wrapper @((controllerName == "Group" && actionName == "Edit") ? "gray-28-button-active-wrapper" : "")">
+                        @Html.ActionLink("Ред. команду", "Edit", "Group", new { id = Model.ID }, null)
+                    </div>
+                    <div class="gray-28-button-wrapper">
+                        @Html.ActionLink("Профиль", "Item", "Group", new { url = Model.Url }, null)
+                    </div>
+                    <div class="gray-28-button-wrapper">
+                        @Html.ActionLink("Участники", "Roster", "Group", new { url = Model.Url }, null)
+                    </div>
+                    <div class="gray-28-button-wrapper">
+                        @Html.ActionLink("Мои команды", "Group", "User")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

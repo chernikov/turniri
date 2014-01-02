@@ -1,0 +1,15 @@
+﻿@model turniri.Model.User
+
+@for (int i = 0; i < 5; i++)
+{
+    if (i < Model.Reputation)
+    {
+    <div class="icon-star-shine sprite">
+    </div>
+    }
+    else
+    {
+    <div class="icon-star-dark sprite">
+    </div>
+    }
+}

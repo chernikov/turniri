@@ -1,0 +1,86 @@
+﻿@model turniri.Model.Match
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="title">
+        ИГРА
+    </div>
+<div class="score-wrapper clear">
+    @if (Model.IsAdmin(currentUser) && Model.Tournament != null && Model.Tournament.Status != (int)turniri.Model.Tournament.StatusEnum.PlayedOut)
+    {
+        <div class="button-rollback-wrapper">
+             <div class="gray-16-button-wrapper rollback-match left-float" data-id="@Model.ID"><span>Переиграть</span></div>
+        </div>
+    }
+    <div class="score-left">
+        @if (Model.Player1 != null)
+        {
+            <div class="preview-image">
+                <a href="@Url.Action("Index", "User", new { login = Model.Player1.User.Login })">
+                    <img src="@Model.Player1.FullImagePath30" alt="preview" title="@Model.Player1.User.Login" />
+                </a>
+                @if (Model.Player1.User.IsOnline)
+                {
+                    <div class="dot"></div>
+                }
+            </div>
+            <div class="name">
+                @Html.ActionLink(Model.Player1.User.Login, "Index", "User", new { login = Model.Player1.User.Login }, null)
+            </div>
+        }
+        else
+        {
+            <div class="preview-image">
+                <img src="/Media/images/default_avatar_30.png" alt="preview" />
+            </div>
+            <div class="name">
+                <span>Нет участника</span>
+            </div>
+        }
+    </div>
+    <div class="score-center">
+        <div class="date">
+            @if (Model.PublishedDate.HasValue)
+            {
+                @Model.PublishedDate.Value.ToString("dd.MM.yyyy")
+            } else {
+                <text>&nbsp;</text>
+            }
+           
+        </div>
+        <div class="score">
+            @Model.Score1View 
+            <span class="tech">Тх</span>
+            : @Model.Score2View
+            <span class="tech">Тх</span>
+        </div>
+    </div>
+    <div class="score-right">
+        @if (Model.Player2 != null)
+        {
+            <div class="preview-image">
+                <a href="@Url.Action("Index", "User", new { login = Model.Player2.User.Login })">
+                    <img src="@Model.Player2.FullImagePath30" alt="preview" title="@Model.Player2.User.Login"/>
+                </a>
+                @if (Model.Player2.User.IsOnline)
+                {
+                    <div class="dot"></div>
+                }
+            </div>
+            <div class="name">
+                @Html.ActionLink(Model.Player2.User.Login, "Index", "User", new { login = Model.Player2.User.Login }, null)
+          
+            </div>
+        }
+        else
+        {
+            <div class="preview-image">
+                <img src="/Media/images/default_avatar_30.png" alt="preview"  />
+            </div>
+            <div class="name">
+                <span>Нет участника</span>
+            </div>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,25 @@
+﻿@model turniri.Model.Game
+<div class="main-top clear">
+    <div class="menu">
+        <ul>
+            <li><a href="@Url.Action("Index", "Game", new { platformUrl = Model.Platform.Url, url = Model.Url })">ГЛАВНАЯ</a></li>
+            @if (Model.AnyLeague)
+            {
+                <li><a href="@Url.Action("League", "Game", new { platformUrl = Model.Platform.Url, url = Model.Url })">ЛИГА</a></li>
+            }
+
+            <li><a href="@Url.Action("Tournaments", "Game", new { platformUrl = Model.Platform.Url, url = Model.Url })">ТУРНИРЫ</a></li>
+            <li><a href="@Url.Action("Gamers", "Game", new {platformUrl = Model.Platform.Url, url = Model.Url})">ИГРОКИ</a></li>
+            <li><a href="@Url.Action("Group", "Game", new { platformUrl = Model.Platform.Url, url = Model.Url })">КОМАНДЫ</a></li>
+            @if (Model.ForumID != null)
+            {
+                <li><a href="@Url.Action("Index", "Forum", new { url = Model.Forum.Url })">ФОРУМ</a></li>
+            }
+            <li><a href="@Url.Action("Achieve", "Game", new { platformUrl = Model.Platform.Url, url = Model.Url })">ДОСТИЖЕНИЯ</a></li>
+           
+        </ul>
+    </div>
+    <div class="game">
+         @Model.Name
+    </div>
+</div>

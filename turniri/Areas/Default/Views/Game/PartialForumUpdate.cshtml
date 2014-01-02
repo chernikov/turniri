@@ -1,0 +1,28 @@
+﻿@model turniri.Model.Game
+
+<div class="box-forum-update box">
+    <div class="top-bar">
+        <h3>Обновления на форуме @Model.Name
+        </h3>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="box-wrapper box-wrapper-scroll">
+        <div class="content  scroll-wrapper">
+            <div class="scroll-pane">
+                <ul class="forum-update-list">
+                    @foreach (var topic in Model.Forum.Topics)
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Forum", new { url = topic.Url })">
+                                @topic.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-gradient">
+        </div>
+    </div>
+</div>

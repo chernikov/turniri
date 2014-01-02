@@ -1,0 +1,106 @@
+﻿@model turniri.Model.Cart
+
+<div class="cart">
+    @if (!Model.IsEmpty)
+    {
+        <div class="product-list clear">
+            <div class="top-grid">
+                <div class="number">
+                    №
+                </div>
+                <div class="name">
+                    НАИМЕНОВАНИЕ
+                </div>
+                <div class="price">
+                    ЦЕНА
+                </div>
+                <div class="quantity">
+                    КОЛИЧЕСТВО
+                </div>
+                <div class="sum">
+                    СУММА
+                </div>
+            </div>
+            <ul class="content">
+                @{
+        var i = 1;
+                }
+                @foreach (var item in Model.SubCartProducts)
+                {
+                    <li class="clear">
+                        <div class="number">
+                            @i
+                        </div>
+                        <div class="name">
+                            <div class="preview-image">
+                                <a href="@Url.Action("Index", "Product", new { path = item.Product.Url })">
+                                    @if (item.ProductVariationID.HasValue)
+                                    {
+                                        <img src="@item.ProductVariation.Image?width=22&height=22&mode=crop" alt="avatar" title="@item.Product.Name" />
+                                    }
+                                    else
+                                    {
+                                        <img src="@item.Product.Image?width=22&height=22&mode=crop" alt="avatar" title="@item.Product.Name" />
+                                    }
+                                </a>
+                            </div>
+                            <a href="@Url.Action("Index", "Product", new { path = item.Product.Url })" class="user">
+                                <span>@item.Product.Name</span>
+                                @if (item.ProductPrice.Preorder)
+                                {
+                                    <small>предзаказ</small>
+                                }
+                            </a>
+                        </div>
+                        <div class="price">
+                            @item.ProductPrice.Price.ToString("0,0.00") руб.
+                        </div>
+                        <div class="quantity">
+                            <input type="text" value="@item.Quantity" class="input-quantity" data-id="@item.ID" />
+                        </div>
+                        <div class="sum">
+                            @((item.ProductPrice.Price * item.Quantity).ToString("0,0.00")) руб.
+                        </div>
+                        <div class="act">
+                            <div class="remove-game" data-id="@item.ID">
+                                <span class="sprite icon-close-image"></span>
+                                <span class="btn-name">Удалить</span>
+                            </div>
+                        </div>
+                    </li>
+                                i++;
+                }
+                <li class="clear total">
+                    <div class="number">
+                    </div>
+                    <div class="name">
+                        <div class="user">ИТОГО</div>
+                    </div>
+                    <div class="price">
+                    </div>
+                    <div class="quantity">
+                    </div>
+                    <div class="sum">
+                        @Model.TotalSum.ToString("0,0.00") руб.
+                    </div>
+                </li>
+            </ul>
+        </div>
+                if (Model.HasPreorder)
+                {
+        <div class="preorder-info clear">
+            В корзине имеются товары для предзаказа, они будут высланы в течении 24 часов
+        </div>
+                }
+        <div class="form-button clear">
+            <input class="blue-28-submit" type="submit" value="ОФОРМИТЬ" id="NextStep">
+            <input class="gray-28-submit" type="submit" value="ОЧИСТИТЬ" id="ClearCartBtn">
+        </div>
+    }
+    else
+    {
+        <div class="empty-cart">
+            <h2>Корзина пуста</h2>
+        </div>
+    }
+</div>

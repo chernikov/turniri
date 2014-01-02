@@ -1,0 +1,39 @@
+﻿@model turniri.Models.Info.BothTexts
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AllTexts</title>
+</head>
+<body>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Html</td>
+                     <td>Html Again</td>
+                    <td>BbCode</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Model.HtmlText
+                    </td>
+                    <td>
+                        @Model.BbCodeText.BBCodeToHTML()
+                    </td>
+                    <td>
+                        @Model.BbCodeText.NlToBr()
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

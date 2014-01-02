@@ -1,0 +1,186 @@
+﻿@model turniri.Model.Product
+
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/cart.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/product-item.js"></script>
+}
+<div id="gallery_popup" class="popup-image-wrapper clear" style="display: none">
+    <div class="icon-close-popup sprite"></div>
+    <div id="PhotoWrapper">
+    </div>
+</div>
+<div id="video_popup" class="popup-video-wrapper" style="display: none">
+    <div class="icon-close-popup sprite">
+    </div>
+    <div class="video">
+    </div>
+</div>
+<div class="shop">
+    <div class="product clear">
+        <div class="clear">
+            <div class="left-info">
+                <div class="game-image">
+                    <img src="@Model.Image?width=250&scale=both" alt="preview" />
+                    @if (Model.AgeRestrict.HasValue)
+                    {
+                        <div class="age-restrict level@(Model.AgeRestrict.Value)"></div>
+                    }
+                </div>
+                <ul class="additional-info">
+                    @if (Model.SubCatalogs.Any())
+                    {
+                        <li><span class="title">Жанр</span> : @Model.SubCatalogsList</li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Creator))
+                    {
+                        <li><span class="title">Разработчик</span> : @Model.Creator</li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Publisher))
+                    {
+                        <li><span class="title">Издатель</span> : @Model.Publisher</li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.RussianPublisher))
+                    {
+                        <li><span class="title">Издатель в России</span> : @Model.RussianPublisher</li>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Language))
+                    {
+                        <li><span class="title">Языки</span> : @Model.Language</li>
+                    }
+                    @if (Model.ReleaseDate.HasValue)
+                    {
+                        <li><span class="title">Дата релиза</span> : @Model.ReleaseDate.Value.ToString("dd MMMM yyyy")
+                        </li>
+                    }
+                </ul>
+                @if (Model.SubProductImages.Any())
+                {
+                    <div class="screenshots-title">
+                        Скриншоты:
+                    </div>
+                    <ul class="screenshots">
+                        @foreach (var screenShot in Model.SubProductImages)
+                        {
+                            <li>
+                                <img src="@screenShot.Image?width=230&scale=both" alt="" class="image-item" data-id="@screenShot.ID"/>
+                            </li>
+                        }
+                    </ul>
+                }
+                @if (Model.SubProductVideos.Any())
+                {
+                    <div class="video-title">
+                        Видео:
+                    </div>
+                    <ul class="videos">
+                        @foreach (var video in Model.SubProductVideos)
+                        {
+                            <li data-id="@video.ID">
+                                <img src="@video.VideoThumb?width=230&scale=both" alt="" />
+                                <div class="icon-play-video sprite"></div>
+                            </li>
+                        }
+                    </ul>
+                }
+                @Html.Action("AlsoProduct", "Product", new { id = Model.ID })
+            </div>
+            <div class="content">
+                <div class="title">
+                    <h2>@Model.Name
+                    </h2>
+                </div>
+                <div class="clear"></div>
+
+
+                @if (Model.SubProductVariations.Any())
+                {
+                    <ul class="variations">
+                        <li>
+                            <img src="@Model.Image?height=200&width=300&mode=crop" />
+                            <div class="btn">
+                                <input class="blue-28-submit buy" type="submit" value="@(Model.ProductPrice.HasUnselledCodes ? "КУПИТЬ" : "КУПИТЬ" /*"ПРЕДЗАКАЗАТЬ"*/)" data-id="@Model.ProductPrice.ID" />
+                                @Model.ProductPrice.Price.ToString("0,0.00") руб.
+                            </div>
+                        </li>
+                        @foreach (var productVariation in Model.SubProductVariations)
+                        {
+                            <li>
+                                <img src="@productVariation.Image?height=200&width=300&mode=crop" />
+                                <div class="btn">
+                                    <input class="blue-28-submit buy" type="submit" value="@(productVariation.HasUselled ? "КУПИТЬ" : "КУПИТЬ" /*"ПРЕДЗАКАЗАТЬ"*/)" data-id="@productVariation.Product.ProductPrice.ID"  data-variation="@productVariation.ID"/>
+                                    @productVariation.Product.ProductPrice.Price.ToString("0,0.00") руб.
+                                </div>
+                            </li>       
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <ul class="prices">
+                        @foreach (var priceProduct in Model.SubProductPrices)
+                        {
+                            <li class="@(priceProduct.Preorder ? "preorder" : "")">
+                                @if (priceProduct.PlatformID.HasValue)
+                                {
+                                    <span class="platform">
+                                        @priceProduct.Platform.Name
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="platform">&nbsp;</span>
+                                }
+                                @if (priceProduct.OldPrice.HasValue)
+                                {
+                                    <span class="old-price">
+                                        @priceProduct.OldPrice.Value.ToString("0,0.00") руб.
+                                    </span>
+                                } else {
+                                    <span class="old-price empty">&nbsp;</span>
+                                }
+                                <span class="price">
+                                    @priceProduct.Price.ToString("0,0.00") руб.
+                                </span>
+                                <span class="button">
+                                    <input class="blue-28-submit buy" type="submit" value="@(priceProduct.IsPreorder ? "ПРЕДЗАКАЗАТЬ" : "КУПИТЬ")" data-id="@priceProduct.ID" />
+
+                                </span>
+                            </li>       
+                        }
+                    </ul>
+                }
+            </div>
+            <div class="left">
+                @if (!string.IsNullOrWhiteSpace(Model.SystemRequirements))
+                {
+                    <div class="requirement">
+                        <div class="title">Системные требования</div>
+
+                        @Html.Raw(Model.SystemRequirements.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                    </div>
+                }
+                @if (Model.VendorID.HasValue)
+                {
+                    <div class="activation">
+                        <div class="title">Правила активации</div>
+
+                        @Html.Raw(Model.Vendor.Text.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Description))
+                {
+                    <div class="text">
+                        <div class="title">Описание</div>
+                        @Html.Raw(Model.Description.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

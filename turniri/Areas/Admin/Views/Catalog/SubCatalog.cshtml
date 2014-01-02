@@ -1,0 +1,27 @@
+﻿@model turniri.Model.Catalog
+
+<div class="sub-catalog catalogList">
+    @foreach (var item in Model.SubCatalogs.OrderBy(p => p.OrderBy))
+    { 
+        <div class="item catalogItem" data-id="@item.ID">
+            @if (item.SubCatalogs.Any())
+            {
+                <a class="open" href="@Url.Action("Index", "Catalog", new { id = item.ID})"></a>
+            }
+            <div class="subCatalogItem">
+            </div>
+            <div class="title">
+                @item.Name
+            </div>
+            <div class="actions">
+                @Html.ActionLink("Добавить", "Create", "Catalog", new { id = item.ID }, new { @class = "btn  btn-mini" })
+                @Html.ActionLink("Изменить", "Edit", "Catalog", new { id = item.ID }, new { @class = "btn  btn-mini" })
+                @Html.ActionLink("Удалить", "Delete", "Catalog", new { id = item.ID }, new { @class = "btn  btn-mini btn-danger" })
+            </div>
+            <div class="sub-wrapper">
+                @Html.Partial("SubCatalog", item)
+            </div>
+        </div>
+       
+    }
+</div>

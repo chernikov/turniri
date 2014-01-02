@@ -1,0 +1,28 @@
+﻿@model turniri.Models.ViewModels.CatalogView
+@{
+    ViewBag.Title = Model.ID == 0 ? "Добавить жанр" : "Изменить жанр";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    @(Model.ID == 0 ? "Добавить жанр" : "Изменить жанр")
+</h2>
+<p>
+</p>
+@using (Html.BeginForm("Edit", "Catalog", FormMethod.Post))
+{
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">
+                Наименование</label>
+            <div class="controls">
+                @Html.TextBox("Name", Model.Name, new { @class = "input-xlarge" })
+                @Html.ValidationMessage("Name")
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Сохранить</button>
+            @Html.ActionLink("Отменить", "Index", null, null, new { @class = "btn" })
+        </div>
+    </fieldset>
+}

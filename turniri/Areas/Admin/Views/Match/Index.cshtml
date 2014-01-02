@@ -1,0 +1,53 @@
+﻿@model IEnumerable<turniri.Model.Round>
+@{
+    ViewBag.Title = "Оспоренные матчи";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Оспоренные матчи</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Турнир
+            </th>
+            <th>
+                Матч
+            </th>
+            <th>
+                Игрок 1
+            </th>
+            <th>
+                Игрок 2
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @(item.Match.Tournament != null ? item.Match.Tournament.Name : "--")
+            </td>
+            <td>
+                @item.Match.Name
+            </td>
+            <td>
+                @item.Player1.User.Login
+            </td>
+            <td>
+                @item.Player2.User.Login
+            </td>
+            <td>
+                @Html.ActionLink("Разрешить", "Edit", "Match", new { id = item.ID }, new { @class = "btn" })
+            </td>
+        </tr>
+    }
+</table>

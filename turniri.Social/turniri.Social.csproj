@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1D3422D3-EFF0-4795-8488-453817E09D91}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>turniri.Social</RootNamespace>
+    <AssemblyName>turniri.Social</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.0.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.2.0.1.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Twitterizer2, Version=2.4.2.22634, Culture=neutral, PublicKeyToken=69d1469eac671567, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>needed\Twitterizer\Twitterizer2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Facebook\FbUserInfo.cs" />
+    <Compile Include="Facebook\FbProvider.cs" />
+    <Compile Include="Facebook\FbAccessToken.cs" />
+    <Compile Include="Facebook\IFbAppConfig.cs" />
+    <Compile Include="Google\GoogleAccessTokenInfo.cs" />
+    <Compile Include="Google\GoogleProvider.cs" />
+    <Compile Include="Google\GoogleUserInfo.cs" />
+    <Compile Include="Google\IGoogleAppConfig.cs" />
+    <Compile Include="ISocialPost.cs" />
+    <Compile Include="Twitter\TwitterProvider.cs" />
+    <Compile Include="Twitter\ITwitterAppConfig.cs" />
+    <Compile Include="Twitter\TwitterAccessToken.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Twitter\TwitterUserInfo.cs" />
+    <Compile Include="Vkontakte\IVkAppConfig.cs" />
+    <Compile Include="Vkontakte\VkAccessToken.cs" />
+    <Compile Include="Vkontakte\VkGroupResponse.cs" />
+    <Compile Include="Vkontakte\VkPhotoUploadServerResponse.cs" />
+    <Compile Include="Vkontakte\VkProvider.cs" />
+    <Compile Include="Vkontakte\VkSavePhotoWallResponse.cs" />
+    <Compile Include="Vkontakte\VkUploadPhotoResponse.cs" />
+    <Compile Include="Vkontakte\VkUserInfoResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UploadHelper\UploadHelper.csproj">
+      <Project>{02fbd52c-b997-4d18-9e2c-81b5ae8efb30}</Project>
+      <Name>UploadHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="needed\Twitterizer\Twitterizer2.dll" />
+    <Content Include="needed\Twitterizer\Twitterizer2.pdb" />
+    <Content Include="needed\Twitterizer\Twitterizer2.XML" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

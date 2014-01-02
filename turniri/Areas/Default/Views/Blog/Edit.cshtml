@@ -1,0 +1,80 @@
+﻿@model turniri.Models.ViewModels.BlogView
+
+@{
+    ViewBag.Title = "ДОБАВИТЬ ЗАПИСЬ";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/edit-blog.js"></script>
+}
+@Html.Partial("UserMenu", "")
+<div class="main-bootom">
+    <div class="box-registration box-forum-update box">
+        <div class="top-bar">
+            <h3>ДОБАВИТЬ ЗАПИСЬ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="registration-wrapper clear">
+            @using (Html.BeginForm("Edit", "Blog", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                
+                @Html.Hidden("ID", Model.ID)
+                @Html.Hidden("UserID", Model.UserID)
+                @Html.Hidden("PreviewUrl", Model.PreviewUrl)
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Заголовок*
+                    </div>
+                    <div class="input">
+                        @Html.TextBox("Header", Model.Header)
+                    </div>
+                    @Html.ValidationMessage("Header")
+                </div>
+                if (currentUser.HasAnyGroup)
+                {
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Группа
+                    </div>
+                    <div class="input">
+                        @Html.DropDownList("GroupID", Model.SelectListGroups, new { @class = "input-xlarge" })
+                    </div>
+                </div>
+                }
+                <div class="input-block bottom-border-none">
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Превью картинка
+                        </div>
+                        <div class="input-image">
+                            <img src="@Model.FullPreviewUrl" alt="avatar" id="PreviewImage" />
+                            <div class="userpic-action" id="DeletePreview">
+                                удалить
+                            </div>
+                            <div class="userpic-action" id="ChangePreview">
+                                загрузить
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Текст *
+                    </div>
+                    <div class="input">
+                        @Html.TextArea("Text", Model.Text)
+                    </div>
+                    @Html.ValidationMessage("Text")
+                </div>
+                <div class="registration-button">
+                    <input class="blue-28-submit" type="submit" value="НАПИСАТЬ" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

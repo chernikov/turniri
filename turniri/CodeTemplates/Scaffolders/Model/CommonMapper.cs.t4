@@ -1,0 +1,36 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="EnvDTE" #>
+<#@ Output Extension="cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using AutoMapper;
+using <#= Model.Namespace #>.Model;
+using <#= Model.Namespace #>.Models.ViewModels;
+
+<# 
+    var modelType = (EnvDTE.CodeType)Model.ModelType; 
+	var modelName = modelType.Name; 
+    var classes = modelType.VisibleMembers().OfType<CodeType>();
+#>
+
+namespace <#= Model.Namespace #>.Mappers
+{
+    public class CommonMapper : IMapper
+    {
+        static CommonMapper()
+        {
+<# foreach(var item in classes) { #>
+            <#= modelName #>.<#= item.Name #>.Init();
+<# } #>
+        }
+
+        public object Map(object source, Type sourceType, Type destinationType)
+        {
+            return Mapper.Map(source, sourceType, destinationType);
+        }
+    }
+}

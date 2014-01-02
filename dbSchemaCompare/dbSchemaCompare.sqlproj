@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>dbSchemaCompare</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{678cf893-9e1d-482d-b579-a3cb0467ff1e}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>dbSchemaCompare</RootNamespace>
+    <AssemblyName>dbSchemaCompare</AssemblyName>
+    <ModelCollation>1049,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>Cyrillic_General_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- Default to the v10.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\ProductCode_1.sql" />
+    <Build Include="dbo\Tables\BlogComment_1.sql" />
+    <Build Include="dbo\Tables\Comment_1.sql" />
+    <Build Include="dbo\Tables\ChatRoomLog_1.sql" />
+    <Build Include="dbo\Tables\ProductVariation_1.sql" />
+    <Build Include="dbo\Tables\ForumMessage_1.sql" />
+    <Build Include="dbo\Tables\PromoAction_1.sql" />
+    <Build Include="dbo\Tables\PromoCode_1.sql" />
+    <Build Include="dbo\Tables\Friendship_1.sql" />
+    <Build Include="dbo\Tables\Grade_1.sql" />
+    <Build Include="dbo\Tables\UserGroup_1.sql" />
+    <Build Include="dbo\Tables\Tournament_1.sql" />
+    <Build Include="dbo\Tables\NewComment_1.sql" />
+    <Build Include="dbo\Tables\NewType_1.sql" />
+    <Build Include="dbo\Tables\UserRoleGroup_1.sql" />
+    <Build Include="dbo\Tables\Page_1.sql" />
+    <Build Include="dbo\Tables\Photo_1.sql" />
+    <Build Include="dbo\Tables\PhotoComment_1.sql" />
+    <Build Include="dbo\Tables\Platform_1.sql" />
+    <Build Include="dbo\Tables\Rating_1.sql" />
+    <Build Include="dbo\Tables\Award_1.sql" />
+    <Build Include="dbo\Tables\Blog_1.sql" />
+    <Build Include="dbo\Tables\Reputation_1.sql" />
+    <Build Include="dbo\Tables\Role_1.sql" />
+    <Build Include="dbo\Tables\Forum_1.sql" />
+    <Build Include="dbo\Tables\Round_1.sql" />
+    <Build Include="dbo\Tables\Game_1.sql" />
+    <Build Include="dbo\Tables\League_1.sql" />
+    <Build Include="dbo\Tables\Subject_1.sql" />
+    <Build Include="dbo\Tables\MatchComment_1.sql" />
+    <Build Include="dbo\Tables\SocialPostImage_1.sql" />
+    <Build Include="dbo\Tables\Tour_1.sql" />
+    <Build Include="dbo\Tables\New_1.sql" />
+    <Build Include="dbo\Tables\ForumLog_1.sql" />
+    <Build Include="dbo\Tables\TournamentAdmin_1.sql" />
+    <Build Include="dbo\Tables\PhotoAlbum_1.sql" />
+    <Build Include="dbo\Tables\TournamentGroup_1.sql" />
+    <Build Include="dbo\Tables\Match_1.sql" />
+    <Build Include="dbo\Tables\UserComment_1.sql" />
+    <Build Include="dbo\Tables\PollItem_1.sql" />
+    <Build Include="dbo\Tables\UserGame_1.sql" />
+    <Build Include="dbo\Tables\UserVideo_1.sql" />
+    <Build Include="dbo\Tables\PollVote_1.sql" />
+    <Build Include="dbo\Tables\SocialPost_1.sql" />
+    <Build Include="dbo\Tables\UserRole_1.sql" />
+    <Build Include="dbo\Tables\UserVideoComment_1.sql" />
+    <Build Include="dbo\Tables\Video_1.sql" />
+    <Build Include="dbo\Tables\SocialGroup_1.sql" />
+    <Build Include="dbo\Tables\VideoComment_1.sql" />
+    <Build Include="dbo\Tables\Group_1.sql" />
+    <Build Include="dbo\Tables\Message_1.sql" />
+    <Build Include="dbo\Tables\Distribution_1.sql" />
+    <Build Include="dbo\Tables\VideoSocialPost_1.sql" />
+    <Build Include="dbo\Tables\Team_1.sql" />
+    <Build Include="dbo\Tables\GroupRating_1.sql" />
+    <Build Include="dbo\Tables\Mail_1.sql" />
+    <Build Include="dbo\Tables\MatchRoaster_1.sql" />
+    <Build Include="dbo\Tables\TeamReplacement_1.sql" />
+    <Build Include="dbo\Tables\UserGroupHistory_1.sql" />
+    <Build Include="dbo\Tables\UserRoleGame_1.sql" />
+    <Build Include="dbo\Tables\UserRoleTournament_1.sql" />
+    <Build Include="dbo\Tables\LeagueParticipant_1.sql" />
+    <Build Include="dbo\Tables\ChatBannedUser_1.sql" />
+    <Build Include="dbo\Tables\ChatMessage_1.sql" />
+    <Build Include="dbo\Tables\ChatRoom_1.sql" />
+    <Build Include="dbo\Tables\Social_1.sql" />
+    <Build Include="dbo\Tables\Background_1.sql" />
+    <Build Include="dbo\Tables\MainCamera_1.sql" />
+    <Build Include="dbo\Tables\TournamentCondition_1.sql" />
+    <Build Include="dbo\Tables\TournamentSocialPost_1.sql" />
+    <Build Include="dbo\Tables\Banner_1.sql" />
+    <Build Include="dbo\Tables\LeagueSeason_1.sql" />
+    <Build Include="dbo\Tables\GlobalUnique_1.sql" />
+    <Build Include="dbo\Tables\BannerStatistic_1.sql" />
+    <Build Include="dbo\Tables\PhotoAlbumSocialPost_1.sql" />
+    <Build Include="dbo\Tables\Category_1.sql" />
+    <Build Include="dbo\Tables\BalanceSiteMoney_1.sql" />
+    <Build Include="dbo\Tables\BlogLike_1.sql" />
+    <Build Include="dbo\Tables\NewSocialPost_1.sql" />
+    <Build Include="dbo\Tables\Vendor_1.sql" />
+    <Build Include="dbo\Tables\MoneyFee_1.sql" />
+    <Build Include="dbo\Tables\SimilarProduct_1.sql" />
+    <Build Include="dbo\Tables\NewLike_1.sql" />
+    <Build Include="dbo\Tables\BlogSocialPost_1.sql" />
+    <Build Include="dbo\Tables\PhotoLike_1.sql" />
+    <Build Include="dbo\Tables\ProductCatalog_1.sql" />
+    <Build Include="dbo\Tables\UserAward_1.sql" />
+    <Build Include="dbo\Tables\RatingDetail_1.sql" />
+    <Build Include="dbo\Tables\ProductImage_1.sql" />
+    <Build Include="dbo\Tables\UserTeam_1.sql" />
+    <Build Include="dbo\Tables\MoneyWithdraw_1.sql" />
+    <Build Include="dbo\Tables\ProductPrice_1.sql" />
+    <Build Include="dbo\Tables\NoticeAction_1.sql" />
+    <Build Include="dbo\Tables\BannedWord_1.sql" />
+    <Build Include="dbo\Tables\NoticeDistribution_1.sql" />
+    <Build Include="dbo\Tables\Participant_1.sql" />
+    <Build Include="dbo\Tables\ProductReview_1.sql" />
+    <Build Include="dbo\Tables\MoneyDetail_1.sql" />
+    <Build Include="dbo\Tables\LeagueLevel_1.sql" />
+    <Build Include="dbo\Tables\Recharge_1.sql" />
+    <Build Include="dbo\Tables\ProductVideo_1.sql" />
+    <Build Include="dbo\Tables\User_1.sql" />
+    <Build Include="dbo\Tables\Cart_1.sql" />
+    <Build Include="dbo\Tables\CartProduct_1.sql" />
+    <Build Include="dbo\Tables\Catalog_1.sql" />
+    <Build Include="dbo\Tables\Notice_1.sql" />
+    <Build Include="dbo\Tables\MoneyNotify_1.sql" />
+    <Build Include="dbo\Tables\Product_1.sql" />
+    <Build Include="dbo\Tables\Poll_1.sql" />
+    <Build Include="dbo\Tables\Camera_1.sql" />
+  </ItemGroup>
+</Project>

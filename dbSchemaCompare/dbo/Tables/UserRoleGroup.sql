@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[UserRoleGroup] (
+    [ID]         INT IDENTITY (1, 1) NOT NULL,
+    [UserRoleID] INT NOT NULL,
+    [GroupID]    INT NOT NULL,
+    CONSTRAINT [PK_UserRoleGroup] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_UserRoleGroup_Group] FOREIGN KEY ([GroupID]) REFERENCES [dbo].[Group] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_UserRoleGroup_UserRole] FOREIGN KEY ([UserRoleID]) REFERENCES [dbo].[UserRole] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE
+);
+

@@ -1,0 +1,35 @@
+@model IEnumerable<turniri.Model.Vendor>
+
+@{
+    ViewBag.Title = "Правила активации";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Правила активации
+</h2>
+@Html.ActionLink("Добавить", "Create", "Vendor", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Наименование
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Vendor", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Vendor", new { id = item.ID }, new { @class = "btn" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<turniri.Model.Forum>
+
+<div id="tab_newest_2_content" class="switcher-content" style="display: none;">
+    <div class="content  scroll-wrapper">
+        <div class="scroll-pane">
+            <ul class="newest-list">
+                @foreach (var forum in Model)
+                {
+                    <li class="clear">
+                        <div class="username">
+                            <a href="@Url.Action("Index", "Forum", new { url = forum.Url })" class="user">
+                                @forum.Name.Teaser(20, "...")
+                            </a>
+                        </div>
+                        <div class="last-visit">
+                            Обновлено @forum.LastUpdate.Value.ToString("HH:mm")
+                        </div>
+                    </li>
+                }
+                 <li class="clear"></li>
+            </ul>
+        </div>
+    </div>
+</div>

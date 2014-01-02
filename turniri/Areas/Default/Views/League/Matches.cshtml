@@ -1,0 +1,157 @@
+﻿@model IEnumerable<turniri.Model.Match>
+
+@if (Model.Any())
+{
+    <div class="box-tur box">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_tur_2" class="current">Стыковые матчи</li>
+            </ul>
+        </div>
+        <div class="box-wrapper box-wrapper-scroll">
+            <div id="tab_tur_2_content" class="switcher-content">
+                <div class="content  scroll-wrapper">
+                    <ul class="stat-list">
+                        @foreach (var match in Model)
+                        {
+                            <li>
+                                <div class="top-user clear">
+                                    <div class="title">
+                                        @match.Game.Name
+                                    </div>
+                                    <div class="result">
+                                        Результат
+                                    </div>
+                                    <div class="report" id="Match_@match.ID">
+                                        <span>Отчет</span>
+                                    </div>
+                                </div>
+                                <div class="user clear">
+                                    @if (match.Player1.IsTeam)
+                                    {
+                                        <div class="userpic">
+                                            <a href="/show-team" class="show-team" data-id="@match.Player1.TeamID">
+                                                <img src="@match.Player1.Team.FullImagePath18" alt="userpic" />
+                                            </a>
+                                            @if (match.Player1.User.IsOnline)
+                                            {
+                                                <div class="dot"></div>
+                                            }
+                                        </div>
+                                        <div class="name">
+                                            <a href="/show-team" class="show-team user" data-id="@match.Player1.TeamID">
+                                                @match.Player1.Team.Name
+                                            </a>
+                                        </div>
+                                        if (match.Score1 > match.Score2)
+                                        {
+                                            <div class="result-value win">
+                                                @match.Score1View
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="result-value lose">
+                                                @match.Score1View
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="userpic">
+                                            <a href="@Url.Action("Index", "User", new { login = match.Player1.User.Login })">
+                                                <img src="@match.Player1.FullImagePath18" alt="userpic" />
+                                            </a>
+                                            @if (match.Player1.User.IsOnline)
+                                            {
+                                                <div class="dot"></div>
+                                            }
+                                        </div>
+                                        <div class="name">
+                                            <a href="@Url.Action("Index", "User", new { login = match.Player1.User.Login })" class="user">
+                                                @match.Player1.User.Login
+                                            </a>
+                                        </div>
+                                        if (match.Score1 > match.Score2)
+                                        {
+                                            <div class="result-value win">
+                                                @match.Score1View
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="result-value lose">
+                                                @match.Score1View
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                                <div class="user clear">
+                                    @if (match.Player2.IsTeam)
+                                    {
+                                        <div class="userpic">
+                                            <a href="/show-team" class="show-team" data-id="@match.Player2.TeamID">
+                                                <img src="@match.Player2.Team.FullImagePath18" alt="userpic" />
+                                            </a>
+                                            @if (match.Player2.User.IsOnline)
+                                            {
+                                                <div class="dot"></div>
+                                            }
+                                        </div>
+                                        <div class="name">
+                                            <a href="/show-team" class="show-team user" data-id="@match.Player2.TeamID">
+                                                @match.Player2.Team.Name
+                                            </a>
+                                        </div>
+                                        if (match.Score2 > match.Score1)
+                                        {
+                                            <div class="result-value win">
+                                                @match.Score2View
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="result-value lose">
+                                                @match.Score2View
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="userpic">
+                                            <a href="@Url.Action("Index", "User", new { login = match.Player2.User.Login })">
+                                                <img src="@match.Player2.FullImagePath18" alt="userpic" />
+                                            </a>
+                                            @if (match.Player2.User.IsOnline)
+                                            {
+                                                <div class="dot"></div>
+                                            }
+                                        </div>
+                                        <div class="name">
+                                            <a href="@Url.Action("Index", "User", new { login = match.Player2.User.Login })" class="user">
+                                                @match.Player2.User.Login
+                                            </a>
+                                        </div>
+                                        if (match.Score2 > match.Score1)
+                                        {
+                                            <div class="result-value win">
+                                                @match.Score2View
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="result-value lose">
+                                                @match.Score2View
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

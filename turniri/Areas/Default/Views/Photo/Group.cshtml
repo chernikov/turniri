@@ -1,0 +1,52 @@
+﻿@model turniri.Model.Group
+@{
+    ViewBag.Title = "Фото команды " + Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@Html.Partial("GroupMenu", Model.Url)
+@if (currentUser != null && Model.IsGrantedMemberOf(currentUser))
+{
+    <div class="photo-gallery-add-button gray-28-button-wrapper-nohover">
+        @Html.ActionLink("Добавить фотоальбом", "Create", "Photo")
+    </div>
+}
+<div class="main-bootom">
+    @foreach (var photoAlbum in Model.SubPhotoAlbums)
+    {
+        
+        <div class="preview-photo box-forum-update box">
+            <div class="top-bar">
+                <h3>
+                    @photoAlbum.Name
+                </h3>
+                @if (currentUser != null && photoAlbum.UserID == currentUser.ID)
+                {
+                    <div class="gray-16-button-wrapper">
+                        @Html.ActionLink("УДАЛИТЬ", "Delete", "Photo", new { id = photoAlbum.ID }, null)
+                    </div>
+                }
+                <div class="bar-arrow-down sprite">
+                </div>
+            </div>
+            @if (photoAlbum.PhotosCount > 0)
+            {
+                <div class="preview-photo-list clear">
+                    <div class="big-preview">
+                        <a href="@Url.Action("Item", "Photo", new { url = photoAlbum.Url })">
+                            <img src="@photoAlbum.AlbumPhoto.AlbumPreviewPath" alt="Album Cover"/>
+                        </a>
+                    </div>
+                    <div class="preview-list clear">
+                        @foreach (var photo in photoAlbum.OtherAlbumPhotos)
+                        {
+                            <img src="@photo.AvatarPath" alt="preview"/>    
+                        }
+                    </div>
+                    <div class="photo-count">
+                        Фотографий: @photoAlbum.PhotosCount</div>
+                </div>        
+            }
+        </div>
+    }
+</div>

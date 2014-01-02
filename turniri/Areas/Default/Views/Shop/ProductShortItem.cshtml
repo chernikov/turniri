@@ -1,0 +1,27 @@
+﻿@model turniri.Model.Product
+
+<li class="item @(Model.IsPromo ? "promo" : "")">
+    @if (Model.IsAction)
+    {
+        <div class="icon-action sprite"></div>
+    }
+    @if (Model.IsNew)
+    {
+        <div class="icon-new sprite"></div>
+    }
+    <a href="@Url.Action("Index", "Product", new { path = Model.Url })"><img src="@Model.ImagePath189" class="image"/></a>
+    <div class="info">
+        @if (Model.OldPrice.HasValue) 
+        {
+            <div class="old-price">
+            @Model.OldPrice.Value.ToString("0,0.00") руб.
+            </div>
+        }
+        <div class="price @(Model.IsAction ? "action-price" : "")">
+            @Model.PriceStr
+        </div>
+        <a href="@Url.Action("Index", "Product", new { path = Model.Url })">@Model.Name</a>
+        <div class="clear"></div>
+        <input class="blue-28-submit buy @(Model.ProductPrice.IsPreorder ? "preorder" : "")" type="submit" value="@(Model.ProductPrice.IsPreorder ? "КУПИТЬ" /*"ПРЕДЗАКАЗАТЬ"*/ : "КУПИТЬ")" data-id="@Model.ProductPrice.ID">
+    </div>
+</li>

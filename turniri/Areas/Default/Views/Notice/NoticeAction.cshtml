@@ -1,0 +1,18 @@
+﻿@model turniri.Model.NoticeAction
+
+@if (Model.Direct)
+{
+    <div class="gray-16-button-wrapper">
+        <a href="@Model.ActionUrl">
+            @Model.Name
+        </a>
+    </div>
+}
+else
+{
+    <div class="gray-16-button-wrapper notice-action" data-id="@Model.ID" data-resolve="@Model.IsResolveNotice" data-url="@Model.ActionUrl" data-run="@Model.IsRunNotice">
+        <a>
+            @Model.Name
+        </a>
+    </div>
+}

@@ -1,0 +1,11 @@
+﻿@model int
+
+<a href="#Notices" id="ShowNotice">
+@if (Model > 0)
+{
+    <span>@Model @Model.CountWord(" новое уведомление", " новых уведомления", " новых уведомлений")</span>
+} else
+{
+    <text>Нет новых уведомлений</text>
+}
+</a>

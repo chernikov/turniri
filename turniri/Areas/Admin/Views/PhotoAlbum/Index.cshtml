@@ -1,0 +1,67 @@
+﻿@model IEnumerable<turniri.Model.PhotoAlbum>
+
+@{
+    ViewBag.Title = "Фотоальбомы";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/admin/index-photoalbum.js"></script>
+}
+
+<h2>Фотоальбомы
+</h2>
+@Html.ActionLink("Создать", "Create", "PhotoAlbum", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Наименование
+            </th>
+            <th>Фотографий
+            </th>
+            <th>Социалки
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.PhotosCount
+            </td>
+            <td>
+                @foreach (var social in item.SubSocialPosts)
+                {
+                    <span class="label label-info">@social.ProviderShortName</span>
+                }
+            </td>
+            <td>
+                <div class="btn-group pull-right">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Действия<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Html.ActionLink("Изменить", "Edit", "PhotoAlbum", new { id = item.ID }, new { @class = "" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Удалить", "Delete", "PhotoAlbum", new { id = item.ID }, new { @class = "stop-action" })
+                        </li>
+                        <li>
+                            <a href="#" class="social" data-id="@item.ID">В соц.сеть</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </td>
+        </tr>
+    }
+</table>

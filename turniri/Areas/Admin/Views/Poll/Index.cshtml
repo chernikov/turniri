@@ -1,0 +1,66 @@
+@model turniri.Model.PageableData<turniri.Model.Poll>
+@{
+    ViewBag.Title = "Голосования";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Голосования 
+</h2>
+@Html.ActionLink("Создать", "Create", "Poll", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID
+            </th>
+            <th>Наименование
+            </th>
+            <th>Автор
+            </th>
+            <th>Форум
+            </th>
+            <th>Тип
+            </th>
+            <th>Закрыто
+            </th>
+            <th>Дата создания
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.User.Login
+            </td>
+            <td>
+                @if (item.FirstForum != null) {
+                    <a href="@Url.Action("Index", "Forum", new {id = item.FirstForum.ID, area="Default"})">@item.FirstForum.Name</a>
+                } else {
+                    <text>нет</text>
+                }
+            </td>
+            <td>
+                @(((turniri.Model.Poll.PollTypeEnum)item.PollType).ToString())
+            </td>
+            <td>
+                @(item.IsClosed ? "да" : "нет")
+            </td>
+            <td>
+                @item.AddedDate
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Poll", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Poll", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>

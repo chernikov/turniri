@@ -1,0 +1,39 @@
+@model IEnumerable<turniri.Model.SocialGroup>
+
+@{
+    ViewBag.Title = "Группы (соц.сети)";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Группы (соц.сети)</h2>
+@Html.ActionLink("Создать", "Create", "SocialGroup", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>Соц.сеть
+            </th>
+            <th>Имя
+            </th>
+            <th>ID
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ProviderName
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Number
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "SocialGroup", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "SocialGroup", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>

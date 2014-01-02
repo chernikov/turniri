@@ -1,0 +1,125 @@
+﻿@model turniri.Models.ViewModels.GroupView
+
+@{
+    ViewBag.Title = Model.ID == 0 ? "Создание команды" : "Редактирование профиля команды";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/edit-group.js"></script>
+}
+@if (Model.ID > 0)
+{
+    @Html.Partial("GroupMenu", Model.SavedUrl)
+}
+else
+{
+    @Html.Partial("UserMenu", "")
+}
+<div class="left">
+    @using (Html.BeginForm("Edit", "Group", FormMethod.Post))
+    {
+        @Html.Hidden("ID", Model.ID)
+        @Html.Hidden("SavedUrl", Model.SavedUrl)
+        @Html.Hidden("UserID", Model.UserID)
+        @Html.Hidden("LogoPath173", Model.LogoPath173)
+        @Html.Hidden("LogoPath96", Model.LogoPath96)
+        @Html.Hidden("LogoPath84", Model.LogoPath84)
+        @Html.Hidden("LogoPath57", Model.LogoPath57)
+        @Html.Hidden("LogoPath30", Model.LogoPath30)
+        @Html.Hidden("LogoPath26", Model.LogoPath26)
+        @Html.Hidden("LogoPath18", Model.LogoPath18)
+       
+        <div class="edit-main-profile main-profile gamers-rating">
+            <div class="top-bar">
+                <h3>@(Model.ID == 0 ? "СОЗДАНИЕ КОМАНДЫ" : "РЕДАКТИРОВАНИЕ ПРОФИЛЯ КОМАНДЫ")
+                </h3>
+                <div class="bar-arrow-down sprite">
+                </div>
+            </div>
+            <div class="main-profile-wrapper clear">
+                @if (!Model.SelectListGameID.Any() && Model.ID == 0)
+                {
+                    <div class="input-block top-border-none  bottom-border-none">
+                        <div class="input-item clear">
+                            <div class="error">
+                                Вы не можете создать команду. По всем играм, в которые вы играете,
+                        вы уже состоите в командах.
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-block top-border-none">
+                        <div class="input-item clear">
+                            <div class="lable-name">
+                                Наименование
+                            </div>
+                            <div class="input">
+                                @Html.TextBox("Name", Model.Name)
+                            </div>
+                            @Html.ValidationMessage("Name")
+                        </div>
+                        <div class="input-item clear">
+                            <div class="lable-name">
+                                Латинское имя
+                            </div>
+                            <div class="input">
+                                @Html.TextBox("Url", Model.Url)
+                            </div>
+                            @Html.ValidationMessage("Url")
+                        </div>
+
+                        <div class="input-item clear">
+                            <div class="lable-name">
+                                Игра
+                            </div>
+                            <div class="input">
+
+                                @Html.DropDownList("GameID", Model.SelectListGameID, new { @class = "game-select" })
+                            </div>
+                            @Html.ValidationMessage("GameID")
+                        </div>
+                        <div class="input-item clear">
+                            <div class="lable-name">
+                                Описание
+                            </div>
+                            <div class="input">
+                                @Html.TextArea("Description", Model.Description, new { @class = "" })
+                            </div>
+                            @Html.ValidationMessage("Description")
+                        </div>
+                    </div>
+                    <div class="input-block bottom-border-none">
+                        <div class="input-item clear">
+                            <div class="lable-name">
+                                Логотип команды
+                            </div>
+                            <div class="input-image">
+                                <img src="@Model.FullLogoPath173" alt="avatar" id="PreviewImage" />
+                                <div class="userpic-action" id="DeletePreview">
+                                    удалить
+                                </div>
+                                <div class="userpic-action" id="ChangePreview">
+                                    загрузить лого
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="form-button">
+                        <input class="gray-24-submit" type="submit" value="СОХРАНИТЬ" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+<div class="right">
+    @if (Model.ID != 0)
+    {
+        @Html.Partial("GroupViewControlPanel", Model)
+    }
+</div>
+

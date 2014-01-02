@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Турниры";
+
+    var mainCamera = ((turniri.Controllers.BaseController)ViewContext.Controller).MainCamera;
+}
+
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/match.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/index.js"></script>
+    @Html.Partial("_SocialLikesScripts")
+    <script type="text/javascript">
+        $().ready(function () {
+            $("#push").click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/Connect/VkConfirm/10",
+                    success: function (data) {
+                        $("body").append(data);
+                    }
+                });
+            });
+        });
+    </script>
+}
+@Html.Hidden("MatchID", (int?)ViewBag.MatchID)
+<div class="left">
+    @if (mainCamera != null && mainCamera.Enabled)
+    {
+        @Html.Action("MainCameraAct", "Home")
+    } else {
+        @Html.Action("MainNewsGallery", "Home")
+    }
+    @Html.Action("MainNewsList", "Home")
+</div>
+<div class="right">
+    
+    @Html.Partial("Instruction")
+
+    <div class="box-tur box">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_tur_1" class="current">Предстоящие</li>
+                <li id="tab_tur_2">Текущие</li>
+                <li id="tab_tur_3">Завершенные</li>
+            </ul>
+        </div>
+        <div class="box-wrapper box-wrapper-scroll">
+            @Html.Action("FutureTournaments", "Home")
+            @Html.Action("CurrentTournaments", "Home")
+            @Html.Action("PlayedOutTournaments", "Home")
+            <div class="bottom-gradient">
+            </div>
+        </div>
+        <div class="lable lable-turnaments sprite">
+        </div>
+    </div>
+    <div class="box-stat box">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_stat_1" class="current">Недавние матчи</li>
+                <li id="tab_stat_2">Предстоящие матчи</li>
+            </ul>
+        </div>
+        <div class="box-wrapper box-wrapper-scroll">
+            @Html.Action("CurrentMatches", "Home")
+            @Html.Action("FutureMatches", "Home")
+            <div class="bottom-gradient">
+            </div>
+        </div>
+        <div class="lable lable-stat sprite">
+        </div>
+    </div>
+    <div class="box-newest box">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_newest_1" class="current">Новобранцы</li>
+                <li id="tab_newest_2">Обновления на форуме</li>
+            </ul>
+        </div>
+        <div class="box-wrapper box-wrapper-scroll">
+            @Html.Action("Newbie", "Home")
+            @Html.Action("ForumLastSubject", "Home")
+            <div class="bottom-gradient">
+            </div>
+        </div>
+        <div class="lable lable-newest sprite">
+        </div>
+    </div>
+    <div class="copyright">
+        &copy; 2012 “Турниры.ру”<br />
+        Все права защищены
+
+
+
+    </div>
+</div>

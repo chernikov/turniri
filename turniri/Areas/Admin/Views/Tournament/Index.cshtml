@@ -1,0 +1,259 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Tournament>
+@{
+    ViewBag.Title = "Турниры";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var search = (turniri.Models.Info.TournamentSearch)ViewBag.Search;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/admin/index-tournament.js"></script>
+}
+<h2>Турниры</h2>
+@using (Html.BeginForm("Index", "Tournament", FormMethod.Get, new { @class = "well form-search" }))
+{
+    <ul class="nav nav-pills">
+        <li class="@(search.State == turniri.Models.Info.TournamentSearch.StateEnum.All ? "active" : "")">
+            <a href="@Url.Action("Index", "Tournament", new { State = turniri.Models.Info.TournamentSearch.StateEnum.All, SearchString = "" })">
+                Все</a> </li>
+        <li class="@(search.State == turniri.Models.Info.TournamentSearch.StateEnum.Active ? "active" : "")">
+            <a href="@Url.Action("Index", "Tournament", new { State = turniri.Models.Info.TournamentSearch.StateEnum.Active, SearchString = "" })">
+                Активные</a> </li>
+        <li class="@(search.State == turniri.Models.Info.TournamentSearch.StateEnum.Archive ? "active" : "")">
+            <a href="@Url.Action("Index", "Tournament", new { State = turniri.Models.Info.TournamentSearch.StateEnum.Archive, SearchString = "" })">
+                Архив</a> </li>
+        <li class="@(search.State == turniri.Models.Info.TournamentSearch.StateEnum.Leagues ? "active" : "")">
+            <a href="@Url.Action("Index", "Tournament", new { State = turniri.Models.Info.TournamentSearch.StateEnum.Leagues, SearchString = "" })">
+                Лиги
+            </a>
+        </li>
+    </ul>
+    @Html.Hidden("State", search.State)
+    @Html.TextBox("SearchString", search.SearchString ?? "", new { @class = "input-medium search-query" })
+  
+    <button type="submit" class="btn">
+        Поиск</button> 
+    <br/>
+    <label class="checkbox">
+        @Html.CheckBox("ShowLeague", search.ShowLeague) Показывать лиговые турниры
+    </label>
+}
+@if (currentUser.InRoles("admin,game_admin"))
+{
+    @Html.ActionLink("Создать", "Create", "Tournament", null, new { @class = "btn" })
+}
+@if (Model.List != null)
+{
+    <div class="pager">
+        @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x, State = search.State, SearchString = search.SearchString }))
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#
+                </th>
+                <th>Наименование
+                </th>
+                <th>Игра
+                </th>
+                <th>Тип
+                </th>
+                <th>Статус
+                </th>
+                <th>Форум
+                </th>
+                <th></th>
+                <th>Дата начала
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.List)
+        {
+            <tr class="@(item.IsLive ? "live" : "")">
+                <td>
+                    @item.ID
+                </td>
+                <td>
+                    <a href="@Url.Action("Index", "Tournament", new { area = "Default", platformUrl = item.Platform.Url, gameUrl = item.Game.Url, url = item.Url })">@item.Name
+                        @(item.IsLive ? ("(" + item.Place + ")") : "")</a>
+                    @if (item.MoneyType > 1)
+                    {
+                        <span class="label @(item.MoneyType == (int)turniri.Model.Tournament.MoneyTypeEnum.Gold? "label-warning" : "label-info")">Взнос: @item.Fee = @(item.Fee * item.MaxPlayersCount) (max)</span>
+                    }
+                </td>
+                <td>
+                    @item.Game.Name
+                </td>
+                <td>
+                    @item.TournamentTypeName
+                    @if (item.IsTeam)
+                    {
+                        <span class='label label-info'>team</span>  
+                    }
+                    @if (item.IsGroup)
+                    {
+                        <span class='label label-success'>group</span>  
+                    }
+                </td>
+                <td>
+                    @item.StatusName
+                    @if (item.IsGroupAllocated)
+                    {
+                        <text>(+ Групповой этап разыгран)</text>
+                    }
+                    @if (item.AllGamesPlayed)
+                    {
+                        <text>(+ Турнир разыгран)</text>
+                    }
+                </td>
+                <td>
+                    @(item.Forum != null ? item.Forum.Name : "")
+                </td>
+                <td>
+                    @item.RegisteredPlayersCount&nbsp;/&nbsp;@(item.MaxPlayersCount.HasValue ? item.MaxPlayersCount.ToString() : "--")
+
+                </td>
+                <td>
+                    @item.BeginDate.ToString("dd.MM.yyyy")
+                </td>
+                <td>
+                    <div class="btn-group pull-right">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Действия<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                @Html.ActionLink("Изменить", "Edit", "Tournament", new { id = item.ID }, new { @class = "" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Награды", "Index", "Award", new { id = item.ID }, new { @class = "" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Матчи", "Matches", "Tournament", new { id = item.ID }, new { @class = "" })
+                            </li>
+                            @if (item.Toss && item.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated && item.TournamentType == (int)turniri.Model.Tournament.TournamentTypeEnum.GroupTournament && !item.IsGroupAllocated)
+                            {
+                                <li>
+                                    @Html.ActionLink("Жеребьевка", "Toss", "Tournament", new { id = item.ID }, new { @class = "" })
+                                </li>
+                            }
+                            <li>
+                                @Html.ActionLink("Аватары", "Index", "Avatar", new { id = item.ID }, new { @class = "" })
+                            </li>
+
+                            @if (item.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated && item.AllTeamClosed)
+                            {
+                                <li>
+                                    @Html.ActionLink("Старт!", "Start", "Tournament", new { id = item.ID }, new { @class = "" })
+                                </li>
+                            }
+                            @if (item.IsGroupAllocated)
+                            {
+                                <li>
+                                    @Html.ActionLink("Расставить плейофф", "AllocatePlayoff", "Tournament", new { id = item.ID }, new { @class = "" })
+                                </li>
+                            }
+                            @if (item.AllGamesPlayed)
+                            {
+                                <li>
+                                    @Html.ActionLink("Закрыть турнир", "FinishTournament", "Tournament", new { id = item.ID }, new { @class = "" })
+                                </li>
+                            }
+                            else if (item.Status != (int)turniri.Model.Tournament.StatusEnum.PlayedOut)
+                            {
+                                <li>
+                                    @Html.ActionLink("Прекратить турнир", "TechFinishTournament", "Tournament", new { id = item.ID }, new { @class = "stop-action" })
+                                </li>
+                            }
+
+                            @if (item.TournamentType == (int)turniri.Model.Tournament.TournamentTypeEnum.RoundRobin)
+                            {
+                                <li>
+                                    @Html.ActionLink("Игроки", "Players", "Tournament", new { id = item.ID }, new { @class = "" })
+                                </li>
+                            }
+                            @if (item.IsTeam)
+                            {
+                                <li>
+                                    @Html.ActionLink("Команды", "Index", "Team", new { id = item.ID }, new { @class = "" })
+                                </li>
+                            }
+                            <li>
+                                @Html.ActionLink("Уведомления", "CreateNotice", "Tournament", new { id = item.ID }, new { @class = "" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Камеры", "Index", "Camera", new { id = item.ID }, new { @class = "" })
+                            </li>
+                            @if (item.Status == (int)turniri.Model.Tournament.StatusEnum.PlayedOut)
+                            {
+                                <li>
+                                    @Html.ActionLink("Вернуть в игру", "UndoFinishTournament", "Tournament", new { id = item.ID }, new { @class = "" })
+                                </li>
+                            }
+                            <li>
+                                @Html.ActionLink("Починить группы", "FixTournamentGroups", "Tournament", new { id = item.ID }, new { @class = "" })
+                            </li>
+                            <li>
+                                <a href="#" class="social" data-id="@item.ID">Cоц. сеть</a>
+                            </li>
+                            @if (currentUser.ID == 1)
+                            {
+                                <li class="divider"></li>
+                                <li><a href="@Url.Action("Delete", "Tournament", new { id = item.ID })" class="delete-action">
+                                    <i class="icon-remove"></i>Удалить</a> </li>
+                            }
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr class="no-border">
+                <td colspan="2">
+                    @foreach (var social in item.SubSocialPosts)
+                    {
+                        <span class="label label-info">@social.ProviderShortName</span>
+                    }
+                </td>
+
+                @if (item.MatchesCount > 0)
+                {
+                    <td colspan="5">
+                        @if (item.PlayedMatchesCount == item.MatchesCount)
+                        {
+                            <div class="progress progress-success progress-striped">
+                                <div class="bar" style="width: 100%">@item.PlayedMatchesCount / @item.MatchesCount
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="progress progress-info progress-striped">
+                                @{
+                            var percent = item.PlayedMatchesCount * 100 / item.MatchesCount;
+                                }
+                                <div class="bar" style="width: @percent%">@item.PlayedMatchesCount / @item.MatchesCount
+                                </div>
+                            </div>
+                        }
+                    </td>
+                    <td colspan="2">
+                        @if (item.SubCameras.Any())
+                        {
+                            foreach (var camera in item.SubCameras)
+                            {
+                            <a href="@Url.Action("Edit", "Camera", new { id = camera.ID })" class="@(camera.Enabled ? "" : "off")">
+                                <i class="icon-camera" title="@camera.Desc"></i></a><text>&nbsp; </text>
+                            }
+                        }
+                    </td>
+                }
+                else
+                {
+                    <td colspan="7"></td>
+                }
+            </tr>
+        }
+    </table>
+    <div class="pager">
+        @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x, State = search.State, SearchString = search.SearchString }))
+    </div>
+}

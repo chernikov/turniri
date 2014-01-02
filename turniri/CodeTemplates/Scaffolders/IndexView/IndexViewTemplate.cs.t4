@@ -1,0 +1,77 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="EnvDTE" #>
+<#@ Output Extension="cshtml" #>
+<#
+	var modelType = (CodeType)Model.ModelType; 
+	var viewType = (CodeType)Model.ViewType;
+	var modelName = modelType.Name; 
+	var viewName = viewType.Name;
+	var modelNameLower = modelName.ToLower();
+	var viewColumns = viewType.VisibleMembers().OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("ShowIndex")));
+	var columns = modelType.VisibleMembers().OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Name == "global::System.Data.Linq.Mapping.ColumnAttribute"));
+	var primaryColumn = columns.OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Children.OfType<CodeElement>().Any(k => k.Name == "IsPrimaryKey"))).FirstOrDefault();
+#>
+<# if(Model.Paging) { #>
+@model <#= Model.Namespace #>.Model.PageableData<<#= Model.Namespace #>.Model.<#= modelName #>>
+<# } else {#>
+@model IEnumerable<<#= Model.Namespace #>.Model.<#= modelName #>>
+<# } #>
+
+@{
+    ViewBag.Title = "<#= modelName #>";
+    Layout = "~/Areas/<#= Model.Area #>/Views/Shared/_Layout.cshtml";
+}
+<h2>
+	<#= modelName #>
+</h2>
+@Html.ActionLink("Create", "Create", "<#= modelName #>", null, new { @class = "btn" })
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+					#
+			</th>
+<# foreach(var column in viewColumns) { #>
+			<th>
+				<#= column.Name #>
+			</th>
+<# } #>
+			<th>
+			</th>
+		</tr>
+	</thead>
+	
+<# if(Model.Paging) { #>
+	@foreach(var item in Model.List) {
+<# } else {#>
+	@foreach(var item in Model) {
+<# } #>
+	<tr>
+		<td> 
+			@item.<#= primaryColumn.Name #>
+<# if(Model.Lang) { #>
+			@if (!item.IsCorrectLang)
+            {
+                <span class="label label-important">Translate it!</span>
+            }
+<# } #>
+		</td>
+<# foreach (var column in viewColumns) { #>
+		<td> 
+			@item.<#= column.Name #>
+		</td>		
+<# } #>
+		<td>
+			@Html.ActionLink("Edit", "Edit", "<#= modelName #>", new { id = item.<#= primaryColumn.Name #> }, new { @class = "btn" })
+            @Html.ActionLink("Remove", "Delete", "<#= modelName #>", new { id = item.<#= primaryColumn.Name #> }, new { @class = "btn" })
+		</td>
+	</tr>
+	}
+</table>
+<# if(Model.Paging) { #>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new {page = x}))
+</div>
+<# } #>

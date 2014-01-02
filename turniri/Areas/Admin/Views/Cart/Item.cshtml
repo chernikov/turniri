@@ -1,0 +1,163 @@
+﻿@model turniri.Model.Cart
+
+@{
+    ViewBag.Title = "Заказ #" + Model.ID.ToString();
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/cart-item.js"></script>
+}
+<h2>Заказ @Model.ID</h2>
+
+<div class="row">
+    <div class="span5">
+        <table class="table">
+            <tr>
+                <td>ID        
+                </td>
+                <td>
+                    @Model.ID
+                </td>
+            </tr>
+            <tr>
+                <td>GlobalUnique       
+                </td>
+                <td>
+                    @Model.GlobalUniqueID
+                </td>
+            </tr>
+              <tr>
+                <td>Создан       
+                </td>
+                <td>
+                    @Model.AddedDate.ToString("dd.MM.yyyy HH:mm")
+                </td>
+            </tr>
+            @if (Model.UserID.HasValue)
+            {
+                <tr>
+                    <td>Пользователь   
+                    </td>
+                    <td>
+                        @Model.Customer.Login (@Model.Customer.Email)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>Адрес       
+                </td>
+                <td>
+                    @Model.Address
+                </td>
+            </tr>
+            <tr>
+                <td>Email       
+                </td>
+                <td>
+                    @Model.Email
+                </td>
+            </tr>
+            <tr>
+                <td>Телефон       
+                </td>
+                <td>
+                    @Model.Phone
+                </td>
+            </tr>
+            <tr>
+                <td>Замечание       
+                </td>
+                <td>
+                    @Html.Raw(Model.Notice.NlToBr())
+                </td>
+            </tr>
+            <tr>
+                <td>Сумма
+                </td>
+                <td>
+                    <strong>@Model.TotalPrice.ToString("0,0.00") руб.</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>Тип оплаты
+                </td>
+                <td>
+                    @Model.PaymentTypeStr
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+@if (!Model.NeedToProcess)
+{
+    <a href="@Url.Action("SendAgain", new {id = Model.ID})" class="btn">Выслать коды</a>
+}
+<h5>Товары</h5>
+<div class="row">
+    <div class="span10">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Наименование</th>
+                     <th>Платформа / Вариант</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
+                    <th>Коды</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.SubCartProducts)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@((item.ProductPrice.Platform != null && item.ProductPrice.Platform != null) ? item.ProductPrice.Platform.Name : "")
+                    @if (item.ProductVariation != null)
+                    {
+                        
+                        <img src="@item.ProductVariation.Image?width=30" class="variation-image" data-html="true" data-trigger="hover" data-content="&lt;img src='@item.ProductVariation.Image' /&gt;"/>
+                    }
+                    
+                    </td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price.ToString("0,0.00") руб.</td>
+                    <td>@((item.Price * item.Quantity).ToString("0,0.00")) руб.</td>
+                    <td>
+                        @if (item.Product.Type == (int)turniri.Model.Product.TypeEnum.Code)
+                        {
+                            foreach (var code in item.SubCodes)
+                            {
+                            <span class="label">@code.Code</span>
+                            }
+                            if (item.SubCodes.Count() < item.Quantity)
+                            {
+                                <div class="btn btn-mini add-code" data-id="@item.ID">Добавить код</div>
+                            }
+                        }
+                        
+                        @if (item.Product.Type == (int)turniri.Model.Product.TypeEnum.RealGood) 
+                        {
+                            if (item.SubCodes.Any())
+                            {
+                                 <span class="label">@item.Product.Name x @item.SubCodes.Count()</span>
+                            }
+                            foreach (var code in item.SubCodes)
+                            {
+                           
+                            }
+                            if (item.SubCodes.Count() < item.Quantity)
+                            {
+                                <div class="btn btn-mini add-real" data-id="@item.ID">Товар есть</div>
+                            }
+                        }
+                        
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+</div>
+<div id="AddCodeWrapper" class="modal big" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+</div>

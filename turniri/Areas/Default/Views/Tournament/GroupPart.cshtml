@@ -1,0 +1,18 @@
+﻿@model turniri.Model.Tournament
+
+<div class="top-bar">
+    <h3 class="left">Турнирная сетка
+    </h3>
+    <div class="select-wrapper">
+        @Html.Action("SelectListGroups", "Tournament", new { id = Model.ID })
+    </div>
+    <div class="top-right">
+        <span id="GroupPartButton">Групповой этап</span>
+        <span id="PlayoffPartButton">Этап плей-офф</span>
+    </div>
+    <div class="bar-arrow-down for-left sprite">
+    </div>
+</div>
+<div class="gamers-list clear" id="GroupWrapper">
+    @Html.Action("Group", "Tournament", new { id = Model.SubGroups.First().ID })
+</div>

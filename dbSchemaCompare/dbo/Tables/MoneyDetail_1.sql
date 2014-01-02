@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[MoneyDetail] (
+    [ID]             INT              IDENTITY (1, 1) NOT NULL,
+    [MoneyFeeID]     INT              NULL,
+    [GlobalUniqueID] UNIQUEIDENTIFIER NULL,
+    [UserID]         INT              NULL,
+    [GroupID]        INT              NULL,
+    [CartID]         INT              NULL,
+    [TournamentID]   INT              NULL,
+    [Global]         UNIQUEIDENTIFIER NOT NULL,
+    [SumGold]        FLOAT (53)       NOT NULL,
+    [SumWood]        FLOAT (53)       NOT NULL,
+    [SumCrystal]     FLOAT (53)       NOT NULL,
+    [Description]    NVARCHAR (1500)  NOT NULL,
+    [AddedDate]      DATETIME         NOT NULL,
+    [IsFee]          BIT              NOT NULL,
+    [Submited]       BIT              NOT NULL,
+    CONSTRAINT [PK_MoneyDetail] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_MoneyDetail_Cart] FOREIGN KEY ([CartID]) REFERENCES [dbo].[Cart] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_MoneyDetail_GlobalUnique] FOREIGN KEY ([GlobalUniqueID]) REFERENCES [dbo].[GlobalUnique] ([ID]),
+    CONSTRAINT [FK_MoneyDetail_Group] FOREIGN KEY ([GroupID]) REFERENCES [dbo].[Group] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_MoneyDetail_MoneyFee] FOREIGN KEY ([MoneyFeeID]) REFERENCES [dbo].[MoneyFee] ([ID]),
+    CONSTRAINT [FK_MoneyDetail_Tournament] FOREIGN KEY ([TournamentID]) REFERENCES [dbo].[Tournament] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_MoneyDetail_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE
+);
+

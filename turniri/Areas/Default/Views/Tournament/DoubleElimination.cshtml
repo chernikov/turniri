@@ -1,0 +1,22 @@
+﻿@model turniri.Model.Tournament
+@{
+    var count = MatchesMathLogic.GetMin2Pow(Model.RegisteredPlayersCount);
+}
+@switch (count)
+{
+    case 4 : 
+        @Html.Partial("DoubleElimination4", Model);
+        break;
+    case 8:
+        @Html.Partial("DoubleElimination8", Model);
+        break;
+    case 16:
+        @Html.Partial("DoubleElimination16", Model);
+        break;
+    case 32:
+        @Html.Partial("DoubleElimination32", Model);
+        break;
+    case 64:
+        @Html.Partial("DoubleElimination64", Model);
+        break;
+}

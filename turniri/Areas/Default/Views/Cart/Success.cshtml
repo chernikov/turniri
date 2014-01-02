@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Спасибо за покупку";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var needToProcess = (bool)ViewBag.NeedToProcess;
+}
+
+<div class="main-bootom">
+    <div class="howtoplay long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>Спасибо за покупку
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="text">
+            @if (needToProcess)
+            {
+                <p>Ваш заказ будет обработан в течении 24 часов.</p>
+            }
+            else
+            {
+                <p>Спасибо за заказ!</p>
+            }
+            <a href="/">Вернуться на главную</a>
+        </div>
+    </div>
+</div>
+

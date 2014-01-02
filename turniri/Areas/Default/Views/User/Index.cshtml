@@ -1,0 +1,145 @@
+﻿@model turniri.Model.User
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    ViewBag.Title = (currentUser != null && currentUser.ID == Model.ID) ? "Личный кабинет" : ("Страница пользователя " + Model.Login);
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var Platforms = ((turniri.Controllers.BaseController)ViewContext.Controller).Platforms;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/match.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/index-user.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/friends.js"></script>
+    <script type="text/javascript">
+        //так надо 
+        var friends;
+        $().ready(function () {
+            friends = new Friends();
+        });
+    </script>
+    <script type="text/javascript" src="/Media/scripts/default/messages.js"></script>
+    
+}
+@Html.Hidden("MatchID", (int?)ViewBag.MatchID)
+@Html.Partial("UserMenu", Model.Login)
+@Html.Hidden("ID", Model.ID)
+<div class="left">
+    <div class="main-profile gamers-rating">
+        <div class="top-bar">
+            <h3>
+                @(Model.IsOnline ? "Онлайн" : "Оффлайн")
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="main-profile-wrapper clear">
+            <div class="user-preview">
+                <div class="preview-image">
+                    <img src="@Model.FullAvatarPath173" alt="userpic" />
+                    @if (@Model.IsOnline)
+                    {
+                        <div class="online"></div>
+                    }
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="top-info">
+                    <div class="name">
+                        @Model.FirstName @Model.LastName
+                        <span class="gray">(@Model.Login)</span>
+                    </div>
+                    <div class="info-stat">
+                        Регистрация: @Model.AddedDate.ToString("dd.MM.yyyy") &nbsp;|&nbsp; Последний визит:
+                        @Model.LastVisitDate.ToString("dd.MM.yyyy") &nbsp;|&nbsp; Просмотров: @Model.VisitCount
+                    </div>
+                </div>
+                <div class="bottom-info">
+                    <div class="left-info">
+                        <ul>
+                            <li>Playstation ID: <span class="gray">@Model.PlaystationID</span></li>
+                            <li>XBOX Gametag: <span class="gray">@Model.XboxGametag</span></li>
+                            <li>EA Account: <span class="gray">@Model.EAAccount</span></li>
+                            <li>Steam Account: <span class="gray">@Model.SteamAccount</span></li>
+                            <li>Garena Account: <span class="gray">@Model.GarenaAccount</span></li>
+                        </ul>
+                    </div>
+                    <div class="right-info">
+                        <ul>
+                            <li>ICQ: <span class="gray">@Model.ICQ</span></li>
+                            <li>Skype: <span class="gray">@Model.Skype</span></li>
+                            <li>Vk: <span class="gray">@Model.Vk</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (currentUser != null && currentUser.ID == Model.ID)
+{
+    <div class="right">
+        @Html.Partial("ControlPanel")
+    </div>
+}
+else
+{
+    <div class="right">
+        @Html.Partial("ProfileControlPanel", Model)
+    </div>
+}
+<div class="main-bootom">
+    <div class="game-gallery long-gamers-rating gamers-rating clear">
+        <div class="top-bar">
+            <h3>Игры
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="game-gallery-wrapper">
+            <div class="gallery-top">
+                <div class="gallery-outer-wrapper">
+                    <div class="left-arrow sprite">
+                    </div>
+                    <div class="inner-gallery-wrapper">
+                        <div class="conteiner" id="GameWrapper">
+                            @Html.Action("Games", "User", new { id = Model.ID })
+                        </div>
+                    </div>
+                    <div class="right-arrow sprite">
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-buttons clear">
+                @if (currentUser != null && currentUser.ID == Model.ID)
+                {
+                    <div class="gray-28-button-wrapper-nohover" id="MyGames">
+                        Мои игры
+                    </div>
+                    foreach (var platfrom in Platforms)
+                    {
+                    <div class="gray-28-button-wrapper-nohover platform_games" id="PlatformGames_@platfrom.ID">
+                        Добавить игру @platfrom.Name
+                    </div>
+                    }
+                    <div class="right-button gray-28-button-active-wrapper gray-28-button-wrapper-nohover"
+                        id="RemoveGames">
+                        <span class="icon-x-active sprite"></span>Удалить игру
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+     @if (Model.GroupsWhereImMember.Any())
+    {
+        @Html.Partial("GroupsList", Model)
+    }
+    @if (currentUser != null && currentUser.ID == Model.ID)
+    {
+        @Html.Partial("Matches", Model)
+        @Html.Partial("Tournaments", Model)
+    }
+   
+    <div id="ReputationWrapper">
+        @Html.Action("Reputation", "User", new { id = Model.ID })
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@model turniri.Model.ProductCode
+
+
+<div class="popup-window camera-popup-window" style="display: block;">
+    <div class="top-bar">
+        <h3>@Model.Product.Name
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper">
+        <div class="match-info">
+            <h2>@Model.Code</h2>
+        </div>
+        <div class="camera-wrapper code">
+            <img src="@Model.Image" class="screenshot" />
+        </div>
+    </div>
+</div>

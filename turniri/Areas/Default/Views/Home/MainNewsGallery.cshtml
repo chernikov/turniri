@@ -1,0 +1,30 @@
+﻿@model IEnumerable<turniri.Model.New>
+
+<div class="main-gallery clear">
+    <div class="preview-image">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li id="NewThumb_@item.ID">
+                    <div class="image-item">
+                        <div class="blanding">
+                        </div>
+                    </div>
+                    <img src="@item.AvatarPreviewPath" alt="@item.Header" />
+                </li>    
+            }
+        </ul>
+    </div>
+    <div class="main-image">
+        @foreach (var item in Model)
+        {
+            <div id="NewPreview_@item.ID" data-url="@item.Url" class="image-switcher news_preview">
+                <img src="@item.PreviewPath" alt="gallery image" />
+                <div class="image-info-wrapper">
+                    @item.Header.Teaser(45, "...")<br />
+                    <span>@item.SubHeader.Teaser(65, "...")</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>

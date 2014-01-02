@@ -1,0 +1,49 @@
+﻿@model turniri.Model.Game
+
+@{
+    ViewBag.Title = "Команды";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var page = (int)ViewBag.Page;
+}
+
+@Html.Action("Menu", "Game", new { id = Model.ID })
+
+
+@if (Model.AnyGroups)
+{
+    <div class="big-box group-wrapper">
+        <div class="groups-list">
+            <ul>
+                @{
+    var i = 0;
+                }
+                @foreach (var group in Model.GroupPage(page))
+                {
+                    <li class="@(i % 2 == 1 ? "second" : "")">
+                        @Html.Partial("__GroupListItem", group)
+                    </li>
+                    i++;
+                }
+            </ul>
+
+        </div>
+    </div>
+    <div class="paging light-paging turnir-paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list">
+            @Html.PageLinksTurniri(page, Model.GroupCountPage(), x => Url.Action("Group", new { id = Model.ID, page = x }))
+        </div>
+    </div>
+}
+else
+{
+    <div class="video-wrapper long-main-news main-news">
+        <div class="news-wrapper">
+            <div class="empty">
+                Для этой игры не создано ни одной команды. 
+            </div>
+        </div>
+    </div>
+}

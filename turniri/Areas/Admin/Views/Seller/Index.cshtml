@@ -1,0 +1,62 @@
+﻿@model IEnumerable<turniri.Model.UserRole>
+
+@{
+    ViewBag.Title = "Продавцы";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header 
+{
+    <script type="text/javascript" src="/Media/scripts/admin/index-seller.js"></script>
+}
+<h2>Продавцы</h2>
+
+<div class="btn" id="AddSellerBtn">Добавить</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.User.Login
+            </td>
+            <td>
+                @Html.ActionLink("Удалить", "Delete", "Seller", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+
+
+<div id="newSellerWrapper" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Добавить продавца</h3>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm("Create", "Seller", FormMethod.Post, new { @class = "form-vertical", id = "ForumMessageForm" }))
+        {
+            @Html.Hidden("UserID", "")
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label">
+                        Имя</label>
+                    <div class="controls">
+                        @Html.TextBox("UserLogin", "", new { @class = "input-xlarge" })
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
+    <div class="modal-footer">
+        <button id="AddSellerSubmit" class="btn btn-primary">Добавить</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+    </div>
+
+</div>

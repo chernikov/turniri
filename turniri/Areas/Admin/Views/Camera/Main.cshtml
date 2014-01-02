@@ -1,0 +1,48 @@
+﻿@model turniri.Models.ViewModels.MainCameraView
+
+@{
+    ViewBag.Title = "Главная камера";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Главная камера</h2>
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        @(TempData["message"] as string)
+    </div>
+}
+@using (Html.BeginForm("Main", "Camera", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Hidden("ID", Model.ID)
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">
+                Выберите камеру</label>
+            <div class="controls">
+                @Html.DropDownList("CameraID", Model.CamerasSelectList)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Или введите код камеры</label>
+            <div class="controls">
+                @Html.TextArea("Code", Model.Code, new { @class = "input-xxlarge", rows = 5  })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Enabled">
+                Включено</label>
+            <div class="controls">
+                @Html.CheckBox("Enabled", Model.Enabled)
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Сохранить</button>
+        </div>
+    </fieldset>
+}
+
+

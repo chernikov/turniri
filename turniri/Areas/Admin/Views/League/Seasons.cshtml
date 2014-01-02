@@ -1,0 +1,60 @@
+﻿@model IEnumerable<turniri.Model.LeagueSeason>
+
+@{
+    var league = (turniri.Model.League)ViewBag.League;
+     ViewBag.Title = "Сезоны лиги " + league.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@Html.ActionLink("← К лигам", "Index", "League", null, new {@class="btn btn-mini" })
+<h2>Сезоны лиги @league.Name</h2>
+
+
+@Html.ActionLink("Создать", "CreateSeason", "League", new { id = league.ID }, new { @class = "btn" })
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Наименование
+			</th>
+            <th>
+                Статус
+            </th>
+            <th>
+				Старт сезона
+			</th>
+            
+			<th>
+				Окончание основных турниров
+			</th>
+            <th>
+				Окончание сезона
+			</th>
+			<th>
+			</th>
+		</tr>
+	</thead>
+	@foreach(var item in Model) 
+    {
+	    <tr>
+		    <td> 
+			    <img src="@item.Image?width=32&height=32&mode=crop" /> @item.Name 
+		    </td>
+            <td>
+                @item.StatusStr
+            </td>
+            <td> 
+			    @item.StartDate.ToString("dd.MM.yyyy")
+		    </td>
+		    <td> 
+                @item.EndMainTourDate.ToString("dd.MM.yyyy")
+		    </td>		
+            <td> 
+                @item.EndDate.ToString("dd.MM.yyyy")
+		    </td>		
+		    <td>
+                @Html.ActionLink("Изменить", "EditSeason", "League", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "DeleteSeason", "League", new { id = item.ID }, new { @class = "btn btn-danger" })
+		    </td>
+	    </tr>
+	}
+</table>

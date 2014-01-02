@@ -1,0 +1,12 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+#region <#= ((EnvDTE.CodeType)Model.EntityType).Name #>
+
+IQueryable<<#= ((EnvDTE.CodeType)Model.EntityType).Name #>> <#= Model.EntityTypeNamePluralized #> { get; }
+
+bool Create<#= ((EnvDTE.CodeType)Model.EntityType).Name #>(<#= ((EnvDTE.CodeType)Model.EntityType).Name #> instance);
+
+bool Update<#= ((EnvDTE.CodeType)Model.EntityType).Name #>(<#= ((EnvDTE.CodeType)Model.EntityType).Name  #> instance);
+
+bool Remove<#=((EnvDTE.CodeType)Model.EntityType).Name #>(int id<#= ((EnvDTE.CodeType)Model.EntityType).Name  #>);
+
+#endregion 

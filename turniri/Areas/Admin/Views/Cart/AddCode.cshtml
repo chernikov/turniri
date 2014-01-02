@@ -1,0 +1,52 @@
+﻿@model turniri.Models.ViewModels.CartProductCodeView
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">@(Model.ID == 0 ? "Добавить код" : "Изменить код")
+    </h3>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("AddCode", "Cart", FormMethod.Post, new { @class = "form-horizontal", id = "AddCodeForm" }))
+    {
+        @Html.Hidden("_ID", Model._ID)
+        @Html.Hidden("CartProductID", Model.CartProductID)
+        @Html.Hidden("ProductID", Model.ProductID)
+        @Html.Hidden("ProductPriceID", Model.ProductPriceID)
+        @Html.Hidden("ProductVariationID", Model.ProductVariationID)
+        @Html.Hidden("Image", Model.Image)
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">
+                    Код</label>
+                <div class="controls">
+                    @Html.TextBox("Code", Model.Code, new { @class = "input-xlarge" })
+                    @Html.ValidationMessage("Code")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">
+                    Картинка</label>
+                <div class="controls">
+                    <img src="@Model.FullImage" alt="avatar" id="PreviewImage" width="300" />
+                    <br />
+                    <div class="btn btn-danger" id="DeletePreview">
+                        удалить
+                    </div>
+                    <div class="btn" id="ChangePreview">
+                        загрузить фото
+                    </div>
+                </div>
+                @Html.ValidationMessage("ImagePath")
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="AddCodeBtn">
+                    @(Model.ID == 0 ? "Добавить" : "Изменить")</button>
+            </div>
+        </fieldset>
+    }
+</div>
+<div class="modal-footer">
+    <button id="AddCodeSubmit" class="btn btn-primary">Добавить</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+</div>
+

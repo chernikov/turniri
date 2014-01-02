@@ -1,0 +1,56 @@
+﻿@model turniri.Model.PageableData<turniri.Model.MoneyDetail>
+<div class="top-panel">
+    <div class="date">
+        Дата
+    </div>
+    <div class="sum">
+        Сумма
+    </div>
+    <div class="desc">
+        Описание
+    </div>
+</div>
+<div class="money-list">
+    <ul>
+        @foreach (var item in Model.List)
+        {
+            <li>
+                <div class="date">
+                    @item.AddedDate.ToString("dd.MM.yyyy")
+                </div>
+                <div class="sum">
+                    @if (item.SumGold != 0)
+                    {
+                        <div class="money-item">
+                            @item.SumGold <span class="icon-gold-mini sprite"></span>
+                        </div>
+                    }
+                    @if (item.SumWood != 0)
+                    {
+                        <div class="money-item">
+                            @item.SumWood <span class="icon-wood-mini sprite"></span>
+                        </div>
+                    }
+                    @if (item.SumCrystal != 0)
+                    {
+                        <div class="money-item">
+                            @item.SumCrystal <span class="icon-crystal-mini sprite"></span>
+                        </div>
+                    }
+                </div>
+                <div class="desc">
+                    @item.Description
+                </div>
+            </li>
+        }
+    </ul>
+    <div class="paging light-paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list" >
+              @Html.PageLinksTurniri(Model.PageNo, Model.CountPage, x => Url.Action("MoneyList", new { page = x }))
+        </div>
+    </div>
+</div>
+

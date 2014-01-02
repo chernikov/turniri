@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=152368
+  -->
+<configuration>
+  <configSections>
+    <section name="nlog" type="NLog.Config.ConfigSectionHandler, NLog" />
+    <section name="vkAppConfig" type="turniri.Global.Config.OAuth.VkontakteAppConfig, turniri" />
+    <section name="facebookAppConfig" type="turniri.Global.Config.OAuth.FacebookAppConfig, turniri" />
+    <section name="twitterAppConfig" type="turniri.Global.Config.OAuth.TwitterAppConfig, turniri" />
+    <section name="googleAppConfig" type="turniri.Global.Config.OAuth.GoogleAppConfig, turniri" />
+    <section name="mimeConfig" type="turniri.Global.Config.MimeTypesConfigSection, turniri" />
+    <section name="mailConfig" type="turniri.Global.Config.MailSettings, turniri" />
+    <section name="mailTemplatesConfig" type="turniri.Global.Config.MailTemplateConfig, turniri" />
+    <section name="iconConfig" type="turniri.Global.Config.IconSizesConfigSection, turniri" />
+    <sectionGroup name="system.web.webPages.razor" type="System.Web.WebPages.Razor.Configuration.RazorWebSectionGroup, System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
+      <section name="host" type="System.Web.WebPages.Razor.Configuration.HostSection, System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" />
+      <section name="pages" type="System.Web.WebPages.Razor.Configuration.RazorPagesSection, System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" />
+    </sectionGroup>
+    <sectionGroup name="elmah">
+      <section name="security" requirePermission="false" type="Elmah.SecuritySectionHandler, Elmah" />
+      <section name="errorLog" requirePermission="false" type="Elmah.ErrorLogSectionHandler, Elmah" />
+      <section name="errorMail" requirePermission="false" type="Elmah.ErrorMailSectionHandler, Elmah" />
+      <section name="errorFilter" requirePermission="false" type="Elmah.ErrorFilterSectionHandler, Elmah" />
+    </sectionGroup>
+    <section name="glimpse" type="Glimpse.Core.Configuration.GlimpseConfiguration" />
+  </configSections>
+  <connectionStrings>
+   <add name="ConnectionString" connectionString="Data Source=u352342.mssql.masterhost.ru;Initial Catalog=u352342;User ID=u352342;Encrypt=no;Password=5phent6nlit;" providerName="System.Data.SqlClient" />
+    <!--<add name="ConnectionString" connectionString="Data Source=SATURN-PC;Initial Catalog=turniri_work2;Integrated Security=True" providerName="System.Data.SqlClient" />-->
+  </connectionStrings>
+  <appSettings>
+    <add key="webpages:Version" value="2.0.0.0" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="Host" value="http://turniri.ru" />
+    <add key="Culture" value="ru" />
+    <add key="DebugMode" value="true" />
+    <add key="AdminEmail" value="chernikov@gmail.com" />
+    <add key="EnableMail" value="true" />
+	<add key="FreeCharge" value="10" />
+    <add key="YandexWallet" value="41001807509747" />
+    <add key="YandexSecret" value="XNUmxB8bEfE29a6u6T6n/MRx" />
+	<add key="MinWithdraw" value="500" />
+    <add key="QiwiID" value="238745" />
+    <add key="QiwiPassword" value="t12345678" />
+  </appSettings>
+  <!--
+    For a description of web.config changes for .NET 4.5 see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.5" />
+      </system.Web>
+  -->
+  <system.web>
+    <compilation debug="true" targetFramework="4.5">
+      <assemblies>
+        <add assembly="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+        <add assembly="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+        <add assembly="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" />
+      </assemblies>
+    </compilation>
+    <authentication mode="Forms">
+      <forms loginUrl="~/login" timeout="14400" />
+    </authentication>
+    <customErrors mode="Off" defaultRedirect="~/error">
+      <error statusCode="403" redirect="~/error" />
+      <error statusCode="404" redirect="~/not-found-page" />
+    </customErrors>
+    <pages controlRenderingCompatibilityVersion="4.0">
+      <namespaces>
+        <add namespace="System.Web.Helpers" />
+        <add namespace="System.Web.Mvc" />
+        <add namespace="System.Web.Mvc.Ajax" />
+        <add namespace="System.Web.Mvc.Html" />
+        <add namespace="System.Web.Routing" />
+        <add namespace="System.Web.WebPages" />
+        <add namespace="turniri.Helpers" />
+        <add namespace="StackExchange.Profiling"/>
+      </namespaces>
+    </pages>
+    <httpModules>
+      <add name="ErrorLog" type="Elmah.ErrorLogModule, Elmah" />
+      <add name="Glimpse" type="Glimpse.Core.Module" />
+    </httpModules>
+    <httpHandlers>
+      <add verb="POST,GET,HEAD" path="elmah.axd" type="Elmah.ErrorLogPageFactory, Elmah" />
+      <add path="glimpse.axd" verb="GET,POST" type="Glimpse.Core.Handler" />
+    </httpHandlers>
+    <httpRuntime maxRequestLength="1048576" />
+    <trace writeToDiagnosticsTrace="true" enabled="true" pageOutput="false" />
+	<machineKey validationKey="48E2A2A0C57C835CD839874C139449188AE988E15F42577F3DB7FF71574B7F8821196FF5675059BDCC3B4D1A8E227870DA15F29DD6EB233448C523A90909152F"
+decryptionKey="01E5D4A152E49CFFF7B9A62480AF09C1F62C2BE7F44147286F2575107E0E2FF4"
+validation="SHA1" decryption="AES"
+/>
+  </system.web>
+  <system.web.webPages.razor>
+    <pages pageBaseType="System.Web.Mvc.WebViewPage">
+      <namespaces>
+        <add namespace="turniri.Global" />
+        <add namespace="turniri.Helpers" />
+        <add namespace="StackExchange.Profiling"/>
+        <add namespace="turniri.Tools" />
+      </namespaces>
+    </pages>
+  </system.web.webPages.razor>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules runAllManagedModulesForAllRequests="true">
+      <add name="ErrorLog" type="Elmah.ErrorLogModule, Elmah" />
+      <add name="Glimpse" type="Glimpse.Core.Module,Glimpse.Core" preCondition="integratedMode" />
+    </modules>
+    <handlers>
+      <add name="Elmah" verb="POST,GET,HEAD" path="elmah.axd" type="Elmah.ErrorLogPageFactory, Elmah" />
+      <add name="Glimpse" path="glimpse.axd" verb="GET,POST" type="Glimpse.Core.Handler,Glimpse.Core" preCondition="integratedMode" />
+    </handlers>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0" newVersion="2.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.5.0.0" newVersion="4.5.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <elmah>
+    <errorLog type="Elmah.XmlFileErrorLog, Elmah" logPath="~/App_Data" />
+    <security allowRemoteAccess="yes" />
+  </elmah>
+  <nlog autoReload="true" xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <variable name="logDirectory" value="${basedir}/Media/logs/${shortdate}" />
+    <targets>
+      <!--<target name="TcpOutlet" xsi:type="NLogViewer" address="tcp4://localhost:4505"/>-->
+      <target name="fileLogTrace" xsi:type="File" fileName="${logDirectory}/trace.txt" />
+      <target name="fileLogDebug" xsi:type="File" fileName="${logDirectory}/debug.txt" />
+      <target name="fileLogInfo" xsi:type="File" fileName="${logDirectory}/info.txt" />
+      <target name="fileLogErrors" xsi:type="File" fileName="${logDirectory}/errors.txt" />
+    </targets>
+    <rules>
+      <logger name="*" level="Trace" writeTo="fileLogTrace" />
+      <logger name="*" level="Debug" writeTo="fileLogDebug" />
+      <logger name="*" level="Info" writeTo="fileLogInfo" />
+      <logger name="*" minlevel="Warn" writeTo="fileLogErrors" />
+    </rules>
+  </nlog>
+  <mimeConfig>
+    <mimeTypes>
+      <add name="application/pdf" resource="/Media/images/mime/application-pdf.png" small="/Media/images/mime/small/application-pdf.png" extension=".pdf" />
+      <add name="application/msword" resource="/Media/images/mime/application-msword.png" small="/Media/images/mime/small/application-msword.png" extension=".doc" />
+      <add name="application/vnd.openxmlformats-officedocument.wordprocessingml.document" resource="/Media/images/mime/application-msword.png" small="/Media/images/mime/small/application-msword.png" extension=".docx" />
+      <add name="application/vnd.ms-excel" resource="/Media/images/mime/application-vnd-ms-excel.png" small="/Media/images/mime/small/application-vnd-ms-excel.png" extension=".xls" />
+      <add name="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" resource="/Media/images/mime/application-vnd-ms-excel.png" small="/Media/images/mime/small/application-vnd-ms-excel.png" extension=".xlsx" />
+      <add name="application/vnd.ms-powerpoint" resource="/Media/images/mime/application-vnd-ms-powerpoint.png" small="/Media/images/mime/small/application-vnd-ms-powerpoint.png" extension=".ppt" />
+      <add name="application/vnd.openxmlformats-officedocument.presentationml.presentation" resource="/Media/images/mime/application-vnd-ms-powerpoint.png" small="/Media/images/mime/small/application-vnd-ms-powerpoint.png" extension=".pptx" />
+      <add name="application/x-msdownload" resource="/Media/images/mime/application-x-msdownload.png" small="/Media/images/mime/small/application-exe.png" extension=".exe" />
+      <add name="application/x-compressed" resource="/Media/images/mime/application-x-compressed.png" small="/Media/images/mime/small/application-x-compressed.png" extension=".tgz" />
+      <add name="application/x-gzip" resource="/Media/images/mime/application-x-gzip.png" small="/Media/images/mime/small/application-x-compressed.png" extension=".gzip" />
+      <add name="application/x-rar-compressed" resource="/Media/images/mime/application-x-rar-compressed.png" small="/Media/images/mime/small/application-x-compressed.png" extension=".rar" />
+      <add name="application/x-stuffit" resource="/Media/images/mime/application-x-stuffit.png" small="/Media/images/mime/small/application-x-compressed.png" extension=".sit" />
+      <add name="application/x-compressed" resource="/Media/images/mime/application-x-compressed.png" small="/Media/images/mime/small/application-x-compressed.png" extension=".tgz" />
+      <add name="application/x-tar" resource="/Media/images/mime/application-x-tar.png" small="/Media/images/mime/small/application-x-compressed.png" extension=".tar" />
+      <add name="application/x-zip-compressed" resource="/Media/images/mime/application-x-zip-compressed.png" small="/Media/images/mime/small/application-x-compressed.png" extension=".zip" />
+      <add name="audio/aiff" resource="/Media/images/mime/audio-aiff.png" small="/Media/images/mime/small/audio-aiff.png" extension=".aiff" />
+      <add name="audio/mpeg" resource="/Media/images/mime/audio-mpeg.png" small="/Media/images/mime/small/audio-mpeg.png" extension=".mp3" />
+      <add name="audio/ogg" resource="/Media/images/mime/audio-ogg.png" small="/Media/images/mime/small/audio-ogg.png" extension=".ogg" />
+      <add name="audio/wav" resource="/Media/images/mime/audio-wav.png" small="/Media/images/mime/small/audio-wav.png" extension=".wav" />
+      <add name="audio/x-ms-wma" resource="/Media/images/mime/audio-x-ms-wma.png" small="/Media/images/mime/small/audio-x-ms-wma.png" extension=".wma" />
+      <add name="text/plain" resource="/Media/images/mime/text-plain.png" small="/Media/images/mime/small/text-plain.png" extension=".txt" />
+      <add name="text/html" resource="/Media/images/mime/text-html.png" small="/Media/images/mime/small/text-html.png" extension=".html" />
+      <add name="text/html" resource="/Media/images/mime/text-html.png" small="/Media/images/mime/small/text-html.png" extension=".htm" />
+      <add name="video/avi" resource="/Media/images/mime/video-avi.png" small="/Media/images/mime/small/video-avi.png" extension=".avi" />
+      <add name="video/mpeg" resource="/Media/images/mime/video-mpeg.png" small="/Media/images/mime/small/video-mpeg.png" extension=".mpeg" />
+      <add name="video/quicktime" resource="/Media/images/mime/video-quicktime.png" small="/Media/images/mime/small/video-quicktime.png" extension=".mov" />
+      <add name="video/x-ms-wmv" resource="/Media/images/mime/video-x-ms-wmv.png" small="/Media/images/mime/small/video-x-ms-wmv.png" extension=".wmv" />
+      <add name="image/jpeg" resource="" small="/Media/images/mime/small/image-jpg.png" extension=".jpg" />
+      <add name="image/jpeg" resource="" small="/Media/images/mime/small/image-jpg.png" extension=".jpeg" />
+      <add name="image/gif" resource="" small="/Media/images/mime/small/image-gif.png" extension=".gif" />
+      <add name="image/png" resource="" small="/Media/images/mime/small/image-png.png" extension=".png" />
+      <add name="image/bmp" resource="/Media/images/mime/image-bmp.png" small="/Media/images/mime/small/image-bmp.png" extension=".bmp" />
+    </mimeTypes>
+  </mimeConfig>
+    <mailConfig
+    SmtpServer="smtp.mastermail.ru"
+    SmtpPort="25"
+    SmtpUserName="administrator@turniri.ru"
+    SmtpPassword="r2ticalor7oro"
+    SmtpReply="administrator@turniri.ru"
+    SmtpUser="Турниры.ру"
+    EnableSsl="false"
+  />
+  <vkAppConfig
+     AppKey="3698842"
+     AppSecret="WBiTlQCLjkvDOKpo2Nyx"
+    />
+
+  <facebookAppConfig
+      AppId="136069443258229"
+      AppSecret="49242a6a7aa76690247d280b14bcd334"
+    />
+
+  <twitterAppConfig
+        twitterConsumerKey="oix7eoYD7TOGQycemdpj8g"
+        twitterConsumerSecret="VjZoKJbIyF1Jjro2r8apaeZUnfNUzKPFdiraL7UuPXk"
+    />
+
+  <googleAppConfig
+      ClientId="463334074260.apps.googleusercontent.com"
+      ClientSecret="IsqAks1TAIXvxuPHDu5Gd7bm"
+    />
+  <mailTemplatesConfig>
+    <mailTemplates>
+      <add name="Register" subject="Регистрация на {0}" template="Здравствуйте! &lt;br/&gt;&lt;br/&gt; Перейдите по ссылке  &lt;a href='http://{1}/User/Activate/{0}'&gt;http://{1}/User/Activate/{0}&lt;/a&gt;, чтобы подтвертить свой почтовый ящик.&lt;br/&gt;-----&lt;br/&gt;С уважением, команда &lt;a href='http://{1}'&gt;{1}&lt;/a&gt;" />
+      <add name="VerifyEmail" subject="Проверка Email для {0}" template="Здравствуйте! &lt;br/&gt;&lt;br/&gt; Перейдите по ссылке  &lt;a href='http://{1}/User/VerifyEmail/{0}'&gt;http://{1}/User/VerifyEmail/{0}&lt;/a&gt;, чтобы подтвертить свой почтовый ящик.&lt;br/&gt;-----&lt;br/&gt;С уважением, команда &lt;a href='http://{1}'&gt;{1}&lt;/a&gt;" />
+      <add name="ForgotPassword" subject="Ваш пароль в {0}" template="Здравствуйте!&lt;br/&gt;&lt;br/&gt;Ниже указана информация для доступа в &lt;a href='http://{2}/'&gt;{2}&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Email : {0}&lt;br/&gt;Пароль: {1}&lt;br/&gt;&lt;br/&gt; -----&lt;br/&gt;С уважением, команда &lt;a href='http://{2}'&gt;{2}&lt;/a&gt;" />
+      <add name="NewMessage" subject="Новое сообщение ({0}) на {1}" template="Здравствуйте!&lt;br/&gt;&lt;br/&gt;Вам прислали личное сообщение {0} &lt;a href='http://{1}/Message/'&gt;{1}/Message/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt; -----&lt;br/&gt;С уважением, команда &lt;a href='http://{1}'&gt;{1}&lt;/a&gt;" />
+      <add name="Friend" subject="Запрос на дружбу от {0} на {1}" template="Здравствуйте!&lt;br/&gt;&lt;br/&gt;Пользователь &lt;a href='http://{0}/User/Index/{1}'&gt;{2}&lt;/a&gt; хочет с вами дружить &lt;br/&gt;&lt;br/&gt; -----&lt;br/&gt;С уважением, команда &lt;a href='http://{0}'&gt;{0}&lt;/a&gt;" />
+      <add name="ProductCodes" subject="Ваша покупка #{0}" template="Здравствуйте!&lt;br/&gt;&lt;br/&gt;Доставка покупки #{0}&lt;br/&gt;&lt;br/&gt;Ваши коды к играм:{1}&lt;br/&gt;&lt;br/&gt;-----&lt;br/&gt;С уважением, команда &lt;a href='http://{2}'&gt;{2}&lt;/a&gt;" />
+    </mailTemplates>
+  </mailTemplatesConfig>
+  <iconConfig>
+    <iconSizes>
+      <add name="Avatar173Size" width="173" height="176" />
+      <add name="Avatar96Size" width="96" height="96" />
+      <add name="Avatar84Size" width="84" height="84" />
+      <add name="Avatar57Size" width="57" height="57" />
+      <add name="Avatar30Size" width="30" height="30" />
+      <add name="Avatar26Size" width="26" height="26" />
+      <add name="Avatar18Size" width="18" height="18" />
+
+      <add name="Group173Size" width="173" height="176" />
+      <add name="Group96Size" width="96" height="96" />
+      <add name="Group84Size" width="84" height="84" />
+      <add name="Group57Size" width="57" height="57" />
+      <add name="Group30Size" width="30" height="30" />
+      <add name="Group26Size" width="26" height="26" />
+      <add name="Group18Size" width="18" height="18" />
+
+      <add name="NewPreviewSize" width="533" height="308" />
+      <add name="NewAvatarPreviewSize" width="92" height="77" />
+      <add name="NewTitleSize" width="800" height="600" />
+      <add name="NewAvatarTitleSize" width="199" height="500" />
+      
+      <add name="VideoThumbSize" width="199" height="148" />
+
+      <add name="ForumTopicSize" width="48" height="48" />
+
+      <add name="GameImage189Size" width="189" height="268" />
+      <add name="GameImage103Size" width="103" height="103" />
+      <add name="GameImage144vSize" width="102" height="144" />
+      <add name="GameImage47Size" width="47" height="47" />
+      <add name="GameImage22Size" width="22" height="22" />
+
+      <add name="BlogPreviewSize" width="199" height="148" />
+
+      <add name="PhotoSize" width="1200" height="800" />
+      <add name="PhotoAlbumPreviewSize" width="221" height="139" />
+      <add name="PhotoAvatarSize" width="107" height="107" />
+      <add name="SmallSize" width="133" height="102" />
+
+      <add name="TournamentImageSize" width="103" height="103" />
+
+      <add name="AwardIconSize" width="24" height="24" />
+      <add name="CommentImageSize" width="640" height="480" />
+      
+      <add name="MaxImageSize" width="700" height="700" />
+	  
+      <add name="BigBannerSize" width="652" height="114" />
+      <add name="SmallBannerSize" width="321" height="114" />
+      <add name="PreviewBannerSize" width="36" height="36" />
+
+      <add name="PreviewBackgroundSize" width="120" height="120" />
+      <add name="SmallBackgroundSize" width="36" height="36" />
+
+      <add name="SocialPreviewSize" width="640" height="480" />
+      
+    </iconSizes>
+  </iconConfig>
+  <glimpse enabled="true" />
+</configuration>

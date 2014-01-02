@@ -1,0 +1,83 @@
+﻿@model turniri.Model.PhotoAlbum
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    int page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/create-comment.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/add-photos.js"></script>
+}
+
+<div id="gallery_popup" class="popup-image-wrapper clear" style="display: none">
+    <div class="icon-close-popup sprite"></div>
+    <div id="PhotoWrapper">
+    </div>
+</div>
+@Html.Partial("UserMenu", Model.User.Login)
+@Html.Hidden("ID", Model.ID)
+@if (currentUser != null && currentUser.ID == Model.UserID)
+{
+    <div class="photo-gallery-add-button gray-28-button-wrapper-nohover" id="AddPhoto">
+        <div class="add-photo-action">Добавить фото</div>
+    </div>
+}
+<div class="main-bootom">
+
+    <div class="preview-photo box-forum-update box">
+        <div class="top-bar">
+            <h3>
+                @Model.Name
+            </h3>
+            @if (currentUser != null && currentUser.ID == Model.UserID)
+            {
+                <div class="gray-16-button-wrapper">
+                    @Html.ActionLink("ИЗМЕНИТЬ", "Edit", "Photo", new { id = Model.ID }, null)
+                </div>    
+                <div class="gray-16-button-wrapper">
+                    @Html.ActionLink("УДАЛИТЬ", "Delete", "Photo", new { id = Model.ID }, null)
+                </div>    
+            }
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="photo-albom-list clear" id="PhotoAlbumList">
+            @foreach (var item in Model.PhotosPage(page))
+            {
+                <div class="image-item" id="Photo_@item.ID">
+                    @if (currentUser != null && currentUser.ID == Model.UserID)
+                    {
+                        <div class="icon-close-image sprite"></div>
+                    }
+                    <img src="@item.SmallPath" alt="image" />
+
+                    <div class="info">
+                        <div class="view">
+                            @item.VisitCount
+                            <div class="sprite icon-view white"></div>
+                        </div>
+                        <div class="comments">
+                            @item.CommentCount
+                            <div class="sprite icon-comment white"></div>
+                        </div>
+                         <div class="like photo" data-id="@item.ID">
+                            <div class="sprite icon white">
+                            </div>
+                            <div class="count">@item.Likes</div>
+                        </div>
+                    </div>
+                </div>                
+            }
+        </div>
+    </div>
+    <div class="photo-paging paging light-paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list">
+            @Html.PageLinksTurniri(page, Model.CountPage(), x => Url.Action("Item", new { page = x }))
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<turniri.Model.Cart>
+
+
+<div class="cart">
+    <div class="product-list clear">
+        <div class="top-grid">
+            <div class="date">
+                ДАТА
+            </div>
+            <div class="name">
+                НАИМЕНОВАНИЕ
+            </div>
+            <div class="price">
+                ЦЕНА
+            </div>
+            <div class="code">
+                КОД
+            </div>
+        </div>
+        <ul class="content">
+            @foreach (var cart in Model)
+            {
+
+                foreach (var cartProduct in cart.SubCartProducts)
+                {
+                <li class="clear">
+                    <div class="date">
+                        @cart.AddedDate.ToString("dd.MM.yyyy")
+                    </div>
+                    <div class="name">
+                        <div class="preview-image">
+                            <a href="@Url.Action("Index", "Product", new { path = cartProduct.Product.Url })">
+                                <img src="@cartProduct.Product.Image?width=22&height=22&mode=crop" alt="avatar" title="@cartProduct.Product.Name">
+                            </a>
+                        </div>
+                        <a href="@Url.Action("Index", "Product", new { path = cartProduct.Product.Url })" class="user">@cartProduct.Product.Name </a>
+                    </div>
+                    <div class="price">
+                        @cartProduct.Product.PriceStr
+                    </div>
+                    <div class="code">
+                        @if (cartProduct.Product.Type == (int)turniri.Model.Product.TypeEnum.Code)
+                        {
+                            foreach (var code in cartProduct.SubCodes)
+                            {
+                                if (!string.IsNullOrWhiteSpace(code.Image))
+                                {
+                            <img src="@code.Image" width="22" class="show-popup-code" data-id="@code.ID" />
+                                }
+                            <div class="code-item">
+                                <div class="value">@code.Code</div>
+                            </div>
+                            }
+                        }
+                        else
+                        {
+                            <span>@cartProduct.Quantity @cartProduct.Quantity.CountWord("штука", "штуки", "штук")</span>
+                        }
+                    </div>
+                </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+

@@ -1,0 +1,49 @@
+﻿@model turniri.Model.Tournament
+@{
+    var viewData = new ViewDataDictionary(); 
+    viewData["inteam"] = false;
+}
+
+<div class="turnir-winners gamers-rating">
+    <div class="top-bar">
+        <h3>Победители
+        </h3>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="gamers-list clear">
+        <div class="top-grid">
+            <div class="name">
+                ИМЯ
+            </div>
+            <div class="score">
+                ЗАРАБОТАННЫЕ ОЧКИ
+            </div>
+            <div class="prize">
+                ПОЛУЧЕННЫЙ ПРИЗ
+            </div>
+        </div>
+        <div class="gamers-scroll">
+            <ul class="clear">
+                @foreach (var award in Model.WinnerAwards)
+                {
+                    <li>
+                        <div class="name">
+                            <div class="icon-medal-@award.Place sprite">
+                            </div>
+                            @Html.Partial("__StatisticPlayerView", award.Player, viewData)
+                       </div>
+                        <div class="score">
+                            @award.Point
+                        </div>
+                        <div class="prize">
+                            <div class="preview-image">
+                                <img src="@award.FullIconPath" alt="preview" title="@award.Description"/>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

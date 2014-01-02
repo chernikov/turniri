@@ -1,0 +1,31 @@
+﻿@model IEnumerable<turniri.Model.Notice>
+
+<div class="popup-window-big popup-window">
+    <div class="top-bar">
+        <h3>Уведомления
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper">
+        <div class="notice-list">
+            @if (Model.Any())
+            {
+                foreach (var notice in Model)
+                {
+                    if (notice.IsShow) 
+                    {
+                        @Html.Partial("Notice", notice)    
+                    }
+                    
+                }
+            }
+            else
+            {
+                <h3>Нет уведомлений</h3>
+            }
+        </div>
+    </div>
+</div>

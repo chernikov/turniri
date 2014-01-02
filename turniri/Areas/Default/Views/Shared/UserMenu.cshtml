@@ -1,0 +1,44 @@
+﻿@model string
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var controllerName = ViewContext.RequestContext.RouteData.Values["controller"] as string;
+    var actionName = ViewContext.RequestContext.RouteData.Values["action"] as string;
+    string login = null;
+    if (!string.IsNullOrWhiteSpace(Model))
+    {
+        login = Model;
+    }
+}
+@if (currentUser != null)
+{
+    <div class="main-top clear">
+        <div class="profile-menu menu">
+            <ul>
+                <li class="@(controllerName == "User" && actionName != "Group" ? "current" : "")">
+                    @Html.ActionLink("ПРОФИЛЬ", "Index", "User", new { login }, null)
+                </li>
+                <li class="@(controllerName == "Blog" ? "current" : "")">
+                    @Html.ActionLink("БЛОГ", "Index", "Blog", new { login }, null)
+                </li>
+                <li class="@(controllerName == "Photo" ? "current" : "")">
+                    @Html.ActionLink("ФОТО", "Index", "Photo", new { login }, null)
+                </li>
+                <li class="@(controllerName == "UserVideo" ? "current" : "")">
+                    @Html.ActionLink("ВИДЕО", "Index", "UserVideo", new { login }, null)
+                </li>
+                <li class="@(controllerName == "Friend" ? "current" : "")">
+                    @Html.ActionLink("ДРУЗЬЯ", "Index", "Friend", new { login }, null)
+                </li>
+                <li class="@(controllerName == "User" && actionName == "Group" ? "current" : "")">
+                    @Html.ActionLink("КОМАНДЫ", "Group", "User", new { login }, null)
+                </li>
+                <li class="@(controllerName == "Award" ? "current" : "")">
+                    @Html.ActionLink("ДОСТИЖЕНИЯ", "Index", "Award", new { login }, null)
+                </li>
+            </ul>
+        </div>
+        <div class="profile">
+            ЛИЧНЫЙ КАБИНЕТ
+        </div>
+    </div>
+}

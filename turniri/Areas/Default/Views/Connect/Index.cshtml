@@ -1,0 +1,80 @@
+﻿@model turniri.Model.User
+@{
+    ViewBag.Title = "Социальные сети";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <script src="/Media/scripts/default/connect.js" type="text/javascript"></script>
+}
+@Html.Partial("UserMenu", "")
+<div class="left">
+    <div class="edit-main-profile main-profile gamers-rating social-connect">
+        <div class="top-bar">
+            <h3>Социальные сети
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="main-profile-wrapper clear">
+            <div class="input-block top-border-none">
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        <div class="gray-28-button-wrapper @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.facebook) ? "gray-28-button-active-wrapper" : "")">
+                            <a href="@Url.Action("FacebookConnect", "Connect")">Facebook</a>
+                        </div>
+                    </div>
+                    <div class="input">
+                        @if (Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.facebook))
+                        {
+                            @Html.CheckBox("FacebookTranslate", Model.SocialByType(turniri.Model.Social.ProviderType.facebook).TranslateWin, new { @class = "toggle-translate", data_type = "facebook" }) <span>
+                            <label for="FacebookTranslate">Транслировать
+                                активность</label></span>
+                        }
+                    </div>
+
+                </div>
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        <div class="gray-28-button-wrapper @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.vk) ? "gray-28-button-active-wrapper" : "")">
+                            <a href="@Url.Action("VkontakteConnect", "Connect")">Vkontakte</a>
+                        </div>
+                    </div>
+                    <div class="input">
+                        @if (Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.vk))
+                        {
+                            @Html.CheckBox("VkTranslate", Model.SocialByType(turniri.Model.Social.ProviderType.vk).TranslateWin, new { @class = "toggle-translate", data_type = "vk" }) <span><label for="VkTranslate">Транслировать
+                                активность</label></span>
+                        }
+                    </div>
+                </div>
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        <div class="gray-28-button-wrapper @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.twitter) ? "gray-28-button-active-wrapper" : "")">
+                            <a href="@Url.Action("TwitterConnect", "Connect")">Twitter</a>
+                        </div>
+                    </div>
+                    <div class="input">
+                        @if (Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.twitter))
+                        {
+                            @Html.CheckBox("TwitterTranslate", Model.SocialByType(turniri.Model.Social.ProviderType.twitter).TranslateWin, new { @class = "toggle-translate", data_type = "twitter" }) <span><label for="TwitterTranslate">Транслировать активность</label></span>
+                        }
+                    </div>
+                </div>
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        <div class="gray-28-button-wrapper @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.google) ? "gray-28-button-active-wrapper" : "")">
+                            <a href="@Url.Action("GoogleConnect", "Connect")">Google</a>
+                        </div>
+                    </div>
+                    <div class="input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+<div class="right">
+    @Html.Partial("ControlPanel")
+</div>

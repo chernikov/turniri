@@ -1,0 +1,28 @@
+﻿@model KeyValuePair<string, turniri.Models.ViewModels.ProductPriceView>
+
+
+<div class="ProductPriceWrapper">
+    <span class="row">
+        @Html.Hidden("ProductPrices.index", Model.Key)
+        @Html.Hidden("ProductPrices[" + Model.Key + "].Key", Model.Key)
+        @Html.Hidden("ProductPrices[" + Model.Key + "].Value.ID", Model.Value.ID)
+        <span class="span2">
+            @Html.TextBox("ProductPrices[" + Model.Key + "].Value.OldPrice", Model.Value.OldPrice, new { @class = "input-small", placeholder = "Старая цена" })
+        </span>
+        <span class="span2">
+            @Html.TextBox("ProductPrices[" + Model.Key + "].Value.Price", Model.Value.Price, new { @class = "input-small", placeholder = "Актуальная цена" })
+        </span>
+        <span class="span2">
+            @Html.DropDownList("ProductPrices[" + Model.Key + "].Value.PlatformID", Model.Value.SelectListPlatforms, new { @class = "input-small"})
+        </span>
+        <span class="span2 icon">
+            <label class="checkbox">
+                @Html.CheckBox("ProductPrices[" + Model.Key + "].Value.Preorder", Model.Value.Preorder)
+                предзаказ
+            </label>
+        </span>
+        <span class="span1">
+            <span class="btn remove-line-link"><i class="icon-trash"></i></span>
+        </span>
+    </span>
+</div>

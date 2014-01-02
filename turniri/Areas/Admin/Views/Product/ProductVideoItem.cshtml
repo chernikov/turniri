@@ -1,0 +1,19 @@
+﻿@model KeyValuePair<string, turniri.Models.ViewModels.ProductVideoView>
+
+<li class="span4 ProductVideoWrapper">
+    @Html.Hidden("ProductVideos.index", Model.Key)
+    @Html.Hidden("ProductVideos[" + Model.Key + "].Key", Model.Key, new {@class="video-key" })
+    @Html.Hidden("ProductVideos[" + Model.Key + "].Value.VideoThumb", Model.Value.VideoThumb)
+    @Html.Hidden("ProductVideos[" + Model.Key + "].Value.VideoCode", Model.Value.VideoCode)
+    <div class="thumbnail normalsize">
+        <div class="remove-video">
+            <i class="icon-remove"></i>
+        </div>
+        <img src="@(Model.Value.FullVideoThumb)?width=200&height=200&mode=crop&scale=both" />
+        <div class="form-search">
+            @Html.TextBox("ProductVideos[" + Model.Key + "].Value.VideoUrl", Model.Value.VideoUrl, new { @class="input-medium search-query video-url"})
+            <button type="submit" class="btn submit-video">Ok</button>
+        </div>
+
+    </div>
+</li>

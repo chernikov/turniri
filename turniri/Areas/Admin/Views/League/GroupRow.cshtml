@@ -1,0 +1,62 @@
+﻿@model turniri.Model.Group
+@{
+    var league = (turniri.Model.League)ViewBag.League;
+    var lastSeason = league.LastSeason;
+}
+<td>
+    @Model.ID
+</td>
+<td>
+    @Model.Name
+</td>
+<td>
+    @if (lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Created)
+    {
+    @Html.Action("SelectListGroupLeagueLevel", new { id = Model.ID, seasonId = lastSeason.ID })
+    }
+    else
+    {
+        <span>@Model.LeagueLevelName(lastSeason) </span>
+    }
+</td>
+
+@if (lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.FinishedMainTour ||
+                lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Finished)
+{
+    <td>
+        @{
+    var place = Model.PlaceOfSeason(lastSeason);
+        }
+        @if (place != null) 
+        { 
+        <span class="badge badge-@Model.ColorPlaceOfSeason(lastSeason)">
+            @place
+        </span>
+        }
+    </td>
+}
+else
+{
+    if (lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Created)
+    {
+        <td>
+            @Html.Action("SelectListGroupTournament", new { id = Model.ID, seasonId = lastSeason.ID, levelId = Model.LeagueLevel(lastSeason) })
+        </td>
+    }
+    else
+    {
+        <td>
+            @{
+        var tournament = Model.TournamentOfSeason(lastSeason);
+            }
+            @if (tournament != null) 
+            {
+                @tournament.Name
+            }
+        </td>
+    }
+}
+<td></td>
+
+
+<td></td>

@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[Round] (
+    [ID]                 INT            IDENTITY (1, 1) NOT NULL,
+    [Participant1ID]     INT            NULL,
+    [Participant2ID]     INT            NULL,
+    [MatchID]            INT            NOT NULL,
+    [Number]             INT            NOT NULL,
+    [Score1]             INT            NOT NULL,
+    [Score2]             INT            NOT NULL,
+    [IntroducedResultID] INT            NULL,
+    [ScreenshotPath]     NVARCHAR (150) NULL,
+    [Status]             INT            NOT NULL,
+    [AddedDate]          DATETIME       NOT NULL,
+    [PlayedDate]         DATETIME       NULL,
+    [ScheduleDate]       DATETIME       NULL,
+    [Player1IsHost]      BIT            NOT NULL,
+    [IsAdditional]       BIT            NOT NULL,
+    [Score1Text]         NVARCHAR (50)  NOT NULL,
+    [Score2Text]         NVARCHAR (50)  NOT NULL,
+    [Extended]           BIT            NOT NULL,
+    [Technical]          BIT            NOT NULL,
+    CONSTRAINT [PK_Round] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_Round_IntroducedResult] FOREIGN KEY ([IntroducedResultID]) REFERENCES [dbo].[User] ([ID]),
+    CONSTRAINT [FK_Round_Match] FOREIGN KEY ([MatchID]) REFERENCES [dbo].[Match] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_Round_Participant1] FOREIGN KEY ([Participant1ID]) REFERENCES [dbo].[Participant] ([ID]),
+    CONSTRAINT [FK_Round_Participant2] FOREIGN KEY ([Participant2ID]) REFERENCES [dbo].[Participant] ([ID])
+);
+

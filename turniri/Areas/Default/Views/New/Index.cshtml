@@ -1,0 +1,151 @@
+﻿@model turniri.Model.New
+@{
+    ViewBag.Title = @Model.Header;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var currentPage = Request.Url.AbsoluteUri;
+}
+@section header
+{
+    <script src="/Media/scripts/default/create-comment.js" type="text/javascript"></script>
+    @Html.Partial("_SocialLikesScripts")
+    <script type="text/javascript">
+        VK.Widgets.Like('vk_like', {
+            width: 200,
+            pageTitle: '@Model.Header',
+            pageUrl: '@currentPage',
+            pageImage: '@Model.PreviewPath'
+        });
+    </script>
+}
+@Html.Partial("UserMenu", "")
+<div class="main-bootom">
+    <div class="box-news gamers-rating">
+        <div class="top-bar">
+            <h3>НОВОСТИ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="news-wrapper clear">
+            <div class="news clear">
+                @if (!string.IsNullOrWhiteSpace(Model.AvatarTitlePath))
+                {
+                    <div class="preview-image">
+                        <img src="@Model.AvatarTitlePath" alt="@Model.Header" />
+                    </div>
+                }
+                <div class="content">
+                    <div class="title">
+                        <h2>
+                            @Model.Header
+                        </h2>
+                    </div>
+                    <div class="text">
+                        @Html.Raw(Model.Text.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                    </div>
+                    <div class="info-wrapper clear">
+                        <div class="date">
+                            @Model.AddedDate.ToString("dd.MM.yyyy")
+                        </div>
+                        <div class="comment">
+                            <a href="@Url.Action("Index", "User", new { login = Model.User.Login })">@Model.User.Login</a>
+                        </div>
+                        <div class="comment">
+                            @Model.CommentCount @Model.CommentCount.CountWord("комментарий", "комментария", "комментариев")
+                        </div>
+                        <div class="comment">
+                            @Model.VisitCount @Model.VisitCount.CountWord("просмотр", "просмотра", "просмотров")
+                        </div>
+                        <div class="like news" data-id="@Model.ID">
+                            <div class="sprite icon @(currentUser != null ? (Model.IsLikedBy(currentUser) ? "selected active" : "active") : "") ">
+                            </div>
+                            <div class="count">@Model.Likes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="likes">
+                <div class="facebook">
+                    <div class="fb-like" data-href="@currentPage" data-send="false" data-layout="button_count" data-width="200" data-show-faces="true" data-font="arial">
+                    </div>
+                </div>
+                <div class="vk">
+                    <div id="vk_like"></div>
+                </div>
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru" data-hashtags="turniriru">
+                        Твитнуть</a>
+                    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <div class="google">
+                    <!-- Place this tag where you want the +1 button to render. -->
+                    <div class="g-plusone" data-size="medium" data-annotation="inline" data-width="200">
+                    </div>
+
+                    <!-- Place this tag after the last +1 button tag. -->
+                    <script type="text/javascript">
+                        window.___gcfg = { lang: 'ru' };
+
+                        (function () {
+                            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                            po.src = 'https://apis.google.com/js/plusone.js';
+                            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                    </script>
+                </div>
+            </div>
+            <div class="comment-wrapper">
+                @if (Model.CommentCount > 0)
+                {
+                    <div class="comment-list">
+                        <ul>
+                            @foreach (var comment in Model.SubComments)
+                            {
+                                <li id="Comment_@comment.ID">
+                                    <div class="comment-info clear">
+                                        <div class="preview-image">
+                                            <img src="@comment.User.FullAvatarPath18" alt="userpic" />
+                                            @if (comment.User.IsOnline)
+                                            {
+                                                <div class="dot"></div>
+                                            }
+                                        </div>
+                                        <div class="name">
+                                            <a href="@Url.Action("Index", "User", new { login = comment.User.Login })">
+                                                @comment.User.Login
+                                            </a>
+                                        </div>
+                                        <div class="date-time">
+                                            |&nbsp;&nbsp;@comment.AddedDate.ToString("dd.MM.yyyy")&nbsp;&nbsp;|&nbsp;&nbsp;@comment.AddedDate.ToString("HH:mm")
+                                        </div>
+                                    </div>
+                                    <div class="text">
+                                        @comment.Text.NlToBr()
+                                        @if (!string.IsNullOrWhiteSpace(comment.ImagePath))
+                                        {
+                                            <br />
+                                            <img src="@comment.ImagePath" alt="image" />
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(comment.VideoCode))
+                                        {
+                                            <br />
+                                            @Html.Raw(comment.VideoCode)
+                                        }
+                                    </div>
+                                    @if (currentUser != null && currentUser.InRoles("admin"))
+                                    {
+                                        <div class="close"></div>    
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                <div id="CommentInput">
+                    @Html.Action("CreateComment", new { id = Model.ID })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

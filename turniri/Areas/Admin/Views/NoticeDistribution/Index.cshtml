@@ -1,0 +1,62 @@
+﻿@model turniri.Model.PageableData<turniri.Model.NoticeDistribution>
+@{
+    ViewBag.Title = "Уведомления";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Уведомления</h2>
+
+@Html.ActionLink("Создать", "Create", "NoticeDistribution", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Автор
+            </th>
+            <th>Название
+            </th>
+            <th>Дата добавления
+            </th>
+            <th>Кол-во 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.User.Login
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.AddedDate.ToString("dd.MM.yyyy")
+            </td>
+            <td>
+                @item.CountReaderNotices &nbsp;/&nbsp;@item.CountNotices
+            </td>
+            <td>
+                @if (!item.AnyNotices)
+                {
+                    @Html.ActionLink("Изменить", "Edit", "NoticeDistribution", new { id = item.ID }, new { @class = "btn" })
+                }
+                @Html.ActionLink("Удалить", "Delete", "NoticeDistribution", new { id = item.ID }, new { @class = "btn btn-danger" })
+                @if (item.AnyNotices)
+                {
+                    @Html.ActionLink("Очистить", "ClearAll", "Notice", new { id = item.ID }, new { @class = "btn" })
+                }
+                @Html.ActionLink("Подписчики", "Item", "Notice", new { id = item.ID }, new { @class = "btn" })
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>

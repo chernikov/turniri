@@ -1,0 +1,93 @@
+﻿@model turniri.Model.ForumMessage
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<a name="@Model.ID"></a>
+<div class="user-info-wrapper">
+    <div class="forum-userpic">
+        <div class="preview-image">
+            <a href="@Url.Action("Index", "User", new { login = Model.Author.Login })">
+                <img src="@Model.Author.FullAvatarPath96" alt="userpic" />
+            </a>
+            @if (Model.Author.IsOnline)
+            {
+                <div class="online"></div>
+            }
+        </div>
+        <a href="@Url.Action("Index", "User", new { login = Model.Author.Login })" class="@Model.StatusColor">
+            @Model.Author.Login
+        </a>
+    </div>
+    <div class="user-summary">
+        Сообщения: @Model.Author.TotalForumMessages
+    </div>
+    <div class="user-awards clear">
+        @foreach (var award in Model.Author.LastAwards)
+        {
+            <img src="@award.FullIconPath" title="@award.Description" />
+        }
+    </div>
+</div>
+<div class="forum-coment-wrapper">
+    <div class="text">
+        @if (Model != null && Model.CanDelete(currentUser))
+        {
+            <div class="remove-message"></div>
+        }
+        @if (Model.ParentID != null)
+        {
+            if (Model.Parent.IsDeleted)
+            {
+                                        
+            <div class="deleted">
+                <q cite="@Model.Parent.Author.Login">Сообщение удалено @Model.Parent.Moderator.Login
+                    (@Model.Parent.ModeratedDate.Value.ToString("dd.MM.yyyy HH:mm"))</q>
+            </div>
+            }
+            else
+            {
+            @Html.Raw(Model.Parent.Quote.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))    
+            }
+        }
+        @if (Model.IsDeleted)
+        {
+            <div class="deleted">
+                Сообщение удалено @Model.Moderator.Login (@Model.ModeratedDate.Value.ToString("dd.MM.yyyy HH:mm"))
+            </div>
+        }
+        else
+        {
+            @Html.Raw(Model.Message.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+        }
+       
+    </div>
+    @if (Model.ModeratedByID.HasValue && !Model.IsDeleted)
+    {
+        <div class="moderated">
+            Сообщение отмодерировано @Model.Moderator.Login (@Model.ModeratedDate.Value.ToString("dd.MM.yyyy HH:mm"))
+        </div>
+    }
+     @if (!string.IsNullOrWhiteSpace(Model.Author.Signature))
+        {
+            <div class="signature">
+            @Model.Author.Signature.BBCodeToHTML().NlToBr()
+            </div>
+        }
+    <div class="date">
+        @Model.AddedDate.ToString("dd MMM yyyy HH:mm")
+    </div>
+    <div class="comment-link">
+        <a href="#@Model.ID">#@Model.ID</a>
+    </div>
+    <div class="answer">
+        <div class="gray-16-button-wrapper answer-message">
+            <span class="">Ответить</span>
+        </div>
+        @if (Model.CanEdit(currentUser))
+        {
+            <div class="gray-16-button-wrapper edit-message">
+                <span class="">Изменить</span>
+            </div>
+        }
+    </div>
+</div>

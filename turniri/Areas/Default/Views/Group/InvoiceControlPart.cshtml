@@ -1,0 +1,23 @@
+﻿@model turniri.Model.Group
+<ul>
+    @if (Model.AskedForNewMembers)
+    {
+        <ul>
+            <li><a href="@Url.Action("Roster", "Group", new { url = Model.Url })">
+                <img src="/Media/images/friend_message.gif" title="У вас новое сообщение" />УЧАСТНИКИ</a>
+            </li>
+        </ul>
+    }
+    else
+    {
+        <li><a href="@Url.Action("Roster", "Group", new { url = Model.Url })">
+            <div class="icon-msn-empty sprite"></div>
+            УЧАСТНИКИ</a></li>
+    }
+    <li class="send-money"><span>
+        <div class="icon-gold sprite"></div>
+        ПОПОЛНИТЬ ТИ В ГРУППЕ</span></li>
+    <li class="send-money-to-player"><span>
+        <div class="icon-crystal sprite"></div>
+        РАСПРЕДЕЛИТЬ ТИ ИГРОКАМ</span></li>
+</ul>

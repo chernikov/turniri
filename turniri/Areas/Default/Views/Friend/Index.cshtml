@@ -1,0 +1,51 @@
+﻿@model turniri.Model.User
+@{
+    ViewBag.Title = "Друзья";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var tabID = (int)ViewBag.TabID;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/friends.js"></script>
+    <script type="text/javascript">
+        //так надо 
+        var friends;
+        $().ready(function () {
+            friends = new Friends();
+            friends.init();
+        });
+    </script>
+    <script type="text/javascript" src="/Media/scripts/default/messages.js"></script>
+}
+@Html.Hidden("TabID", tabID)
+@Html.Partial("UserMenu", Model.Login)
+<div class="main-bootom">
+    <div class="big-box turnirs">
+        <div class="switcher clear">
+            <ul>
+                
+                @if (currentUser != null && currentUser.ID == Model.ID)
+                {
+                       <li id="tab_friends_1">Мои друзья</li>
+                        <li id="tab_friends_2">Заявки в друзья</li>
+                } else {
+                    
+                   <li id="tab_friends_1">Друзья</li>
+                 }
+            </ul>
+        </div>
+        <div class="friend-wrapper clear">
+            <div id="tab_friends_1_content" class="switcher-content">
+                @Html.Action("Friends", "Friend", new { id = Model.ID })
+            </div>
+            @if (currentUser != null && currentUser.ID == Model.ID)
+            {
+                <div id="tab_friends_2_content" class="switcher-content">
+                    @Html.Action("Orders", "Friend", new { id = Model.ID })
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

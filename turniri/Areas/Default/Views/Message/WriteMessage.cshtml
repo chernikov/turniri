@@ -1,0 +1,68 @@
+﻿@model turniri.Models.ViewModels.MessageView
+
+<div class="popup-window-big popup-window" style="display: block;">
+    <div class="top-bar">
+        <h3>Написать сообщение
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    @using (Html.BeginForm("WriteMessage", "Message", FormMethod.Post, new { id = "WriteMessageForm" }))
+    {
+        @Html.Hidden("SubjectID", Model.SubjectID)
+        @Html.Hidden("ReceiverID", Model.ReceiverID)
+        <div class="popup-message popup-wrapper">
+            @if (Model.ReceiverID == 0)
+            {
+                <div class="popup-input-item">
+                    <div class="label-name">
+                        Кому
+                    </div>
+                    <div class="input">
+                        @Html.TextBox("ReceiverLogin", Model.ReceiverLogin)
+                        @Html.ValidationMessage("ReceiverLogin")
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="popup-input-item">
+                    <div class="label-name">
+                        Кому
+                    </div>
+                    <div class="input">
+                        @Model.ReceiverLogin
+                    </div>
+                </div>
+            }
+            <div class="popup-input-item">
+                <div class="label-name">
+                    Тема 
+                </div>
+                <div class="input">
+                    @Html.ValidationMessage("SubjectName")
+                    @Html.TextBox("SubjectName", Model.SubjectName, new { @class = "subject" })
+                </div>
+            </div>
+            <div class="popup-input-item">
+                <div class="label-name">
+                    Сообщение
+                </div>
+                <div class="input">
+                    @Html.ValidationMessage("Text")
+                    @Html.TextArea("Text", Model.Text)
+                </div>
+            </div>
+            <div class="massage-button clear">
+                <div class="gray-24-button-wrapper" id="WriteMessageButton">
+                    <span>ОТПРАВИТЬ</span>
+                </div>
+                <div class="gray-24-button-wrapper">
+                    <span class="popup-close">ОТМЕНА</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

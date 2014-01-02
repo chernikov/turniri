@@ -1,0 +1,84 @@
+﻿@model turniri.Models.ViewModels.UserVideoView
+@{
+    ViewBag.Title = "Загрузить видео";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/edit-user-video.js"></script>
+}
+@Html.Partial("UserMenu", "")
+<div class="main-bootom">
+    <div class="box-registration box-forum-update box">
+        <div class="top-bar">
+            <h3>ЗАГРУЗИТЬ ВИДЕО
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="registration-wrapper clear">
+            @using (Html.BeginForm("Edit", "UserVideo", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.Hidden("UserID", Model.UserID)
+                @Html.Hidden("ID", Model.ID)
+                @Html.Hidden("VideoCode", Model.VideoCode)
+                @Html.Hidden("VideoThumb", Model.VideoThumb)
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Заголовок*
+                    </div>
+                    <div class="input">
+                        @Html.TextBox("Header", Model.Header)
+                    </div>
+                    @Html.ValidationMessage("Header")
+                </div>
+                if (currentUser.HasAnyGroup)
+                {
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Группа
+                    </div>
+                    <div class="input">
+                        @Html.DropDownList("GroupID", Model.SelectListGroups, new { @class = "input-xlarge" })
+                    </div>
+                </div>
+                }
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Ссылка на видео*
+                    </div>
+                    <div class="input">
+                        @Html.TextBox("VideoUrl", Model.VideoUrl)
+                    </div>
+                    <div class="edit-video-preview">
+                        <div id="VideoWrapper">
+                            <div id="VideoCodeWrapper">
+                                @Html.Raw(Model.VideoCode)
+                            </div>
+                            <div id="VideoThumbWrapper">
+                                @if (!string.IsNullOrWhiteSpace(Model.VideoThumb))
+                                {
+                                    <img src="@Model.VideoThumb" alt="preview"/>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationMessage("VideoThumb")
+                </div>
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Текст *
+                    </div>
+                    <div class="input" style="overflow: hidden;">
+                        @Html.TextArea("Text", Model.Text, new { style = "width : 500px" })
+                    </div>
+                    @Html.ValidationMessage("Text")
+                </div>
+                <div class="registration-button">
+                    <input class="blue-28-submit" type="submit" value="РАЗМЕСТИТЬ" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

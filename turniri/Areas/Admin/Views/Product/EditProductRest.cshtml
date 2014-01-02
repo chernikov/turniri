@@ -1,0 +1,74 @@
+﻿@model turniri.Model.Product
+
+@if (Model.SubProductVariations.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#
+                </th>
+                <th>Остаток</th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        @using (Html.BeginForm("Rest", "Product", FormMethod.Post))
+        {
+            <tr>
+                <td>
+                    <img src="@Model.Image?width=60&mode=crop" />
+                </td>
+                <td>
+                    @Html.Hidden("ProductID", Model.ID)
+                    @Html.Hidden("ProductVariationID", null)
+                    @Html.TextBox("Rest", Model.RestOfCodes(null))
+                </td>
+                <td>
+                    <input type="submit" value="Сохранить" class="btn" />
+                </td>
+            </tr>
+        }
+        @foreach (var productVariation in Model.SubProductVariations)
+        {
+            using (Html.BeginForm("Rest", "Product", FormMethod.Post))
+            {
+            <tr>
+                <td>
+                    <img src="@productVariation.Image?width=60&mode=crop" />
+                </td>
+                <td>
+                    @Html.Hidden("ProductID", Model.ID)
+                    @Html.Hidden("ProductVariationID", productVariation.ID)
+                    @Html.TextBox("Rest", Model.RestOfCodes(productVariation.ID))
+                </td>
+                <td>
+                    <input type="submit" value="Сохранить" class="btn" />
+                </td>
+            </tr>
+            }
+        }
+    </table>
+    
+}
+else
+{
+    using (Html.BeginForm("Rest", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+    <fieldset>
+        <legend>Остатки на складе</legend>
+        <div class="control-group">
+            <label class="control-label">
+                Количество доступного товара</label>
+            <div class="controls">
+                @Html.TextBox("Rest", Model.UnselledCodes, new { @class = "input-xlarge" })
+                <div class="hint">
+                    Тот который еще не продан
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="RestBtn">Изменить</button>
+        </div>
+    </fieldset>
+    }
+}

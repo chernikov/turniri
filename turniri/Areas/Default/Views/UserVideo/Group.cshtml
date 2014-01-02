@@ -1,0 +1,83 @@
+﻿@model turniri.Model.Group
+@{
+    ViewBag.Title = "Видео команды " + Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/user-videos.js"></script>
+}
+<div id="video_popup" class="popup-video-wrapper" style="display: none">
+    <div class="icon-close-popup sprite">
+    </div>
+    <div class="video">
+    </div>
+</div>
+@Html.Partial("GroupMenu", Model.Url)
+@if (currentUser != null && Model.IsGrantedMemberOf(currentUser))
+{
+    <div class="photo-gallery-add-button gray-28-button-wrapper-nohover">
+        @Html.ActionLink("Загрузить видео", "Create", "UserVideo")
+    </div>
+}
+<div class="main-bootom">
+    <div class="video-wrapper long-main-news main-news">
+        @if (Model.UserVideosCount > 0)
+        {
+            <div class="news-wrapper">
+                <ul>
+                    @{
+            int i = 0;
+                    }
+                    @foreach (var video in Model.UserVideoPage(page))
+                    {
+                        <li class="@(i % 2 == 0 ? "" : "second") clear" id="UserVideo_@video.ID">
+                            <div class="video-preview preview">
+                                <img src="@video.VideoThumb" alt="title" />
+                                <div class="icon-play-video sprite">
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="title">
+                                    <h2>
+                                        @Html.ActionLink(video.Header, "Item", "UserVideo", new { id = video.ID }, null)
+                                    </h2>
+                                </div>
+                                <div class="text">
+                                    @Html.Raw(video.Text.StripTags().Teaser(300, "..."))
+                                </div>
+                                <div class="bottom-wrapper">
+                                    <div class="date">
+                                        Дата добавление: @video.AddedDate.ToString("dd.MM.yyyy")
+                                    </div>
+                                    <div class="view">
+                                        Просмотров: @video.VisitCount
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        i++;
+                    }
+                </ul>
+                <div class="paging">
+                    <div class="title">
+                        Страницы:
+                    </div>
+                    <div class="paging-list">
+                        @Html.PageLinksTurniri(page, Model.UserVideosCountPage(), x => Url.Action("Group", new { page = x }))
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="news-wrapper">
+                <div class="empty">
+                    Ничего не добавлено
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@model turniri.Models.ViewModels.DistributionView
+@{
+    ViewBag.Title = Model.ID == 0 ? "Добавление рассылки" : "Изменение рассылки";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/distribution.js"></script>
+}
+<h2>@(Model.ID == 0 ? "Добавление рассылки" : "Изменение рассылки")</h2>
+<p>
+</p>
+@using (Html.BeginForm("Edit", "Distribution", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Hidden("ID", Model.ID)
+    @Html.Hidden("UserID", Model.UserID)
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">
+                Наименование</label>
+            <div class="controls">
+                @Html.TextBox("Name", Model.Name, new { @class = "input-xlarge" })
+                @Html.ValidationMessage("Name")
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Тема письма</label>
+            <div class="controls">
+                @Html.TextBox("Subject", Model.Subject, new { @class = "input-xlarge" })
+                @Html.ValidationMessage("Subject")
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Содержание письма
+            </label>
+            <div class="controls">
+                @Html.ValidationMessage("Body")
+                @Html.TextArea("Body", Model.Body, new { @class = "input-xlarge html-description" })
+            </div>
+        </div>
+        <p class="text-info"><small>* Используйте %username% в теме и содержания письма для замены на логин пользователя</small></p>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Сохранить</button>
+            @Html.ActionLink("Отменить", "Index", null, null, new { @class = "btn" })
+        </div>
+    </fieldset>
+}

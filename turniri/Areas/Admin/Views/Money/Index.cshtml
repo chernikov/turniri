@@ -1,0 +1,107 @@
+﻿@model turniri.Model.PageableData<turniri.Model.MoneyDetail>
+@{
+    ViewBag.Title = "Баланс сайта";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var parameters = ViewContext.HttpContext.Request.Params;
+}
+
+<h2>Баланс сайта</h2>
+@Html.Action("Balance", "Money")
+
+@Html.ActionLink("Пересчитать", "RecalculateAll", "Money", null, new { @class = "btn" })
+@Html.ActionLink("Удалить непроведенные", "RemoveUnsubmitted", "Money", null, new { @class = "btn" })
+@Html.ActionLink("Проверить QIWI", "CheckQiwi", "Money", null, new { @class = "btn" })
+<br />
+<br />
+@using (Html.BeginForm("Index", "Money", FormMethod.Post, new { @class = "well" }))
+{
+    @Html.TextBox("search", parameters["search"], new { @class = "input-medium search-query" })
+
+    <button type="submit" class="btn">
+        Поиск</button> 
+    <br />
+    <br />
+   <span> С </span>@Html.TextBox("beginDate", parameters["beginDate"], new { @class = "input-medium datePicker" })
+    <span> По </span> @Html.TextBox("endDate", parameters["endDate"], new { @class = "input-medium datePicker" })
+    <label class="checkbox">
+        @Html.CheckBox("gold", parameters["gold"]) только золотое ТИ
+    </label>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>GUID
+            </th>
+            <th></th>
+            <th>Сумма
+            </th>
+            <th>Описание
+            </th>
+            <th>Дата
+            </th>
+            <th>Статус
+            </th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                <small><small><small>@item.Global</small></small></small>
+                @if (!item.Submited)
+                {
+                    <a href="@Url.Action("Submit", "Money", new { guid = item.Global })"><i class="icon-ok-sign" title="Провести операцию"></i></a>
+                }
+            </td>
+            <td>
+                @if (item.UserID.HasValue)
+                {
+                    <span class="label label-inverse">@item.User.Login</span>
+                }
+                else if (item.GroupID.HasValue)
+                {
+                    <span class="label label-warning">@item.Group.Name</span>
+                }
+                else if (item.TournamentID.HasValue)
+                {
+                    <span class="label label-info">@item.Tournament.Name</span>
+                }
+                else
+                {
+                    <span class="label label-success">Сайт</span>
+                }
+            </td>
+            <td>
+                <strong>@item.SumGold</strong> / @item.SumWood / @item.SumCrystal
+            </td>
+            <td>
+                <span title="@item.Description">@item.Description.Teaser(50)</span>
+            </td>
+            <td>
+                @item.AddedDate
+            </td>
+            <td>
+                @if (item.Submited)
+                {
+                    <span class="label label-info">Проведен</span>
+                }
+                else
+                {
+                    <span class="label label-important">Не проведен</span>
+                }
+            </td>
+            <td>
+                <a href="@Url.Action("Remove", "Money", new  {guid = item.Global })" class="btn">Удалить</a>
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x, search = parameters["search"], gold = parameters["gold"], beginDate = parameters["beginDate"], endDate = parameters["endDate"] }))
+</div>

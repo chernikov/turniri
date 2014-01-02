@@ -1,0 +1,60 @@
+﻿@model turniri.Model.Group
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var i = 1;
+    var team = (turniri.Model.Team)ViewBag.Team;
+}
+@foreach (var userGroup in Model.SubUserGroups)
+{
+    var viewData = new ViewDataDictionary();
+    viewData.Add("gameId", team.Tournament.GameID);
+    <li class="@(i % 2 == 1 ? "second" : "")">
+        <div class="number">@i</div>
+        @Html.Partial("_RosterItem", userGroup.User, viewData)
+        <div class="action">
+            @if (currentUser != null && currentUser.ID == team.Captain.ID)
+            {
+                if (!team.IsClosed)
+                {
+                    if (!team.IsRegisteredUser(userGroup.User) && team.AcceptedCount < team.Tournament.TeamCount)
+                    {
+                <div class="gray-16-button-wrapper add-user-item" data-id="@userGroup.UserID" data-team="@team.ID">
+                    <span>добавить</span>
+                </div>
+                    }
+                    if (team.IsRegisteredUser(userGroup.User) && userGroup.UserID != currentUser.ID)
+                    {
+                <div class="gray-16-button-wrapper decline-user-item" data-id="@team.GetByUserID(userGroup.UserID).ID">
+                    <span>удалить</span>
+                </div>
+                    }
+                }
+                else if (!team.HotReplacement.HasValue || team.HotReplacement > 0)
+                {
+                    if (team.IsRegisteredUser(userGroup.User))
+                    {
+                <div class="gray-16-button-wrapper off-user-item" data-id="@team.GetByUserID(userGroup.UserID).ID" data-team="@team.ID">
+                    <span>заменить</span>
+                </div>
+                <div class="gray-16-button-wrapper cancel-off-user-item hidden">
+                    <span>отмена</span>
+                </div>
+                    }
+                    else
+                    {
+                <div class="gray-16-button-wrapper on-user-item hidden" data-id="@userGroup.UserID">
+                    <span>на поле</span>
+                </div>
+                    }
+                } else {
+                    if (team.IsRegisteredUser(userGroup.User))
+                    {
+                        <text>в игре</text>
+                    }
+                }
+            }
+            &nbsp;
+        </div>
+    </li>
+            i++;
+}

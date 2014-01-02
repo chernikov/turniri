@@ -1,0 +1,42 @@
+﻿@model IEnumerable<turniri.Model.Forum>
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="sub-forum forumList">
+    @foreach (var item in Model)
+    {
+        if (item != null)
+        {
+            <div class="item @(!item.IsEnd ? "forumItem"  : "")" data-id="@item.ID">
+                <div class="title  @(item.IsEnd ? "is-end" : "")">
+                    @item.Name
+                </div>
+                <div class="actions">
+                    @if (!item.IsEnd)
+                    {
+                        if (!item.SubMessages.Any() && !item.SubForums.Any())
+                        {
+                            @Html.ActionLink("Сообщения", "Index", "ForumMessage", new { id = item.ID }, new { @class = "btn btn-mini" })
+                        }
+                        @Html.ActionLink("Добавить", "Create", "Forum", new { id = item.ID }, new { @class = "btn btn-mini" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Сообщения", "Index", "ForumMessage", new { id = item.ID }, new { @class = "btn btn-mini" })
+                    }
+                    @if (currentUser != null && item.CanEdit(currentUser))
+                    {
+                        @Html.ActionLink("Изменить", "Edit", "Forum", new { id = item.ID }, new { @class = "btn btn-mini" })
+                    }
+                    @if (currentUser != null && item.CanDelete(currentUser))
+                    {
+                        @Html.ActionLink("Удалить", "Delete", "Forum", new { id = item.ID }, new { @class = "btn btn-mini btn-danger" })
+                    }
+                </div>
+                <div class="sub-wrapper">
+                    @Html.Action("TinySubForum", "Forum", new { id = item.ID })
+                </div>
+            </div>
+        }
+    }
+</div>

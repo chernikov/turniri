@@ -1,0 +1,51 @@
+﻿@model turniri.Model.Tournament
+
+@{
+    ViewBag.Title = "Аватары";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Аватары</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Логин
+            </th>
+            <th>
+                Юзерпик
+            </th>
+            <th>
+                Псевдоним
+            </th>
+            <th>
+                Аватарка
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.SubPlayers)
+    {
+        <tr>
+            <td>
+                @item.User.Login
+            </td>
+            <td>
+                <img src="@item.User.FullAvatarPath26" />
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(item.ImagePath26))
+                {
+                    <img src="@item.ImagePath26" />
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Avatar", new { id = item.ID }, new { @class = "btn" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,190 @@
+﻿@model turniri.Model.Team
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@Html.Hidden("TeamID", Model.ID)
+@Html.Hidden("GameID", Model.Tournament.GameID)
+@Html.Hidden("IsGroup", Model.Tournament.IsGroup)
+<div class="popup-window team-popup-window" style="display: block;">
+    <div class="top-bar">
+        <h3>Команда @Model.Name
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper">
+        @if (currentUser != null && currentUser.ID == Model.Captain.ID && !Model.IsClosed)
+        {
+            if (Model.AcceptedCount < Model.Tournament.TeamCount)
+            {
+                var rest = Model.Tournament.TeamCount - Model.AcceptedCount;
+            <div class="close-register">
+                Осталось принять @rest @rest.CountWord("игрока", "игрока", "игроков")
+            </div>
+               
+            }
+            else
+            {
+            <div class="close-register">
+                <div class="gray-16-button-wrapper close-team" data-id="@Model.ID">
+                    <span>закрыть регистрацию</span>
+                </div>
+            </div>
+            }
+        }
+        @if (currentUser != null && Model.HotReplacement.HasValue && Model.IsClosed)
+        {
+            if (Model.HotReplacement.Value > 0)
+            {
+            <div class="close-register">
+                Осталось @Model.HotReplacement @Model.HotReplacement.Value.CountWord("замена", "замены", "замен")
+            </div>
+            }
+            else
+            {
+            <div class="close-register">
+                Нет замен
+            </div>
+            }
+        }
+        <div class="captain-wrapper">
+            <div class="title">
+                Капитан :
+            </div>
+            <div class="user-login-wrapper">
+                <div class="preview-image">
+                    <a href="@Url.Action("Index", "User", new { login = Model.Captain.Login })">
+                        <img src="@Model.Captain.FullAvatarPath18" alt="avatar" title="@Model.Captain.Login"/>
+                    </a>
+                </div>
+                <a href="@Url.Action("Index", "User", new { login = Model.Captain.Login })" class="user">
+                    @Model.Captain.Login
+                </a>
+            </div>
+        </div>
+        <div class="roster">
+            <div class="list">
+                <div class="number">№</div>
+                <div class="name">ИМЯ</div>
+                <div class="thumbs-up">
+                    <div class="icon-thumbs-up sprite">
+                    </div>
+                </div>
+                <div class="thumbs-down">
+                    <div class="icon-thumbs-down sprite">
+                    </div>
+                </div>
+                <div class="reputation">
+                    РЕПУТАЦИЯ
+                </div>
+                <div class="score">
+                    ОЧКИ
+                </div>
+                <div class="level">
+                    УРОВЕНЬ
+                </div>
+                <div class="bandwidth">
+                    СВЯЗЬ
+                </div>
+                <div class="action">&nbsp;</div>
+            </div>
+            <div class="gamers-scroll">
+                <div class="scroll-pane">
+                    <ul class="clear">
+                        @{
+                            var i = 1;
+                        }
+                        @if (currentUser != null && Model.Tournament.IsGroup && Model.Captain.ID == currentUser.ID)
+                        {
+                            @Html.Action("GroupRoster", new { id = Model.ID })
+                        }
+                        else
+                        {
+                            foreach (var userTeam in Model.SubUsers)
+                            {
+                                var viewData = new ViewDataDictionary();
+                                viewData.Add("gameId", Model.Tournament.GameID);
+                            <li class="@(i % 2 == 1 ? "second" : "")">
+                                <div class="number">@i</div>
+                                @Html.Partial("_RosterItem", userTeam.User, viewData)
+                                <div class="action">
+                                    @if (currentUser != null && currentUser.ID == userTeam.Team.Captain.ID)
+                                    {
+                                        if (userTeam.Team.IsClosed)
+                                        {
+                                            if (!Model.HotReplacement.HasValue || Model.HotReplacement > 0)
+                                            {
+                                                if (Model.IsRegisteredUser(userTeam.User))
+                                                {
+                                                    <div class="gray-16-button-wrapper off-user-item" data-id="@Model.GetByUserID(userTeam.UserID).ID" data-team="@Model.ID">
+                                                        <span>заменить</span>
+                                                    </div>
+                                                    <div class="gray-16-button-wrapper cancel-off-user-item hidden">
+                                                        <span>отмена</span>
+                                                    </div>
+                                                }
+                                            }
+                                        } else {
+                                            if (!userTeam.Accepted && userTeam.Team.AcceptedCount < userTeam.Team.Tournament.TeamCount)
+                                            {
+                                            <div class="gray-16-button-wrapper accept-user-item" data-id="@Model.ID">
+                                                <span>принять</span>
+                                            </div>
+                                            }
+                                            if (userTeam.UserID != currentUser.ID)
+                                            {
+                                            <div class="gray-16-button-wrapper decline-user-item" data-id="@Model.ID">
+                                                <span>удалить</span>
+                                            </div>
+                                            }
+                                        }
+                                    }
+                                    &nbsp;
+                                </div>
+                            </li>
+                                    i++;
+                            }
+
+                        }
+                    </ul>
+                </div>
+
+                @if (!Model.Tournament.IsGroup && Model.Captain.ID == currentUser.ID && Model.Tournament.TeamCount > Model.AcceptedCount)
+                {
+                    <div class="gray-16-button-wrapper add-player">
+                        <span>Добавить</span>
+                    </div>
+                }
+                @if (!Model.Tournament.IsGroup && Model.Captain.ID == currentUser.ID && Model.IsClosed && Model.HotReplacement != 0)
+                {
+                    <div class="gray-16-button-wrapper replace-player hidden">
+                        <span>Заменить</span>
+                    </div>
+                }
+                <div class="select-player-wrapper hidden" id="SelectPlayerWrapper">
+                    @Html.Hidden("SelectPlayerID", 0)
+                    @Html.TextBox("SelectPlayer", null)
+                    <div class="gray-16-button-wrapper" id="SelectPlayerButton">
+                        <span>Ok</span>
+                    </div>
+                    <div class="error"></div>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.AnyTeamReplacements)
+        {
+            @Html.Partial("Replacements", Model)
+        }
+
+        @if (currentUser != null && currentUser.ID == Model.Captain.ID && !Model.IsClosed)
+        {
+            <div class="warning">
+                ! При закрытии турнира все неподтвержденные игроки будут удалены
+            </div>
+        }
+
+    </div>
+</div>

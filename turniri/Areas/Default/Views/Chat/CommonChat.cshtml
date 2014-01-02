@@ -1,0 +1,73 @@
+﻿@model turniri.Model.ChatRoom
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+<div class="common-chat">
+    @Html.Hidden("CommonChatRoomID", Model.ID)
+    <div class="list">
+        <div class="background"></div>
+        <div class="scroll-pane">
+            <ul id="CommonChatMessages">
+                @Html.Hidden("CommonLastUpdateID", Model.LastIdUpdate)
+                @foreach (var message in Model.LastMessagesReverse)
+                {
+                    if (message.Type == (int)turniri.Model.ChatMessage.MessageType.Simple)
+                    {
+                    <li class="common-item item" data-id="@message.ID">
+                        @if (message.CanDelete(currentUser))
+                        {
+                            <div class="remove"></div>
+                        }
+                        <div class="time">@message.AddedDate.ForumDateNamed() &mdash;</div>
+                        <div class="common-user user" data-id="@message.UserID">
+                            <div class="preview-image">
+                                <a href="@Url.Action("Index", "User", new { login = message.User.Login })">
+                                    <img src="@message.User.FullAvatarPath18" alt="userpic" />
+                                </a>
+                                @if (message.User.IsOnline)
+                                {
+                                    <div class="dot"></div>
+                                }
+                            </div>
+                            @if (message.CanDelete(currentUser))
+                            {
+                                <div class="ban"></div>
+                            }
+                            <a href="@Url.Action("Index", "User", new { login = message.User.Login })" class="@message.StatusColor">@message.User.Login</a>
+                            :
+                        </div>
+                        <div class="text">@Html.Raw(message.Message.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                        </div>
+                    </li>
+                    }
+                    if (message.Type == (int)turniri.Model.ChatMessage.MessageType.System)
+                    {
+                    <li class="item" data-id="@message.ID">
+
+                        <div class="time">@message.AddedDate.ForumDateNamed() &mdash;</div>
+
+                        <div class="text system">@Html.Raw(message.Message.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                        </div>
+                    </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    @if (currentUser != null)
+    {
+        <div id="InputWrapper" style="@(Model.CanAddMessage(currentUser) ? "" : "display:none")">
+            @using (Html.BeginForm("Write", "Chat", FormMethod.Post, new { id = "CommonChatMessageForm" }))
+            {
+                <div class="top-bg">
+                    <div class="inner-input">
+                        <input type="text" class="text" id="CommonChatMessage" value="" />
+                        <input type="submit" class="icon-submit sprite" id="CommonSubmitChatMessageButton" />
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    <div class="close-chat"></div>
+</div>

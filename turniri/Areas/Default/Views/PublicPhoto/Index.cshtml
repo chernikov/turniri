@@ -1,0 +1,45 @@
+﻿@model turniri.Model.PageableData<turniri.Model.PhotoAlbum>
+@{
+    ViewBag.Title = "ФОТО";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+<div class="main-bootom">
+    @foreach (var photoAlbum in Model.List)
+    {
+        <div class="preview-photo box-forum-update box">
+            <div class="top-bar">
+                <h3>
+                    @photoAlbum.Name
+                </h3>
+                <div class="bar-arrow-down sprite">
+                </div>
+            </div>
+            @if (photoAlbum.PhotosCount > 0)
+            {
+                <div class="preview-photo-list clear">
+                    <div class="big-preview">
+                        <a href="@Url.Action("Item", "Photo", new { url = photoAlbum.Url })">
+                            <img src="@photoAlbum.AlbumPhoto.AlbumPreviewPath" alt="Album Cover"/>
+                        </a>
+                    </div>
+                    <div class="preview-list clear">
+                        @foreach (var photo in photoAlbum.OtherAlbumPhotos)
+                        {
+                            <img src="@photo.AvatarPath" alt="preview"/>    
+                        }
+                    </div>
+                    <div class="photo-count">
+                        Фотографий: @photoAlbum.PhotosCount</div>
+                </div>        
+            }
+        </div>
+    }
+</div>
+<div class="paging light-paging turnir-paging">
+    <div class="title">
+        Страницы:
+    </div>
+    <div class="paging-list">
+        @Html.PageLinksTurniri(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new {page = x}))
+    </div>
+</div>

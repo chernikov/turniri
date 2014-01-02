@@ -1,0 +1,48 @@
+﻿@model turniri.Model.Poll
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@Html.Hidden("PollID", Model.ID)
+
+<div class="forum-poll-wrapper">
+   
+    @if (Model.CanVote(currentUser))
+    {
+         <div class="title">@Model.Name</div>
+        <div class="text">
+            @foreach (var pollItem in Model.SubPollItems)
+            {
+                <div class="poll-item">
+                    <label>
+                        @if (Model.PollType == (int)turniri.Model.Poll.PollTypeEnum.Radio)
+                        {
+                            @Html.RadioButton("PollItems[]", pollItem.ID)
+                        }
+                        @if (Model.PollType == (int)turniri.Model.Poll.PollTypeEnum.CheckBox)
+                        {
+                            @Html.CheckBox("PollItems[]", new { value = pollItem.ID })
+                        }
+                        <span class="text">@pollItem.Description</span>
+                    </label>
+                </div>
+            }
+            <div class="buttons">
+                <div class="gray-16-button-wrapper" id="Vote">
+                    <span class="">Проголосовать</span>
+                </div>
+                <div class="gray-16-button-wrapper" id="DontVote">
+                    <span class="">Воздержаться</span>
+                </div>
+            </div>
+        </div>
+        <div class="date">
+            @Model.AddedDate.ToString("dd MMM yyyy")
+        </div>
+        <div class="answer">
+        </div>
+    }
+    else
+    {
+        @Html.Action("Voted", "Poll", new {id = Model.ID})
+    }
+</div>

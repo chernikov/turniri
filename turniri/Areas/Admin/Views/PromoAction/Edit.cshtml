@@ -1,0 +1,103 @@
+﻿@model turniri.Models.ViewModels.PromoActionView
+@{
+    ViewBag.Title = Model.ID == 0 ? "Добавить промо-акцию" : "Изменить промо-акцию";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <script type="text/javascript" src="/Media/scripts/admin/edit-promoaction.js"></script>
+}</script>
+<h2>@(Model.ID == 0 ? "Добавить промо-акцию" : "Изменить промо-акцию")</h2>
+<p></p>
+@using (Html.BeginForm("Edit", "PromoAction", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Hidden("ID", Model.ID)
+    @Html.Hidden("ProductID", Model.ProductID)
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Наименование
+            </label>
+            <div class="controls">
+                @Html.TextBox("Name", Model.Name)
+                @Html.ValidationMessage("Name")
+            </div>
+        </div>
+         <div class="control-group">
+            <label class="control-label" for="Name">
+                Только на конкретный продукт
+            </label>
+            <div class="controls">
+                @Html.TextBox("ProductName", Model.ProductName)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Величина
+            </label>
+            <div class="controls">
+                @Html.TextBox("Amount", Model.Amount)
+                @Html.ValidationMessage("Amount")
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Тип
+            </label>
+            <div class="controls">
+                @Html.DropDownList("Type", Model.SelectListType)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Использовать до
+            </label>
+            <div class="controls">
+                @Html.TextBox("ValidDate", Model.ValidDate.HasValue ? Model.ValidDate.Value.ToString("dd.MM.yyyy") : "", new { @class = "datePicker" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Количестов
+            </label>
+            <div class="controls">
+                @Html.TextBox("Quantity", Model.Quantity)
+                @Html.ValidationMessage("Quantity")
+            </div>
+        </div>
+        @if (Model.ID == 0)
+        {
+            <div class="control-group">
+            <label class="control-label" for="Name">
+                Код
+            </label>
+            <div class="controls">
+                @Html.TextBox("Code", Model.Code)
+                @Html.ValidationMessage("Code")
+            </div>
+        </div>
+        }
+        <div class="control-group">
+            <label class="control-label" for="Name">
+                Многоиспользуемые промокоды:
+            </label>
+            <div class="controls">
+                @if (Model.CanChangeReusable)
+                {
+                    @Html.DropDownList("Reusable", Model.SelectListReusable)
+                }
+                else
+                {
+                    @Html.Hidden("Reusable", Model.Reusable)
+                    @Model.SelectListReusable.First(p => p.Selected).Text
+                }
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Сохранить
+            </button>
+            @Html.ActionLink("Отмена", "Index", null, null, new { @class = "btn" })
+        </div>
+    </fieldset>
+}

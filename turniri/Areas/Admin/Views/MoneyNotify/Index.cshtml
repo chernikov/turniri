@@ -1,0 +1,44 @@
+@model turniri.Model.PageableData<turniri.Model.MoneyNotify>
+
+@{
+    ViewBag.Title = "Уведомления по пополнениям денег";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Уведомления по пополнениям денег</h2>
+
+@Html.ActionLink("Очистить", "Clear", "MoneyNotify", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>Тип
+            </th>
+            <th>Данные
+            </th>
+            <th>Дата
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.TypeStr
+            </td>
+            <td>
+                @item.Data.Teaser(100)
+            </td>
+            <td>
+                @item.AddedDate
+            </td>
+            <td>
+                @Html.ActionLink("Просмотр", "Item", "MoneyNotify", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "MoneyNotify", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>

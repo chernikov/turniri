@@ -1,0 +1,35 @@
+﻿@model IEnumerable<turniri.Model.Forum>
+
+<div class="sub-forum forumList">
+    @foreach (var item in Model)
+    { 
+        <div class="item forumItem" data-id="@item.ID">
+            @if (item.SubForums.Any())
+            {
+                <div class="open"></div>
+            }
+            <div class="subForumItem">
+            </div>
+            <div class="title @(item.IsEnd ? "is-end" : "")">
+                @item.Name
+            </div>
+            <div class="actions">
+                @if (!item.IsEnd)
+                {
+                    if (!item.SubMessages.Any() && !item.SubForums.Any())
+                    {
+                        @Html.ActionLink("Сообщения", "Index", "ForumMessage", new { id = item.ID }, new { @class = "btn" })
+                    }
+                    @Html.ActionLink("Добавить", "Create", "Forum", new { id = item.ID }, new { @class = "btn" })
+                }
+                else
+                {
+                    @Html.ActionLink("Сообщения", "Index", "ForumMessage", new { id = item.ID }, new { @class = "btn" })
+                }
+                @Html.ActionLink("Изменить", "Edit", "Forum", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Forum", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </div>
+            <div class="sub-wrapper"></div>
+        </div>
+    }
+</div>

@@ -1,0 +1,76 @@
+﻿@{
+    var controllerName = ViewContext.RequestContext.RouteData.Values["controller"] as string;
+    var actionName = ViewContext.RequestContext.RouteData.Values["action"] as string;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+<div class="controll-box box-forum-update box">
+    <div class="top-bar">
+        <h3>КОНТРОЛЬНАЯ ПАНЕЛЬ
+        </h3>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="box-wrapper box-wrapper-scroll">
+        <div class="content">
+            <ul>
+                <li><a href="@Url.Action("Index", "Message")">
+                    @if (currentUser.HasUnreadMail(1))
+                    {
+                        <img src="/Media/images/message.gif" title="У вас новое сообщение" />
+                    }
+                    else
+                    {
+                    <div class="icon-letter-blue-empty sprite">
+                    </div>    
+                    }
+                    ПРОСМОТР СООБЩЕНИЙ</a></li>
+                <li><a href="@Url.Action("Fight", "Message")">
+                    @if (currentUser.HasUnreadMail(2))
+                    {
+                        <img src="/Media/images/battle_message.gif" title="У вас новое боевое сообщение" />
+                    }
+                    else
+                    {
+                    <div class="icon-letter-red-empty sprite"></div>
+                    }
+                    ПРОСМОТР БОЕВЫХ СООБЩЕНИЙ</a></li>
+                <li><a href="@Url.Action("Income", "Friend")">
+                     @if (currentUser.AskedForNewFriend) 
+                    {
+                         <img src="/Media/images/friend_message.gif" title="У вас новое сообщение" />
+                     } else {
+                    <div class="icon-msn-empty sprite">
+                    </div>
+                    }
+                    ПРИГЛАШЕНИЯ ДРУЖИТЬ</a></li>
+            </ul>
+            <div class="buttons-wrapper">
+                <div class="gray-28-button-wrapper @((controllerName == "User" && actionName == "Edit") ? "gray-28-button-active-wrapper" : "")">
+                    @Html.ActionLink("Ред. профиль", "Edit", "User")
+                </div>
+                <div class="gray-28-button-wrapper @((controllerName == "User" && actionName == "Money") ? "gray-28-button-active-wrapper" : "")">
+                    @Html.ActionLink("Деньги", "Money", "User")
+                </div>
+                <div class="gray-28-button-wrapper">
+                    @Html.ActionLink("Мои команды", "Group", "User")
+                </div>
+                <div class="gray-28-button-wrapper">
+                    @Html.ActionLink("Написать в блог", "Create", "Blog")
+                </div>
+                <div class="gray-28-button-wrapper">
+                    @Html.ActionLink("Искать друзей", "Index", "Users")
+                </div>
+                <div class="gray-28-button-wrapper">
+                    @Html.ActionLink("Загрузить фото", "Create", "Photo")
+                </div>
+                <div class="gray-28-button-wrapper">
+                    @Html.ActionLink("Загрузить видео", "Create", "UserVideo")
+                </div>
+                <div class="gray-28-button-wrapper @((controllerName == "Connect") ? "gray-28-button-active-wrapper" : "")">
+                    @Html.ActionLink("Соц. сети", "Index", "Connect")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

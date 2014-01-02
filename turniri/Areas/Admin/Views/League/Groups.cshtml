@@ -1,0 +1,45 @@
+﻿@model IList<turniri.Model.Group>
+
+@{
+    var league = (turniri.Model.League)ViewBag.League;
+    ViewBag.Title = "Группы лиги " + league.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var lastSeason = league.LastSeason;
+}
+@section header 
+{
+    <script type="text/javascript" src="/Media/scripts/admin/league-group.js"></script>
+}
+@Html.ActionLink("← К лигам", "Index", "League", null, new {@class="btn btn-mini" })
+
+@if (league.AnyPlayer)
+{
+    @Html.ActionLink("К Турнирам →", "Tournaments", "League", new { id = league.ID }, new { @class = "btn btn-mini" })
+}
+
+
+<h2>Группы лиги @league.Name</h2>
+
+@Html.Hidden("SeasonID", lastSeason.ID)
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID
+            </th>
+            <th>Группа
+            </th>
+            <th>Уровень
+            </th>
+            <th>Место
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+{
+    <tr class="group-row" id="GroupRow_@item.ID">
+       @Html.Partial("GroupRow", item)
+    </tr>
+}
+</table>

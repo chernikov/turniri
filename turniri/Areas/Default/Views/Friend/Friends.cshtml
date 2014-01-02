@@ -1,0 +1,106 @@
+﻿@model turniri.Model.User
+@{
+    var page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@if (Model.FullFriendshipsAny)
+{
+    <div class="friend-list">
+        <ul class="clear">
+            @{
+    var i = 0;
+            }
+            @foreach (var item in Model.FullFriendshipsPage(page))
+            {
+                if (i % 2 == 0)
+                {
+                @Html.Raw("<li class=\"first clear\">")
+                }
+                <div class="friend-item clear" id="User_@item.ReceiverID">
+                    <div class="preview-image">
+                        <a href="@Url.Action("Index", "User", new { login = item.Receiver.Login })">
+                            <img src="@item.Receiver.FullAvatarPath84" alt="preview" />
+                        </a>
+                        @if(item.Receiver.IsOnline) 
+                        {
+                            <div class="online"></div>
+                        }
+                    </div>
+                    <div class="user-info">
+                        <div class="top-info">
+                            <div class="name">
+                                <a href="@Url.Action("Index", "User", new { login = item.Receiver.Login })" class="user">
+                                    @item.Receiver.Login
+                                </a>
+                            </div>
+                            @if (item.Receiver.IsOnline)
+                            {
+                                <div class="status">online</div>
+                            }
+                            else
+                            {
+                                <div class="status offline">offline</div>
+                            }
+                        </div>
+                        <div class="bottom-info">
+                            <div class="prize-title">
+                                Последние награды:
+                            </div>
+                            @foreach (var award in item.Receiver.LastAwards)
+                            {
+                                <img src="@award.FullIconPath" alt="@award.Name" title="@award.Description" />
+                            }
+                        </div>
+                    </div>
+                    <div class="user-buttons">
+                        @if (currentUser != null)
+                        {
+                            
+                            <div class="gray-24-button-wrapper write-message">
+                                <span>Написать сообщение</span>
+                            </div>
+                            if (currentUser.HasFriend(item.ReceiverID))
+                            {
+                            <div class="gray-24-button-wrapper write-fight-message">
+                                <span>Написать боевое сообщ</span>
+                            </div>
+                            <div class="delete-user">
+                                Удалить из друзей
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="add-user">
+                                Добавить в друзья
+                            </div>
+                            }
+                        }
+                    </div>
+                </div>
+                        if (i % 2 == 1)
+                        {
+                @Html.Raw("</li>")
+                        }
+                        i++;
+            }
+            @if (i % 2 == 1)
+            {
+                @Html.Raw("</li>")
+            }
+        </ul>
+    </div>
+    <div class="friends-paging paging light-paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list">
+            @Html.PageLinksTurniri(page, Model.FullFriendshipsCount(), x => Url.Action("Friends", new { page = x }))
+        </div>
+    </div>
+}
+else
+{
+    <div class="empty">
+        У вас пока нет друзей
+    </div>
+}

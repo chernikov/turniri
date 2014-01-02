@@ -1,0 +1,35 @@
+@model turniri.Models.ViewModels.SocialGroupView
+@{
+    ViewBag.Title = Model.ID == 0 ? "Добавить группу" : "Изменить группу";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    @(Model.ID == 0 ? "Добавить группу" : "Изменить группу")
+</h2>
+
+@using (Html.BeginForm("Edit", "SocialGroup", FormMethod.Post))
+{
+    @Html.Hidden("ID", Model.ID)
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">
+                Соц. сеть</label>
+            <div class="controls">
+                @Html.DropDownList("Provider", Model.ProviderSelectList, new { @class = "input-xlarge" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Имя
+            </label>
+            <div class="controls">
+                @Html.TextBox("Name", Model.Name, new { @class = "input-xlarge" })
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Сохранить</button>
+            @Html.ActionLink("Отменить", "Index", null, null, new { @class = "btn" })
+        </div>
+    </fieldset>
+}

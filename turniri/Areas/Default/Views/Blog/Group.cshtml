@@ -1,0 +1,81 @@
+﻿@model turniri.Model.Group
+@{
+    ViewBag.Title = "Блог команды “" + Model.Name + "”";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController) ViewContext.Controller).CurrentUser;
+}
+@Html.Partial("GroupMenu", Model.Url)
+<div class="left">
+    <div class="blog long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>
+                Блог команды “@Model.Name”
+            </h3>
+            @if (currentUser != null && Model.IsGrantedMemberOf(currentUser))
+            {
+                <div class="gray-16-button-wrapper">
+                    @Html.ActionLink("ДОБАВИТЬ", "Create", "Blog")
+                </div>    
+            }
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        @if (Model.BlogsCount > 0)
+        {
+            <div class="blog-list">
+                <ul>
+                    @{
+                        int i = 0;
+                    }
+                    @foreach (var blog in Model.BlogPage(page))
+                    {
+                        <li class="@(i % 2 == 0 ? "" : "second")">
+                            @if (!string.IsNullOrWhiteSpace(blog.PreviewUrl))
+                            {
+                                <div class="preview">
+                                    <img src="@blog.PreviewUrl" alt="@blog.Header" />
+                                </div>
+                            }
+                            <div class="content">
+                                <div class="title">
+                                    <h2>
+                                        @Html.ActionLink(blog.Header, "Item", "Blog", new { url = blog.Url }, null)
+                                    </h2>
+                                </div>
+                                <div class="text">
+                                    @Html.Raw(blog.Text.BBCodeToHTML().ReplaceSmiles((index, name) => Html.SetSmiles(index, name)))
+                                </div>
+                                <div class="bottom-wrapper clear">
+                                    <div class="date">
+                                        @blog.AddedDate.ToString("dd.MM.yyyy")
+                                    </div>
+                                    <div class="comment">
+                                        @blog.CommentCount @blog.CommentCount.CountWord("комментарий", "комментария", "комментариев")
+                                    </div>
+                                    <div class="more">
+                                        <a href="@Url.Action("Item", "Blog", new { url = blog.Url })">Читать далее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        i++;
+                    }
+                </ul>
+                <div class="paging">
+                    <div class="title">
+                        Страницы:
+                    </div>
+                    <div class="paging-list">
+                        @Html.PageLinksTurniri(page, Model.CountPage(), x => Url.Action("Group", new { page = x }))
+                    </div>
+                </div>
+            </div>
+        } 
+        else
+        {
+            <div class="empty">Нет ни одной записи</div>
+        }
+    </div>
+</div>
+@Html.Action("LastCommentsGroup", "Blog", new {id = Model.ID})

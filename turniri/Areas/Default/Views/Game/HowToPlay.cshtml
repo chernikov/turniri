@@ -1,0 +1,19 @@
+﻿@model turniri.Model.Game
+@{
+    ViewBag.Title = "Как играть в " + Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+@Html.Action("Menu", "Game", new { id = Model.ID })
+<div class="main-bootom">
+    <div class="howtoplay long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>   КАК ИГРАТЬ В @Model.Name
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+            <div class="text">
+            @Html.Raw(Model.HowToPlay.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+            </div>
+    </div>
+</div>

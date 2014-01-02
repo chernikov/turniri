@@ -1,0 +1,31 @@
+﻿@model IEnumerable<turniri.Model.Tournament>
+<div id="tab_tur_3_content" class="switcher-content" style="display: none">
+    <div class="content  scroll-wrapper">
+        <div class="scroll-pane">
+            <ul class="tournaments-list">
+                @foreach (var tournament in Model)
+                {
+                    <li class="clear">
+                        <div class="tur-preview">
+                            <img src="@tournament.ImagePath" alt="image" width="47" />
+                        </div>
+                        <div class="info-wrapper">
+                            <div class="title">
+                                <a href="@Url.Action("Index", "Tournament", new { platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">@tournament.Name</a>
+                            </div>
+                            <div class="game-name">
+                                <a href="@Url.Action("Index", "Game", new { platformUrl = tournament.Game.Platform.Url, url = tournament.Game.Url })">@tournament.Game.Name.Teaser(8)</a>
+                            </div>
+                            <div class="gray-16-button-wrapper">
+                                <a href="@Url.Action("Index", "Tournament", new {platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">Смотреть</a>
+                            </div>
+                            <div class="platform">
+                                @tournament.Game.Platform.Name
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

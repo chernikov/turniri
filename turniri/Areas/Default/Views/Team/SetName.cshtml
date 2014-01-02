@@ -1,0 +1,54 @@
+﻿@model turniri.Models.ViewModels.TeamView
+
+<div class="popup-window register-team" style="display: block;">
+    <div class="top-bar">
+        <h3>Зарегистрировать команду
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    @using (Html.BeginForm("Register", "Team", FormMethod.Post, new { id = "SetTeamNameForm" }))
+    {
+        @Html.Hidden("TournamentID", Model.TournamentID)
+        @Html.Hidden("ImagePath18", Model.ImagePath18)
+        @Html.Hidden("ImagePath26", Model.ImagePath26)
+        @Html.Hidden("ImagePath30", Model.ImagePath30)
+        <div class="popup-message popup-wrapper">
+            <div class="popup-input-item">
+                <div class="label-name">
+                    Название
+                </div>
+                <div class="input">
+                    @Html.TextBox("Name", Model.Name)
+                    @Html.ValidationMessage("Name")
+                </div>
+            </div>
+            <div class="popup-input-item">
+                <div class="upload-image">
+                    Аватарка:
+                    <div class="UploadAvatar upload-image-button">загрузить</div>
+                    <div class="uploaded-image">
+                        @if (!string.IsNullOrWhiteSpace(Model.ImagePath30))
+                        {
+                            <img src="@Model.ImagePath30" />
+                        }
+                        
+                    </div>
+                    <div class="input">
+                        @Html.ValidationMessage("ImagePath30")
+                    </div>
+                </div>
+            </div>
+            <div class="massage-button clear">
+                <div class="gray-24-button-wrapper" id="SetTeamNameButton">
+                    <span>СОХРАНИТЬ</span>
+                </div>
+                <div class="gray-24-button-wrapper">
+                    <span class="popup-close">ОТМЕНА</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

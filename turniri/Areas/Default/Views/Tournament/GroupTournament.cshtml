@@ -1,0 +1,25 @@
+﻿@model turniri.Model.Tournament
+
+<div class="main-turnir-grid gamers-rating" id="TablePartWrapper">
+    @Html.Partial("GroupPart", Model)
+</div>
+<div id="StatisticWrapper">
+    @Html.Action("StatisticGroup", "Tournament", new { id = Model.SubGroups.First().ID })
+</div>
+@if (Model.PlayedMatchesCount > 0 && Model.SelectableSubTours.Any())
+{
+    <div class="main-turnir-grid gamers-rating">
+        <div class="top-bar">
+            <h3 class="left">По турам</h3>
+            <div class="top-right">
+                Показать тур номер&nbsp;&nbsp;
+                    @Html.Action("SelectListTours", "Tournament", new {id = Model.ID})
+            </div>
+            <div class="bar-arrow-down for-left sprite">
+            </div>
+        </div>
+        <div class="gamers-list clear" id="Tours">
+            @Html.Action("Tours", "Tournament", new {id =  Model.SelectableSubTours.First().ID})
+        </div>
+    </div>
+}

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<turniri.Model.Platform>
+@{
+    var leagues = (List<turniri.Model.League>)ViewBag.Leagues;
+}
+<div class="top-menu-wrapper">
+    <div class="top-menu top-bg">
+        <ul>
+            <li class="menu-item"><a href="/">ГЛАВНАЯ</a></li>
+
+            @if (leagues.Any())
+            {
+                <li class="menu-item">
+                    <a href="#">Лиги</a>
+                    <div class="menu-arrow">
+                        <span class="icon-arrow-down sprite"></span>
+                    </div>
+                    <div class="dropdown-wrapper">
+                        <div class="dropdown-arrow sprite">
+                        </div>
+                        <div class="dropdown-outer">
+                            <div class="dropdown-inner clear">
+                                <ul>
+                                    @foreach (var league in leagues)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", "League", new { url = league.Url }, null)">
+                                                <div class="drop-preview">
+                                                    <img src="@league.Image?width=22&height=22&mode=crop" alt="preview" />
+                                                </div>
+                                                @league.Name
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+            <li class="menu-item">
+                <a href="@Url.Action("All", "Tournament")">ТУРНИРЫ</a>
+            </li>
+
+            <li class="menu-item">
+                <a href="@Url.Action("Index", "Group")">КОМАНДЫ</a>
+            </li>
+            <li class="menu-item">
+                <a href="@Url.Action("Index", "Forum", new { url = "" })">ФОРУМ</a>
+            </li>
+
+            @foreach (var platform in Model)
+            {
+                <li class="menu-item">
+                    <a href="#">@platform.Name</a>
+                    <div class="menu-arrow">
+                        <span class="icon-arrow-down sprite"></span>
+                    </div>
+                    <div class="dropdown-wrapper">
+                        <div class="dropdown-arrow sprite">
+                        </div>
+                        <div class="dropdown-outer">
+                            <div class="dropdown-inner clear">
+                                <ul>
+                                    @foreach (var game in platform.MainGames)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", "Game", new { platformUrl = game.Platform.Url, url = game.Url }, null)">
+                                                <div class="drop-preview">
+                                                    <img src="@game.ImagePath22" alt="preview" />
+                                                </div>
+                                                @game.Name
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+            <li class="menu-item">
+                @Html.ActionLink("ФОТО", "Index", "PublicPhoto")
+            </li>
+            <li class="menu-item">
+                <a href="@Url.Action("Index", "Shop", new { path = "" })">МАГАЗИН</a>
+            </li>
+        </ul>
+    </div>
+    @*<div class="search-wrapper top-bg">
+            <div id="search" class="inner-search">
+                <input type="text" class="text" value="" title="Поиск по сайту" /><span class="icon-search sprite"></span>
+            </div>
+        </div>*@
+</div>

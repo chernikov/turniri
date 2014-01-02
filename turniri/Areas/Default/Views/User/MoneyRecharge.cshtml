@@ -1,0 +1,32 @@
+﻿@model turniri.Models.ViewModels.RechargeView
+
+@Html.Hidden("Percent", null)
+<div class="money-recharge">
+    @using (Html.BeginForm("MoneyRecharge", "User", FormMethod.Post, new { id = "MoneyRechargeForm" }))
+    {
+            <div class="input-item clear">
+                <div class="lable-name">
+                    Тип
+                </div>
+                <div class="input">
+                    @Html.DropDownList("Provider", Model.SelectListProvider)
+                </div>
+            </div>
+            <div class="input-item clear">
+                <div class="lable-name">
+                    Сумма, руб
+                </div>
+                <div class="input">
+                    @Html.TextBox("Sum", Model.Sum)
+                </div>
+            </div>
+        <div class="money-info">
+                <div class="title">Будет зачислено</div>
+                <div class="value" id="PayValue"></div>
+                <div class="sprite icon-gold type-money"></div>
+            </div>
+        <div class="form-button">
+            <input class="blue-28-submit" type="submit" value="ПОПОЛНИТЬ" id="MoneyRechargeBtn" />
+        </div>
+    }
+</div>

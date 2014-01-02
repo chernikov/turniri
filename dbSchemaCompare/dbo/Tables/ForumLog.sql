@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[ForumLog] (
+    [ID]       INT      IDENTITY (1, 1) NOT NULL,
+    [ForumID]  INT      NOT NULL,
+    [UserID]   INT      NOT NULL,
+    [ReadDate] DATETIME NOT NULL,
+    CONSTRAINT [PK_ForumLog] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_ForumLog_Forum] FOREIGN KEY ([ForumID]) REFERENCES [dbo].[Forum] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_ForumLog_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE
+);
+

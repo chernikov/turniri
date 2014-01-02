@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[NewLike] (
+    [ID]     INT IDENTITY (1, 1) NOT NULL,
+    [NewID]  INT NOT NULL,
+    [UserID] INT NOT NULL,
+    CONSTRAINT [PK_NewLike] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_NewLike_New] FOREIGN KEY ([NewID]) REFERENCES [dbo].[New] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_NewLike_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID])
+);
+

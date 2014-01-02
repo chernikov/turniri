@@ -1,0 +1,124 @@
+﻿@model turniri.Model.User
+@{
+    ViewBag.Title = "Блог пользователя “" + Model.Login + "”";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@Html.Partial("UserMenu", Model.Login)
+<div class="left">
+    <div class="blog long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>Блог пользователя “@Model.Login”
+            </h3>
+            @if (currentUser != null && currentUser.ID == Model.ID)
+            {
+                <div class="gray-16-button-wrapper">
+                    @Html.ActionLink("ДОБАВИТЬ", "Create", "Blog")
+                </div>    
+            }
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        @if (Model.BlogsCount > 0)
+        {
+            <div class="blog-list">
+                <ul>
+                    @{
+            int i = 0;
+                    }
+                    @foreach (var blog in Model.BlogPage(page))
+                    {
+                        <li class="@(i % 2 == 0 ? "" : "second")">
+                            @if (!blog.IsBanned)
+                            {
+                                if (!string.IsNullOrWhiteSpace(blog.PreviewUrl))
+                                {
+                                <div class="preview">
+                                    <img src="@blog.PreviewUrl" alt="@blog.Header" />
+                                </div>
+                                }
+                                <div class="content">
+                                    <div class="title">
+                                        <h2>
+                                            @Html.ActionLink(blog.Header, "Item", "Blog", new { url = blog.Url }, null)
+                                        </h2>
+                                    </div>
+                                    <div class="text">
+                                        @Html.Raw(blog.Text.BBCodeToHTML().ReplaceSmiles((index, name) => Html.SetSmiles(index, name)))
+                                    </div>
+                                    <div class="bottom-wrapper clear">
+                                        <div class="date">
+                                            @blog.AddedDate.ToString("dd.MM.yyyy")
+                                        </div>
+                                        <div class="comment">
+                                            @blog.CommentCount <div class="sprite icon-comment"></div>
+                                        </div>
+                                        <div class="comment">
+                                            @blog.VisitCount <div class="sprite icon-view"></div>
+                                        </div>
+                                        <div class="more">
+                                            <a href="@Url.Action("Item", "Blog", new { url = blog.Url })">Читать далее</a>
+                                        </div>
+                                        <div class="like blog" data-id="@blog.ID">
+                                            <div class="sprite icon @(currentUser != null ? (blog.IsLikedBy(currentUser) ? "selected active" : "active") : "") ">
+                                            </div>
+                                            <div class="count">@blog.Likes</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="content">
+                                    <div class="title">
+                                        <h2>Забанен
+                                        </h2>
+                                    </div>
+                                    @if (currentUser != null && currentUser.ID == blog.UserID)
+                                    {
+                                        <div class="text">
+                                            По причине : @blog.BanDescription
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="text">
+                                            Текст не понравился администраторам
+                                        </div>
+                                    }
+                                    <div class="bottom-wrapper clear">
+                                        <div class="date">
+                                            @blog.AddedDate.ToString("dd.MM.yyyy")
+                                        </div>
+                                        <div class="comment">
+                                            @blog.CommentCount @blog.CommentCount.CountWord("комментарий", "комментария", "комментариев")
+                                        </div>
+                                        <div class="more">
+                                            <a href="@Url.Action("Item", "Blog", new { url = blog.Url })">Читать далее</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </li>
+                            i++;
+                    }
+                </ul>
+                <div class="paging">
+                    <div class="title">
+                        Страницы:
+                    </div>
+                    <div class="paging-list">
+                        @Html.PageLinksTurniri(page, Model.CountPage(), x => Url.Action("Index", new { page = x }))
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="empty">Нет ни одной записи</div>
+        }
+    </div>
+</div>
+@Html.Action("LastComments", "Blog", new { id = Model.ID })

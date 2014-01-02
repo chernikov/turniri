@@ -1,0 +1,23 @@
+﻿@model turniri.Model.Tournament
+@{
+    var count = MatchesMathLogic.GetMin2Pow(Model.GroupCount * Model.ExitFromGroup);
+    ViewBag.PlayoffStage = true;
+}
+@switch (count)
+{
+    case 4 : 
+        @Html.Partial("SingleElimination4", Model);
+        break;
+    case 8:
+        @Html.Partial("SingleElimination8", Model);
+        break;
+    case 16:
+        @Html.Partial("SingleElimination16", Model);
+        break;
+    case 32:
+        @Html.Partial("SingleElimination32", Model);
+        break;
+    case 64:
+        @Html.Partial("SingleElimination64", Model);
+        break;
+}

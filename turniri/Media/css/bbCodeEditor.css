@@ -1,0 +1,174 @@
+﻿.bbcode-textarea
+{
+    min-width: 400px;
+}
+
+.bbcode-wrapper
+{
+    position: relative;
+}
+
+.bbcode-window
+{
+    position: absolute;
+    background: #fff;
+    border: 1px solid #eee;
+    width: 300px;
+    z-index: 20;
+    top: 50px;
+    left: 70px;
+    font-family: Arial;
+    font-size: 12px;
+}
+
+    .bbcode-window .bbcode-close
+    {
+        background: no-repeat;
+        background-color: transparent;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAiElEQVR42r2RsQrDMAxEBRdl8SDcX8lQPGg1GBI6lvz/h7QyRRXV0qUULwfvwZ1tenw5PxToRPWMC52eA9+WDnlh3HFQ/xBQl86NFYJqeGflkiogrOvVlIFhqURFVho3x1moGAa3deMs+LS30CAhBN5nNxeT5hbJ1zwmji2k+aF6NENIPf/hs54f0sZFUVAMigAAAABJRU5ErkJggg==');
+        border: 0;
+        cursor: pointer;
+        position: absolute;
+        height: 16px;
+        padding: 0;
+        width: 16px;
+        top: 2px;
+        right: 2px;
+    }
+
+        .bbcode-window .bbcode-close:hover,
+        .bbcode-window .bbcode-close:focus
+        {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAqklEQVR4XqWRMQ6DMAxF/1Fyilyj2SmIBUG5QcTCyJA5Z8jGhlBPgRi4TmoDraVmKFJlWYrlp/g5QfwRlwEVNWVa4WzfH9jK6kCkEkBjwxOhLghheMWMELUAqqwQ4OCbnE4LJnhr5IYdqQt4DJQjhe9u4vBBmnxHHNzRFkDGjHDo0VuTAqy2vAG4NkvXXDHxbGsIGlj3e835VFNtdugma/Jk0eXq0lP//5svi4PtO01oFfYAAAAASUVORK5CYII=');
+        }
+
+        .bbcode-window .bbcode-close:active
+        {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAARElEQVQoz2P4z4AfMlBLAYMdwxkghgEwD1XBGTC0g0sDIaYJECVwFqoChBK4WegKkJWArSJZAQErCDqSKG/iCyhaRhYA9LDIbULDzlIAAAAASUVORK5CYII=');
+        }
+
+    .bbcode-window .bbcode-img-input-wrapper
+    {
+        clear: both;
+        padding: 20px 0 20px 0;
+    }
+
+        .bbcode-window .bbcode-img-input-wrapper .bbcode-title
+        {
+            float: left;
+            margin: 4px 10px 0 20px;
+        }
+
+        .bbcode-window .bbcode-img-input-wrapper .bbcode-image-input
+        {
+            width: 100px;
+        }
+
+    .bbcode-window .bbcode-upload-image
+    {
+        margin: 20px 0 0 20px;
+        border: 1px solid #eee;
+        background-color: #eee;
+        text-decoration: underline;
+        float: left;
+        padding: 5px;
+        clear: both;
+    }
+
+    .bbcode-window .bbcode-smiles-wrapper
+    {
+        clear: both;
+        padding: 20px;
+        overflow : auto;
+        margin : 20px 0 0 0;
+    }
+        .bbcode-window .bbcode-smiles-wrapper .bbcode-smile
+        {
+            padding : 2px;
+            margin : 2px;
+            float : left;
+            cursor : pointer;
+        }
+    
+.bbcode-panel
+{
+    position: relative;
+    height: 32px;
+    background-color: #eee;
+}
+
+    .bbcode-panel .bbcode-button-icon
+    {
+        background: transparent url("/Media/images/icons.png") no-repeat 4px 4px;
+        float: left;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        top: 4px;
+        left: 4px;
+        margin: 0 0 0 2px !important;
+        border: 1px solid #333;
+        cursor: pointer;
+
+    }
+
+        .bbcode-panel .bbcode-button-icon.bold
+        {
+            background-position: -44px -20px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.italic
+        {
+            background-position: -68px -20px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.ul
+        {
+            background-position: 4px 4px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.ol
+        {
+            background-position: 4px -44px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.li
+        {
+            background-position: -20px 4px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.link
+        {
+            background-position: -68px 4px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.smile
+        {
+            background-position: -20px -20px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.img
+        {
+            background-position: -20px -44px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.code
+        {
+            background-position: 4px -20px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.quote
+        {
+            background-position: -20px -68px;
+        }
+
+        .bbcode-panel .bbcode-button-icon.spoiler
+        {
+            background-position: 4px -68px;
+
+        }
+
+        .bbcode-panel .bbcode-button-icon.video
+        {
+            background-position: -44px -68px;
+        }

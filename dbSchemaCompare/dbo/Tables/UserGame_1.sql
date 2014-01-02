@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[UserGame] (
+    [ID]     INT IDENTITY (1, 1) NOT NULL,
+    [UserID] INT NOT NULL,
+    [GameID] INT NOT NULL,
+    CONSTRAINT [PK_UserGame] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_UserGame_Game] FOREIGN KEY ([GameID]) REFERENCES [dbo].[Game] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_UserGame_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID])
+);
+

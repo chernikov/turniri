@@ -1,0 +1,79 @@
+﻿@model turniri.Model.PageableData<turniri.Model.New>
+
+@{
+    ViewBag.Title = "Новости";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/admin/index-new.js"></script>
+}
+<h2>Новости</h2>
+
+@Html.ActionLink("Создать", "Create", "New", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Наименование
+            </th>
+            <th>Автор
+            </th>
+            <th>Дата
+            </th>
+            <th>Социалки
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Header
+            </td>
+            <td>
+                @item.User.Login
+            </td>
+            <td>
+                @item.AddedDate.ToString("dd MMMM yyyy")
+            </td>
+            <td>
+                @foreach (var social in item.SubSocialPosts)
+                {
+                    <span class="label label-info">@social.ProviderShortName</span>
+                }
+            </td>
+            <td>
+                @if (currentUser.InRoles("admin") || currentUser.ID == item.UserID)
+                {
+                    <div class="btn-group pull-right">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Действия<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                @Html.ActionLink("Изменить", "Edit", "New", new { id = item.ID }, new { @class = "" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Удалить", "Delete", "New", new { id = item.ID }, new { @class = "stop-action" })
+                            </li>
+                            <li>
+                                <a href="#" class="social" data-id="@item.ID">В соц.сеть</a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>

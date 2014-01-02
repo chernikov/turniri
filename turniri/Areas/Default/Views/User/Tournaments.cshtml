@@ -1,0 +1,84 @@
+﻿@model turniri.Model.User
+@if (Model.CurrentTournamentMatches.Any() || Model.PlayedTournamentMatches.Any())
+{
+    <div class="big-box turnirs">
+        <div class="switcher clear">
+            <ul>
+                @if (Model.CurrentTournamentMatches.Any())
+                {
+                    <li id="tab_turnament_1">Текущие турниры</li>
+                }
+                @if (Model.PlayedTournamentMatches.Any())
+                {
+                    <li id="tab_turnament_2">Завершенные турниры</li>
+                }
+            </ul>
+        </div>
+        <div class="match-wrapper turnirs-wrapper">
+            @if (Model.CurrentTournamentMatches.Any())
+            {
+                <div id="tab_turnament_1_content" class="switcher-content">
+                    <div class="top-panel">
+                        <div class="name">
+                            Имя
+                        </div>
+                        <div class="platform">
+                            ИГРА
+                        </div>
+                        <div class="game">
+                            ТУРНИР
+                        </div>
+                        <div class="stage">
+                            СТАДИЯ
+                        </div>
+                        <div class="result">
+                            РЕЗУЛЬТАТ
+                        </div>
+                    </div>
+                    <div class="match-list">
+                        <div>
+                            <ul>
+                                @foreach (var match in Model.CurrentTournamentMatches)
+                                {
+                                    @Html.Partial("_MatchItemTournament", match)
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.PlayedTournamentMatches.Any())
+            {
+                <div id="tab_turnament_2_content" class="switcher-content" style="display: none">
+                    <div class="top-panel">
+                        <div class="name">
+                            Имя
+                        </div>
+                        <div class="platform">
+                            ИГРА
+                        </div>
+                        <div class="game">
+                            ТУРНИР
+                        </div>
+                        <div class="stage">
+                            СТАДИЯ
+                        </div>
+                        <div class="result">
+                            РЕЗУЛЬТАТ
+                        </div>
+                    </div>
+                    <div class="match-list">
+                        <div>
+                            <ul>
+                                @foreach (var match in Model.PlayedTournamentMatches)
+                                {
+                                    @Html.Partial("_MatchItemTournament", match)
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

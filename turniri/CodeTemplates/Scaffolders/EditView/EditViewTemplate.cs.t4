@@ -1,0 +1,75 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="EnvDTE" #>
+<#@ Output Extension="cshtml" #>
+<#
+	var modelType = (CodeType)Model.ModelType; 
+	var modelName = modelType.Name; 
+	var viewType = (CodeType)Model.ViewType; 
+	var viewName = viewType.Name; 
+	var columns = viewType.VisibleMembers().OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("Field")));
+	
+	var hiddenColumns = columns.OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("Hidden")));
+	var realColumns = columns.OfType<CodeProperty>().Where(p => !p.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("Hidden")));
+	var primaryColumn = columns.OfType<CodeProperty>().First(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("Primary")));
+#>
+@model <#= Model.Namespace #>.Models.ViewModels.<#= modelName #>View
+@{
+    ViewBag.Title = Model.<#= primaryColumn.Name #> == 0 ? "Add <#= modelName #>" : "Edit <#= modelName #>";
+    Layout = "~/Areas/<#= Model.Area #>/Views/Shared/_Layout.cshtml";
+}
+<h2>@(Model.<#= primaryColumn.Name #> == 0 ? "Add <#= modelName #>" : "Edit <#= modelName #>")</h2>
+<p></p>
+@using (Html.BeginForm("Edit", "<#= modelName #>", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+	<fieldset>
+<# foreach(var item in hiddenColumns) { #>
+		@Html.Hidden("<#= item.Name #>", Model.<#= item.Name #>)
+<# } #>
+
+<# if(Model.Lang) { #>
+		@if (!Model.IsCorrectLang)
+        {
+            <span class="label label-important">Translate it!</span>
+        }
+<# } #>
+<# foreach(var item in realColumns) { #>
+		<div class="control-group">
+            <label class="control-label" for="<#= item.Name #>">
+                <#= item.Name #>
+			</label>
+            <div class="controls">
+                @Html.ValidationMessage("<#= item.Name #>")
+<#	if (item.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("TextBox"))) { #>
+				@Html.TextBox("<#= item.Name #>", Model.<#= item.Name #>)
+<#} #>
+<#	if (item.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("TextArea"))) { #>
+				@Html.TextArea("<#= item.Name #>", Model.<#= item.Name #>, new {@class = "textarea"})
+<#} #>
+<#	if (item.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("HtmlText"))) { #>
+				@Html.TextArea("<#= item.Name #>", Model.<#= item.Name #>, new {@class = "htmltext"})
+<#} #>
+<#	if (item.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("CheckBox"))) { #>
+				@Html.CheckBox("<#= item.Name #>", Model.<#= item.Name #>)
+<#} #>
+<#	if (item.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("DropDown"))) { #>
+				@Html.DropDownList("<#= item.Name #>", Model.SelectList<#= item.Name #>)
+<#} #>
+<#	if (item.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("CheckBox"))) { #>
+				@Html.CheckBox("<#= item.Name #>", Model.<#= item.Name #>)
+<#} #>
+<#	if (item.Attributes.OfType<CodeAttribute>().Any(r => r.Name.Contains("Radio"))) { #>
+				@Html.RadioButton("<#= item.Name #>", Model.<#= item.Name #>)
+<#} #>
+            </div>
+        </div>
+<# } #>
+	   <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Save
+			</button>
+            @Html.ActionLink("Cancel", "Index", null, null, new { @class = "btn" })
+        </div>
+	</fieldset>
+}

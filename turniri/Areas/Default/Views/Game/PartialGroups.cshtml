@@ -1,0 +1,24 @@
+﻿@model turniri.Model.Game
+<div class="big-box">
+    <div class="switcher clear">
+        <ul>
+            <li class="current">Топ-10 команд</li>
+        </ul>
+    </div>
+    <div class="group-wrapper turnirs-wrapper">
+        <div class="groups-list">
+            <ul>
+                @{
+                    var i = 0;
+                }
+                @foreach (var group in Model.GroupPage(1))
+                {
+                    <li class="@(i % 2 == 1 ? "second" : "")">
+                        @Html.Partial("__GroupListItem", group)
+                    </li>
+                    i++;
+                }
+            </ul>
+        </div>
+    </div>
+</div>

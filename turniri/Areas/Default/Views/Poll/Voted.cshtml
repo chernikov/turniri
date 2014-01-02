@@ -1,0 +1,19 @@
+﻿@model turniri.Model.Poll
+
+<div class="title">@Model.Name</div>
+<div class="text">
+    @{
+        var total = Model.Total != 0 ? Model.Total : 1;
+        var max = Model.Max != 0 ? Model.Max : 1;
+    }
+    @foreach (var pollItem in Model.SubPollItems)
+    {
+        var width = (int)(400 * pollItem.CountVotes / max);
+        <div class="poll-item">
+            @pollItem.Description (@pollItem.CountVotes)
+
+                    <div class="chart" style="width : @(width)px;"></div>
+        </div>
+    }
+</div>
+

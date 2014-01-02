@@ -1,0 +1,74 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="EnvDTE" #>
+<#@ Output Extension="cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using ManageAttribute;
+using <#= Model.Namespace #>.Model;
+
+<# 
+    var modelType = (EnvDTE.CodeType)Model.ModelType; 
+	var modelName = modelType.Name; 
+    var modelNamePlural = Model.ModelTypePluralized; 
+	var columns = modelType.VisibleMembers().OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Name == "global::System.Data.Linq.Mapping.ColumnAttribute" || r.Name.Contains("LangColumn")));
+    var primaryColumn = columns.OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Children.OfType<CodeElement>().Any(k => k.Name == "IsPrimaryKey"))).FirstOrDefault();
+	var relatedEntities =  modelType.VisibleMembers().OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Name == "global::System.Data.Linq.Mapping.AssociationAttribute"));
+#>
+
+namespace <#= Model.Namespace #>.Models.ViewModels
+{ 
+	public class <#= modelName #>View
+    {
+<# if(Model.Lang) { #>
+		public bool IsCorrectLang {get; set; }		
+<# } #>
+
+        public <#= ((EnvDTE.CodeTypeRef)primaryColumn.Type).AsString #> <#= primaryColumn.Name #> { get; set; }
+<# foreach(var column in columns) { if (column.Name != primaryColumn.Name) { 
+	var @type = ((EnvDTE.CodeTypeRef)column.Type).AsString;
+	var pos = @type.LastIndexOf(".");
+	if (pos > -1) {
+		@type = @type.Substring(pos+1);
+	}
+#>
+
+		public <#= @type #> <#= column.Name #> {get; set; }
+<# } } #>
+
+<# if(Model.Related) { #>
+<# foreach(CodeProperty column in relatedEntities) { 
+	var @type = ((EnvDTE.CodeTypeRef)column.Type).AsString;
+	var pos = @type.LastIndexOf(".");
+	if (pos > -1) {
+		@type = @type.Substring(pos+1);
+	}
+	var typeOfColumn = ((EnvDTE.CodeTypeRef)column.Type).CodeType;
+
+	if (typeOfColumn.Name == "EntitySet") { 
+		var posOpen = typeOfColumn.FullName.IndexOf("<");
+		var posClose = typeOfColumn.FullName.IndexOf(">");
+		var @subtype = typeOfColumn.FullName.Substring(posOpen + 1, posClose - posOpen -1); 
+		pos = @subtype.LastIndexOf(".");
+		if (pos > -1) {
+			@subtype = @subtype.Substring(pos+1);
+		} #>
+
+		public List<<#= @subtype #>View> <#= column.Name #> {get; set; }
+<# }  else { #>
+
+		public <#= @type #>View <#= column.Name #> {get; set; }
+<# } 
+}
+}
+#>
+    }
+}

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="D:\Projects\RepositoryMercurial\turniri\source\turniri\tests.nunit" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-12-23" time="08:51:20">
+  <environment nunit-version="2.6.2.12296" clr-version="2.0.50727.5466" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.6.2\bin" machine-name="SATURN-PC" user="Saturn" user-domain="SATURN-PC" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Project" name="D:\Projects\RepositoryMercurial\turniri\source\turniri\tests.nunit" executed="True" result="Success" success="True" time="5.516" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="D:\Projects\RepositoryMercurial\turniri\source\turniri\turniri.IntegrationTest\bin\Debug\turniri.IntegrationTest.dll" executed="True" result="Success" success="True" time="5.499" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="turniri" executed="True" result="Success" success="True" time="5.499" asserts="0">
+            <results>
+              <test-suite type="SetUpFixture" name="IntegrationTest" executed="True" result="Success" success="True" time="5.498" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="DefaultUserControllerTest" executed="True" result="Success" success="True" time="2.574" asserts="0">
+                    <results>
+                      <test-case name="turniri.IntegrationTest.DefaultUserControllerTest.CreateUser_CreateNormalUser_CountPlusOne" executed="True" result="Success" success="True" time="2.552" asserts="1" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

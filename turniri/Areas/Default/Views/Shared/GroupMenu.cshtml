@@ -1,0 +1,42 @@
+﻿@model string
+@{
+    var currentUser = ((turniri.Controllers.BaseController) ViewContext.Controller).CurrentUser;
+    var controllerName = ViewContext.RequestContext.RouteData.Values["controller"] as string;
+    var actionName = ViewContext.RequestContext.RouteData.Values["action"] as string;
+    string url = Model;
+    if (string.IsNullOrWhiteSpace(Model))
+    {
+        url = null;
+    }
+}
+
+@if (currentUser != null)
+{
+    <div class="main-top clear">
+        <div class="profile-menu menu">
+            <ul>
+                <li class="@(controllerName == "Group" && actionName == "Item" ? "current" : "")">
+                    @Html.ActionLink("ПРОФИЛЬ", "Item", "Group", new { url }, null)
+                </li>
+                <li class="@(controllerName == "Blog" && actionName == "Group" ? "current" : "")">
+                    @Html.ActionLink("БЛОГ", "Group", "Blog", new { url }, null)
+                </li>
+                <li class="@(controllerName == "Photo" && actionName == "Group" ? "current" : "")">
+                     @Html.ActionLink("ФОТО", "Group", "Photo", new { url }, null)
+                </li>
+                <li class="@(controllerName == "UserVideo" && actionName == "Group" ? "current" : "")">
+                    @Html.ActionLink("ВИДЕО", "Group", "UserVideo", new { url }, null)
+                </li>
+                <li class="@(controllerName == "Group" && actionName == "Roster" ? "current" : "")">
+                    @Html.ActionLink("УЧАСТНИКИ", "Roster", "Group", new { url }, null)
+                </li>
+                <li class="@(controllerName == "Group" && actionName == "Award"  ? "current" : "")">
+                     @Html.ActionLink("ДОСТИЖЕНИЯ", "Award", "Group", new { url }, null)
+                </li>
+            </ul>
+        </div>
+        <div class="group">
+            КОМАНДА
+        </div>
+    </div>
+}

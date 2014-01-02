@@ -1,0 +1,122 @@
+﻿@model List<turniri.Model.Participant>
+@{
+    var game = (turniri.Model.Game)ViewBag.Game;
+}
+@if (Model.Any())
+{
+    <div class="turnir-gamers long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>Зарегистрированные игроки
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="gamers-list clear">
+
+            <div class="top-grid">
+                <div class="number">
+                    №
+                </div>
+                <div class="name">
+                    ИМЯ
+                </div>
+                <div class="thumbs-up">
+                    <div class="icon-thumbs-up sprite">
+                    </div>
+                </div>
+                <div class="thumbs-down">
+                    <div class="icon-thumbs-down sprite">
+                    </div>
+                </div>
+                <div class="reputation">
+                    РЕПУТАЦИЯ
+                </div>
+                <div class="score">
+                    ОЧКИ
+                </div>
+                <div class="level">
+                    УРОВЕНЬ
+                </div>
+                <div class="bandwidth">
+                    СВЯЗЬ
+                </div>
+                <div class="date">
+                    ДАТА ПОДАЧИ 
+                </div>
+            </div>
+            <div class="gamers-scroll">
+                <div class="scroll-pane">
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        <ul class="clear">
+                            @{ var i = 1; }
+                            @foreach (var item in Model.OrderByDescending(p => p.Rating.TotalScore))
+                            {
+                                <li class="@(i % 2 == 0 ? "second" : "")">
+                                    <div class="number">
+                                        @i
+                                    </div>
+                                    <div class="name">
+                                        <div class="preview-image">
+                                            <a href="@Url.Action("Index", "User", new { login = item.User.Login })">
+                                                <img src="@item.FullImagePath18" alt="avatar" title="@item.User.Login"/>
+                                            </a>
+                                            @if (item.User.IsOnline)
+                                            {
+                                                <div class="dot"></div>
+                                            }
+                                        </div>
+                                        @if (!string.IsNullOrWhiteSpace(item.Name))
+                                        {
+                                            <a href="@Url.Action("Index", "User", new { login = item.User.Login })" class="user double-line">
+                                                @item.User.Login
+                                                <span class="avatar-name">@item.Name</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Index", "User", new { login = item.User.Login })" class="user">
+                                                @item.User.Login
+                                            </a>
+                                        }
+                                    </div>
+                                    <div class="thumbs-up">
+                                        @item.User.CountPlus
+                                    </div>
+                                    <div class="thumbs-down">
+                                        @item.User.CountMinus
+                                    </div>
+                                    <div class="reputation">
+                                        @Html.Partial("_ShowReputation", item.User)
+                                    </div>
+                                    <div class="score">
+                                        @item.Rating.TotalScore/@turniri.Model.User.PointsToNextLevel(@item.Rating.TotalScore)
+                                    </div>
+                                    <div class="level">
+                                        @item.Rating.Level
+                                    </div>
+                                    <div class="bandwidth">
+                                        @if (item.User.ReputationConnection.HasValue)
+                                        {
+                                            <div class="icon-bandwidth-@((int)item.User.ReputationConnection.Value) sprite">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="icon-bandwidth-null sprite">
+                                            </div> 
+                                        }
+                                    </div>
+                                    <div class="date">
+                                        @item.AddedDate.ToString("dd.MM.yyyy") <span class="gray">(@item.AddedDate.ToString("HH:mm"))</span>
+                                    </div>
+                                </li>
+                                        i++;
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

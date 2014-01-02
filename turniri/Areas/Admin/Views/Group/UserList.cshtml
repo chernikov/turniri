@@ -1,0 +1,27 @@
+﻿@model turniri.Models.ViewModels.AdminGroupView
+<h3>Игроки</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя 
+            </th>
+            <th>Роли
+            </th>
+            <th>Статус
+            </th>
+            <th>
+                <div class="btn btn-primary" id="AddUserGroups" data-target="#AddPlayerModal" data-toggle="modal">
+                    <span class="icon-plus icon-white"></span>
+                    Добавить
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var userGroup in Model.UserGroups)
+        {
+            @Html.Partial("UserGroupItem", userGroup)
+        }
+    </tbody>
+</table>
+<h3>Иное</h3>

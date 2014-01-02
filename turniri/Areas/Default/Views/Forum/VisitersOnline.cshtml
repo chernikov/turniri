@@ -1,0 +1,5 @@
+﻿@model int
+@if (Model > 0) 
+{
+    <div class="visiters">и @Model @Model.CountWord("гость", "гостя", "гостей")</div>
+}

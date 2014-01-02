@@ -1,0 +1,96 @@
+﻿@model IEnumerable<turniri.Model.PromoAction>
+@{
+    ViewBag.Title = "Промо акции";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/index-promoaction.js"></script>
+}
+
+<h2>Промо-акции</h2>
+@Html.ActionLink("Добавить", "Create", "PromoAction", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Наименование
+            </th>
+             <th>Товар
+            </th>
+            <th>Величина
+            </th>
+            <th>Использовать до
+            </th>
+            <th>Количество
+            </th>
+            <th>Закрыта?
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Name 
+            </td>
+             <td>
+                @(item.Product != null ? item.Product.Name : "") 
+            </td>
+            <td>
+                @item.Amount  @(item.Type == 1 ? "%" : "$")
+            </td>
+            <td>
+                @(item.ValidDate.HasValue ? item.ValidDate.Value.ToString("d") : "none")
+            </td>
+            <td>
+                @item.UsedCodesCount / @item.Quantity
+            </td>
+            <td>
+                @(item.Closed ? "да" : "нет")
+            </td>
+            <td>
+                <span class="show-promocodes" data-id="@item.ID">Показать коды</span>
+                <a  href="#generateCodesModal" class="btn generate" role="button" data-toggle="modal" data-id="@item.ID">Сгенерировать</a>
+                @Html.ActionLink("Изменить", "Edit", "PromoAction", new { id = item.ID }, new { @class = "btn" })
+                @if (item.CanRemove)
+                {
+                    @Html.ActionLink("Удалить", "Delete", "PromoAction", new { id = item.ID }, new { @class = "btn" })
+                }
+                else if (item.Closed)
+                {
+                    @Html.ActionLink("Переоткрыть", "Reopen", "PromoAction", new { id = item.ID }, new { @class = "btn" })
+                }
+                else
+                {
+                    @Html.ActionLink("Закрыть", "Close", "PromoAction", new { id = item.ID }, new { @class = "btn" })
+                }
+               
+            </td>
+        </tr>
+        <tr class="hidden promocodes" data-id="@item.ID">
+            <td colspan="8">
+                @foreach (var promoCode in item.SubPromoCodes)
+                {
+                    <span class="label @(promoCode.Used ? "label-important" : "label-info")" title="@(promoCode.Used ? promoCode.UsedDate.Value.ToString("d") : promoCode.AddedDate.ToString("d"))">@promoCode.Code</span>
+                    <text>&nbsp;</text>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+
+<div class="modal small hide fade" id="generateCodesModal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Создать промо-коды</h3>
+    </div>
+    <div id="GeneratePromoCodeWrapper">
+    </div>
+</div>

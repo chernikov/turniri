@@ -1,0 +1,77 @@
+﻿@model IEnumerable<turniri.Model.Subject>
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@if (Model.Any())
+{
+    <div class="top-panel">
+        <div class="from">
+            ОТ КОГО
+        </div>
+        <div class="title">
+            ТЕМА
+        </div>
+        <div class="date">
+            ДАТА
+        </div>
+        <div class="checkbox">
+            &nbsp;
+        </div>
+    </div>
+    <div class="message-box-list">
+        <div class="scroll-pane">
+            <ul>
+                @{
+    var i = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    <li class="@(i % 2 == 0 ? "first" : "") clear subject" id="Subject_@item.ID">
+                        <div class="from clear">
+                            @if (item.LastMessage.IsReaded)
+                            {
+                                <div class="icon-letter-readed-red sprite">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="icon-letter-red sprite @(item.LastMessage.ReceiverID == currentUser.ID ? "" : "not-openable")">
+                                </div>
+                            }
+                            <div class="preview-image">
+                                <a href="@Url.Action("Index", "User", new { login = item.LastMessage.Sender.Login  })">
+                                    <img src="@item.LastMessage.Sender.FullAvatarPath18" alt="userpic" />
+                                </a>
+                                @if (item.LastMessage.Sender.IsOnline)
+                                {
+                                    <div class="dot"></div>
+                                }
+                            </div>
+                            <div class="text">
+                                <a href="@Url.Action("Index", "User", new { login = item.LastMessage.Sender.Login })" class="user">
+                                    @item.LastMessage.Sender.Login
+                                </a>
+                            </div>
+                        </div>
+                        <div class="title">
+                            @item.Name
+                        </div>
+                        <div class="date">
+                            @item.LastMessage.AddedDate.ToString("dd.MM.yyyy")
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" />
+                        </div>
+                    </li>
+                                i++;
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="empty">
+        Нет приглашений 
+    </div>
+}

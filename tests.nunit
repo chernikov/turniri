@@ -1,0 +1,8 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" />
+  <Config name="Debug" binpathtype="Auto">
+    <assembly path="turniri.IntegrationTest\bin\Debug\turniri.IntegrationTest.dll" />
+    <assembly path="turniri.UnitTest\bin\Debug\turniri.UnitTest.dll" />
+  </Config>
+  <Config name="Release" binpathtype="Auto" />
+</NUnitProject>

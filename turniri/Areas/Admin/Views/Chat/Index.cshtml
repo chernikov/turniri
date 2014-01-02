@@ -1,0 +1,54 @@
+﻿@model IEnumerable<turniri.Model.ChatRoom>
+
+@{
+    ViewBag.Title = "Чаты";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/index-chat.js"></script>
+}
+<h2>Чаты</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Последнее обновление 
+            </th>
+            <th>
+            Транслировать
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.LastUpdate.ToString("dd.MM.yyyy HH:mm")
+            </td>
+            <td>
+            @if (item.TranslateInForum)
+            {
+                <span class="label label-info toggle-translate" data-id="@item.ID">On</span>
+            }
+            else
+            {
+                <span class="label toggle-translate" data-id="@item.ID">Off</span>
+            }
+            </td>
+        </tr>
+    }
+</table>

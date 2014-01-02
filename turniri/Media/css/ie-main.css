@@ -1,0 +1,53 @@
+﻿.z-index-1 {
+	position: relative;
+	z-index: 0;
+}
+
+.top .enter {
+	padding: 6px 9px 4px;
+	float: left;
+	background : url("data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA9JREFUeNpiYGBgCAIIMAAAVwBTE0OY5gAAAABJRU5ErkJggg==") repeat 0 0;
+	border: solid 1px #7f7f7f;
+	border-top: none;
+}
+
+.main-inner-wrapper .left .main-gallery .preview-image li .current .blanding {
+	position: absolute;
+	width: 92px;
+	height: 39px;
+	background : url("data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABBJREFUeNpi+P///3KAAAMACaMDpcFDLzoAAAAASUVORK5CYII=") repeat 0 0;
+	top: -3px;
+	left: -3px;
+}
+
+.main-inner-wrapper .left .main-gallery .main-image .image-info-wrapper {
+	bottom: 0;
+	width: 485px;
+	height: 39px;
+	padding: 19px 24px;
+	background : url("data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA9JREFUeNpiYGBgWAsQYAAAsgCuSsSEDwAAAABJRU5ErkJggg==") repeat 0 0;
+	position: absolute;
+	color: #fff;
+	font-weight: bold;
+	font-size: 18px;
+	text-align: right;
+	line-height: 20px;
+}
+
+.gamers-rating .gamers-list .gamers-scroll li {
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C4C4C 77%, endColorstr=#3D3D3D 93%, GradientType=1)";
+	background : #4c4c4c;
+}
+
+.gamers-rating .gamers-list .gamers-scroll li.second {
+	background : #3D3D3D;
+}
+
+.big-box .turnirs-wrapper .turnirs-list li.second {
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C4C4C 77%, endColorstr=#3D3D3D 93%, GradientType=1)";
+	background : #4c4c4c;
+}
+
+.long-box .turnirs-wrapper .turnirs-list li.second {
+	background : #4c4c4c;
+}

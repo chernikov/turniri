@@ -1,0 +1,36 @@
+@model turniri.Models.ViewModels.BannedWordView
+@{
+    ViewBag.Title = "Слово для запикивания";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>@(Model.ID == 0 ? "Добавить слово для запикивания" : "Edit BannedWord")</h2>
+
+<div class="form">
+    @using (Html.BeginForm("Edit", "BannedWord", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.Hidden("ID", Model.ID)
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label" for="Word">
+                    Слово</label>
+                <div class="controls">
+                    @Html.TextBox("Word", Model.Word)
+                    @Html.ValidationMessage("Word")
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="IsCanBeSubWord">
+                    Может быть подстрокой</label>
+                <div class="controls">
+                    @Html.CheckBox("IsCanBeSubWord", Model.IsCanBeSubWord)
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    Сохранить</button>
+                @Html.ActionLink("Отменить", "Index", null, null, new { @class = "btn" })
+            </div>
+        </fieldset>
+    }
+</div>

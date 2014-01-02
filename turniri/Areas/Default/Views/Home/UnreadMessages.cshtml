@@ -1,0 +1,15 @@
+﻿@model turniri.Model.User
+
+@if (Model != null)
+{
+    if (Model.HasUnreadMail(0))
+    {
+    <a href="@Url.Action("Index", "Message")">
+        <img src="/Media/images/main_page_message.gif" title="У вас новое сообщение" /></a>
+    }
+    else
+    {
+    <a href="@Url.Action("Index", "Message")"><span class="icon-mail-empty sprite"></span>
+    </a>
+    }
+}

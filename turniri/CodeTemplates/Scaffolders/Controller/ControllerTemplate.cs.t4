@@ -1,0 +1,104 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="EnvDTE" #>
+<#@ Output Extension="cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using <#= Model.Namespace #>.Models.ViewModels;
+using <#= Model.Namespace #>.Model;
+
+<#
+	var modelType = (CodeType)Model.ModelType; 
+	var modelName = modelType.Name; 
+	var modelNameLower = modelName.ToLower();
+	var columns = modelType.VisibleMembers().OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Name == "global::System.Data.Linq.Mapping.ColumnAttribute"));
+	var primaryColumn = columns.OfType<CodeProperty>().FirstOrDefault(p => p.Attributes.OfType<CodeAttribute>().Any(r => r.Children.OfType<CodeElement>().Any(k => k.Name == "IsPrimaryKey")));
+#>
+
+namespace <#= Model.Namespace #>.Areas.<#= Model.Area #>.Controllers
+{ 
+    public class <#= Model.ControllerName #> : <#= Model.Area #>Controller
+    {
+<# if(Model.Paging) { #>
+		public ActionResult Index(int page = 1)
+        {
+			var list = Repository.<#= Model.ModelTypePluralized #>;
+			var data = new PageableData<<#= modelName #>>();
+			data.Init(list, page, "Index");
+<# if(Model.Lang) { #>
+			data.List.ForEach(p => p.CurrentLang = CurrentLang.ID);
+<# } #>
+			return View(data);
+		}
+<# }  else {#>
+		public ActionResult Index()
+        {
+			var list = Repository.<#= Model.ModelTypePluralized #>.ToList();
+<# if(Model.Lang) { #>
+			list.ForEach(p => p.CurrentLang = CurrentLang.ID);
+<# } #>
+			return View(list);
+		}
+<# } #>
+
+		public ActionResult Create() 
+		{
+			var <#= modelNameLower #>View = new <#= modelName #>View();
+<# if(Model.Lang) { #>
+			<#= modelNameLower #>View.CurrentLang = CurrentLang.ID;
+<# } #>
+			return View("Edit", <#= modelNameLower #>View);
+		}
+
+		[HttpGet]
+		public ActionResult Edit(int id) 
+		{
+			var  <#= modelNameLower #> = Repository.<#= Model.ModelTypePluralized #>.FirstOrDefault(p => p.<#= primaryColumn.Name #> == id); 
+
+			if (<#= modelNameLower #> != null) {
+<# if(Model.Lang) { #>
+			<#= modelNameLower #>.CurrentLang = CurrentLang.ID;
+<# } #>
+				var <#= modelNameLower #>View = (<#= modelName #>View)ModelMapper.Map(<#= modelNameLower #>, typeof(<#= modelName #>), typeof(<#= modelName #>View));
+				return View(<#= modelNameLower #>View);
+			}
+			return RedirectToNotFoundPage;
+		}
+
+		[HttpPost]
+		public ActionResult Edit(<#= modelName #>View <#= modelNameLower #>View)
+        {
+            if (ModelState.IsValid)
+            {
+                var <#= modelNameLower #> = (<#= modelName #>)ModelMapper.Map(<#= modelNameLower #>View, typeof(<#= modelName #>View), typeof(<#= modelName #>));
+<# if(Model.Lang) { #>
+			<#= modelNameLower #>.CurrentLang = CurrentLang.ID;
+<# } #>
+                if (<#= modelNameLower #>.<#= primaryColumn.Name #> == 0)
+                {
+                    Repository.Create<#= modelName #>(<#= modelNameLower #>);
+                }
+                else
+                {
+                    Repository.Update<#= modelName #>(<#= modelNameLower #>);
+                }
+                return RedirectToAction("Index");
+            }
+            return View(<#= modelNameLower #>View);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var <#= modelNameLower #> = Repository.<#= Model.ModelTypePluralized #>.FirstOrDefault(p => p.<#= primaryColumn.Name #> == id);
+            if (<#= modelNameLower #> != null)
+            {
+                    Repository.Remove<#= modelName #>(<#= modelNameLower #>.<#= primaryColumn.Name #>);
+            }
+			return RedirectToAction("Index");
+        }
+	}
+}

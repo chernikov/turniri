@@ -1,0 +1,9 @@
+﻿@model turniri.Models.ViewModels.PollItemView
+@{
+    var guid = Guid.NewGuid();
+}
+<div class="item">
+    @Html.Hidden("PollItems.index", guid.ToString("N"))
+    @Html.TextBox("PollItems[" + guid.ToString("N") + "].Description", Model.Description)
+    <div class="remove"></div>
+</div>

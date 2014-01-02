@@ -1,0 +1,100 @@
+﻿@model turniri.Model.PageableData<turniri.Model.User>
+@{
+    ViewBag.Title = "Игроки";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/index-user.js"></script>
+}
+<h2>Игроки</h2>
+@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "well" }))
+{
+    @Html.TextBox("search", ViewData["search"], new { @class = "input-medium search-query" })
+    
+    <button type="submit" class="btn">
+        Поиск</button> 
+    <br />
+    <br />
+    <label class="checkbox">
+        @Html.CheckBox("gold", ViewData["gold"] as bool?) + еще по играм / командам
+    </label>
+   
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Логин
+            </th>
+            <th>Имя Фамилия
+            </th>
+            <th>Email
+            </th>
+            <th>Страна
+            </th>
+            <th>Деньги
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Login
+            </td>
+            <td>
+                @item.FirstName @item.LastName
+            </td>
+            <td>
+                @item.Email
+            </td>
+            <td>
+                @item.Country
+            </td>
+            <td>
+                <strong>@item.MoneyGold.Round()</strong> / @item.MoneyWood.Round() / @item.MoneyCrystal.Round()
+            </td>
+            <td>
+                <div class="btn-group pull-right">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Действия<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @if (!item.ActivatedDate.HasValue)
+                        {
+                            <li>@Html.ActionLink("Активировать", "Activate", "User", new { id = item.ID }, new { @class = "" })
+                            </li>
+                        }
+                        @if (item.Banned)
+                        {
+                            <li>@Html.ActionLink("Разбанить", "UnBanUser", "User", new { id = item.ID }, new { @class = "" })
+                            </li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Забанить", "BanUser", "User", new { id = item.ID }, new { @class = "" })
+                            </li>
+                        }
+                        <li>@Html.ActionLink("Зайти", "Login", "User", new { id = item.ID }, new { @class = "" })
+                        </li>
+                        <li><a href="#" class="change-money" data-id="@item.ID">Деньги</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>
+
+<div id="popupWrapper" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+</div>

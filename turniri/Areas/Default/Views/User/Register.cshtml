@@ -1,0 +1,169 @@
+﻿@model turniri.Models.ViewModels.User.RegisterUserView
+@{
+    ViewBag.Title = "Регистрация";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+<div class="main-bootom">
+    <div class="box-registration box-forum-update box">
+        <div class="top-bar">
+            <h3>РЕГИСТРАЦИЯ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="registration-wrapper clear">
+            <div class="right">
+                <ul>
+                    <li>
+                        <a href="@Url.Action("VkontakteLogin", "Oauth")">
+                            <span class="sprite vk"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("FacebookLogin", "Oauth")">
+                            <span class="sprite facebook"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("GoogleLogin", "Oauth")">
+                            <span class="sprite google"></span>
+                        </a>
+                    </li>
+                   
+                </ul>
+            </div>
+            <div class="left">
+                @using (Html.BeginForm("Register", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Логин*
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Login", Model.Login)
+                        </div>
+                        @Html.ValidationMessage("Login")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            E-mail*
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Email", Model.Email)
+                        </div>
+                        @Html.ValidationMessage("Email")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            E-mail повторно*
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("ConfirmEmail", Model.ConfirmEmail)
+                        </div>
+                        @Html.ValidationMessage("ConfirmEmail")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Пароль*
+                        </div>
+                        <div class="input">
+                            @Html.Password("Password", Model.Password)
+                        </div>
+                        @Html.ValidationMessage("Password")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Повторите пароль*
+                        </div>
+                        <div class="input">
+                            @Html.Password("ConfirmPassword", Model.ConfirmPassword)
+                        </div>
+                        @Html.ValidationMessage("ConfirmPassword")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Страна*
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Country", Model.Country)
+                        </div>
+                        @Html.ValidationMessage("Country")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Город*
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("City", Model.City)
+                        </div>
+                        @Html.ValidationMessage("City")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Имя
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("FirstName", Model.FirstName)
+                        </div>
+                        @Html.ValidationMessage("FirstName")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Фамилия
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("LastName", Model.LastName)
+                        </div>
+                        @Html.ValidationMessage("LastName")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Дата рождения*
+                        </div>
+                        <div class="input">
+                            @Html.DropDownList("BirthdateDay", Model.BirthdateDaySelectList, new { @class = "date" })
+                            @Html.DropDownList("BirthdateMonth", Model.BirthdateMonthSelectList, new { @class = "month" })
+                            @Html.DropDownList("BirthdateYear", Model.BirthdateYearSelectList, new { @class = "month" })
+                        </div>
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Телефон*
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Phone", Model.Phone)
+                        </div>
+                        @Html.ValidationMessage("Phone")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Код с картинки*
+                        </div>
+                        <div class="captcha">
+                            <div class="captcha-image">
+                                <img src="@Url.Action("Captcha", "User")" alt="captcha"/>
+                            </div>
+                            <div class="captcha-input">
+                                @Html.TextBox("Captcha", Model.Captcha)
+                                @Html.ValidationMessage("Captcha")
+                            </div>
+
+                            <div class="captcha-checkbox">
+                                <label>
+                                    @Html.CheckBox("Agreement", Model.Agreement)
+                                    <span>Я соглашаюсь с <a href="@Url.Action("Index", "Page", new { url = "pravila" })">
+                                        правилами</a> сайта</span>
+                                </label>
+                                @Html.ValidationMessage("Agreement")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="registration-button">
+                        <input class="blue-28-submit" type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" />
+                    </div>
+               
+                }
+            </div>
+        </div>
+    </div>
+</div>

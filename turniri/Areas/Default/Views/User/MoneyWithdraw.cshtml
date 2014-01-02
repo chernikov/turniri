@@ -1,0 +1,46 @@
+﻿@model turniri.Models.ViewModels.MoneyWithdrawView
+
+@Html.Hidden("PercentWithdraw", null)
+<div class="money-recharge">
+    @using (Html.BeginForm("MoneyWithdraw", "User", FormMethod.Post, new { id = "MoneyWithdrawForm" }))
+    {
+        <div class="input-item clear">
+            <div class="lable-name">
+                Тип
+            </div>
+            <div class="input">
+                @Html.DropDownList("Provider", Model.SelectListProvider, new {id = "ProviderWithdraw" })
+            </div>
+        </div>
+         <div class="input-item clear">
+            <div class="lable-name">
+                Золотые ТИ
+            </div>
+            <div class="input">
+                @Html.TextBox("Sum", Model.Sum, new {id = "SumGold" })
+            </div>
+        </div>
+        <div class="input-item clear">
+            <div class="lable-name">
+                Номер кошелька
+            </div>
+            <div class="input">
+                @Html.TextBox("Account", Model.Account)
+            </div>
+        </div>
+        <div class="money-info">
+            <div class="title">Будет получено</div>
+            <div class="value" id="WithdrawValue"></div>
+             <div class="value">руб.</div>
+        </div>
+        if (Html.ValidationMessage("Common") != null)
+        {
+            <div class="not-enough-money">
+            @Html.ValidationMessage("Common")
+            </div>
+        }
+        <div class="form-button">
+            <input class="blue-28-submit" type="submit" value="ВЫВЕСТИ" id="MoneyWithdrawBtn" />
+        </div>
+    }
+</div>

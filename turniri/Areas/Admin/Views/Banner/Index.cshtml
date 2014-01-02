@@ -1,0 +1,55 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Banner>
+
+@{
+    ViewBag.Title = "Баннеры";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Баннеры</h2>
+
+@Html.ActionLink("Создать", "Create", "Banner", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>Путь 
+            </th>
+            <th>Тип
+            </th>
+            <th>Url
+            </th>
+            <th>Картинка 
+            </th>
+            <th>
+                Просмотр/Клики
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr class="@(item.IsOn ? "" : "off")">
+            <td>
+                @item.Path
+            </td>
+            <td>
+                @((turniri.Model.Banner.TypeEnum)item.Type)
+            </td>
+            <td>
+                @item.Url
+            </td>
+            <td>
+                <img src="@item.ImagePath.GetPreviewPath("_prev")"/>
+            </td>
+            <td>
+                @item.TotalViews / @Html.ActionLink(item.TotalClicks.ToString(), "Details", "Banner", new {id = item.ID}, null)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Banner", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Banner", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>

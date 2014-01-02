@@ -1,0 +1,54 @@
+﻿@model turniri.Models.ViewModels.LoginViewModel
+<div class="login-wrapper">
+    <div class="login-arrow sprite">
+    </div>
+    <div class="login-outer-form">
+        @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+        {
+            <div class="login-inner-form">
+                <div id="login" class="login-input">
+                    @Html.TextBox("Login", Model.Login, new { title = "Логин" })
+                </div>
+                <div id="password" class="login-input">
+                    @Html.Password("Password", Model.Password, new { title = "Пароль" })
+                </div>
+                <div class="form-enter-wrapper clear">
+                    <div class="gray-24-button-wrapper">
+                        <input type="submit" class="submit" value="Войти" />
+                    </div>
+                    <div class="remeber-wrapper">
+                        <label>
+                            @Html.CheckBox("IsPersistent", Model.IsPersistent) Запомнить меня
+                        </label>
+                    </div>
+                </div>
+                <div class="social-wrapper clear">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("GoogleLogin", "Oauth")">
+                                <span class="google sprite"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("FacebookLogin", "Oauth")">
+                                <span class="facebook sprite"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("VkontakteLogin", "Oauth")">
+                                <span class="vkontakte sprite"></span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="forgot-wrapper clear">
+                    <span class="icon-forgot sprite"></span>
+                    @Html.ActionLink("Забыли свой пароль?", "ForgotPassword", "Login")
+                </div>
+
+
+            </div>
+        }
+    </div>
+</div>

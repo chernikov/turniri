@@ -1,0 +1,64 @@
+﻿@model turniri.Model.NewType
+@{
+    int page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div id="tab_news_@(Model.ID)_content" class="switcher-content">
+    <ul>
+        @foreach (var _new in Model.NewsPage(page))
+        {
+            <li class="clear">
+                @if (!string.IsNullOrWhiteSpace(_new.TitlePath))
+                {
+                    <div class="preview">
+                        <a href="@Url.Action("Index", "New", new { url = @_new.Url })">
+                            <img src="@_new.AvatarTitlePath" alt="@_new.Header" />
+                        </a>
+                    </div>    
+                }
+                <div class="content">
+                    <div class="title">
+                        <h2>
+                            @Html.ActionLink(@_new.Header, "Index", "New", new { url = @_new.Url }, null)
+                        </h2>
+                    </div>
+                    <div class="text">
+                        @Html.Raw(_new.Text.BBCodeToHTML().StripTags().Teaser(300, "..."))
+                    </div>
+                    <div class="bottom-wrapper">
+                        <div class="date">
+                            @_new.AddedDate.ToString("dd.MM.yyyy")
+                        </div>
+                        <div class="user">
+                            <a href="@Url.Action("Index", "User", new { login = _new.User.Login })">@_new.User.Login</a>
+                        </div>
+                        <div class="comments">
+                            @_new.CommentCount
+                            <div class="sprite icon-comment"></div>
+                        </div>
+                        <div class="comments">
+                            @_new.VisitCount
+                            <div class="sprite icon-view"></div>
+                        </div>
+                        <div class="more">
+                            @Html.ActionLink("далее", "Index", "New", new { url = @_new.Url }, null)
+                        </div>
+                        <div class="like news" data-id="@_new.ID">
+                            <div class="sprite  icon @(currentUser != null ? (_new.IsLikedBy(currentUser) ? "selected active" : "active") : "") ">
+                            </div>
+                            <div class="count">@_new.Likes</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+    <div class="paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list">
+            @Html.PageLinksTurniri(page, Model.CountPage(), x => Url.Action("NewsList", new { page = x }))
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿body
+{
+    font-family: Arial;
+    color: #343434;
+    font-size: 14px;
+    padding: 5px 0;
+}
+
+
+
+.quote {
+	border: solid 1px #575757;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	border-radius: 7px;
+	margin: 0 0 10px 0;
+}
+
+    .quote .quote-title {
+	    color: #fff;
+	    font-size: 13px;
+	    padding: 0 7px;
+	    line-height: 20px;
+	    background: #575757;
+	    -moz-border-radius-topleft: 6px;
+	    -webkit-border-radius-topleft: 6px;
+	    border-top-left-radius: 6px;
+	    -moz-border-radius-topright: 6px;
+	    -webkit-border-radius-topright: 6px;
+	    border-top-right-radius: 6px;
+    }
+
+    .quote .quote-text 
+    {
+	    padding: 7px;
+	    font-style: italic;
+	    color: #a6a5a5;
+    }

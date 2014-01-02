@@ -1,0 +1,136 @@
+﻿@model turniri.Model.Group
+
+@{
+    ViewBag.Title = "Участники команды " + Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/roster-group.js"></script>
+}
+@Html.Partial("GroupMenu", Model.Url)
+<div class="main-bootom">
+    <div class="long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>Участники команды @Model.Name
+            </h3>
+            <div class="gray-16-button-wrapper">
+                <a href="@Url.Action("Notify", "Group", new { id = Model.ID })">УВЕДОМЛЕНИЯ</a>
+            </div>
+            <div class="gray-16-button-wrapper">
+                <a href="@Url.Action("Transfers", "Group", new { id = Model.ID })">ТРАНСФЕРЫ</a>
+            </div>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="gamers-list clear">
+            <div class="top-grid">
+                <div class="number">
+                    №
+                </div>
+                <div class="name">
+                    ИМЯ
+                </div>
+                <div class="thumbs-up">
+                    <div class="icon-thumbs-up sprite">
+                    </div>
+                </div>
+                <div class="thumbs-down">
+                    <div class="icon-thumbs-down sprite">
+                    </div>
+                </div>
+                <div class="reputation">
+                    РЕПУТАЦИЯ
+                </div>
+                <div class="score">
+                    ОЧКИ
+                </div>
+                <div class="level">
+                    УРОВЕНЬ
+                </div>
+                <div class="bandwidth">
+                    СВЯЗЬ
+                </div>
+            </div>
+            <div class="gamers-scroll">
+                <ul class="clear">
+                    @{
+                        var i = 1;
+                    }
+                    @foreach (var item in Model.SubUserGroups)
+                    {
+                        <li class="@(i % 2 == 0 ? "" : "second") gamer-item" id="User_@item.User.ID">
+                            <div class="number">
+                                @i
+                            </div>
+                            <div class="name">
+                                <div class="preview-image">
+                                    <a href="@Url.Action("Index", "User", new { login = item.User.Login })">
+                                        <img src="@item.User.FullAvatarPath18" alt="avatar" />
+                                    </a>
+                                    @if (item.User.IsOnline)
+                                    {
+                                        <div class="dot"></div>
+                                    }
+                                </div>
+                                <a href="@Url.Action("Index", "User", new { login = item.User.Login })" class="user">
+                                    @item.User.Login
+                                </a>
+                                @if (currentUser != null && currentUser.ID == Model.UserID)
+                                {
+                                    <div class="gray-16-button-wrapper">
+                                        <a href="@Url.Action("RemovePlayer", "Group", new { id = item.ID })">Удалить</a>
+                                    </div>
+                                    
+                                    if (item.Status == (int)turniri.Model.UserGroup.StatusEnum.Asked)
+                                    {
+                                    <div class="gray-16-button-wrapper">
+                                        <a href="@Url.Action("AcceptPlayer", "Group", new { id = item.ID })">Принять</a>
+                                    </div>
+                                    }
+                                    else
+                                    {
+                                    <div class="gray-16-button-wrapper switch-captain @(item.InRole("group_captain") ? "active" : "")" data-id="@item.ID">
+                                        <span>Капитан</span>
+                                    </div>
+                                    <div class="gray-16-button-wrapper switch-leader @(item.InRole("group_leader") ? "active" : "")"  data-id="@item.ID">
+                                        <span>Лидер</span>
+                                    </div>
+                                    }
+                                }
+                            </div>
+                            <div class="thumbs-up">
+                                @item.User.CountPlus
+                            </div>
+                            <div class="thumbs-down">
+                                @item.User.CountMinus
+                            </div>
+                            <div class="reputation">
+                                @Html.Partial("_ShowReputation", item.User)
+                            </div>
+                            <div class="score">
+                                @item.Rating.TotalScore/@turniri.Model.User.PointsToNextLevel(@item.Rating.TotalScore)
+                            </div>
+                            <div class="level">
+                                @item.Level
+                            </div>
+                            <div class="bandwidth">
+                                @if (item.User.ReputationConnection.HasValue)
+                                {
+                                    <div class="icon-bandwidth-@((int)item.User.ReputationConnection.Value) sprite">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="icon-bandwidth-null sprite">
+                                    </div> 
+                                }
+                            </div>
+                        </li>
+                                i++;
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

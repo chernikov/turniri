@@ -1,0 +1,71 @@
+﻿@model turniri.Model.Match
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="popup-window-big popup-window">
+    <div class="top-bar">
+        <h3>Подробности матча #@Model.Number
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper">
+        <div class="popup-report-score clear">
+            @if (Model.CountRounds > 1)
+            {
+                if (Model.Tournament != null && Model.Tournament.HostGuest)
+                {
+                @Html.Partial("_RoundInfo", Model.Participant1HostRound)
+                @Html.Partial("_RoundInfo", Model.Participant2HostRound)
+                }
+                else
+                {
+                @Html.Partial("_RoundInfo", Model.Round1)
+                @Html.Partial("_RoundInfo", Model.Round2)
+                }
+                if (Model.AdditionalRound != null)
+                {
+                @Html.Partial("_RoundInfo", Model.AdditionalRound)
+                }
+            }
+            else
+            {
+                @Html.Partial("_RoundInfo", Model.SubRounds.First())
+            }
+            @if (Model.Tournament != null && Model.Tournament.IsTeam)
+            {
+                <div class="score-wrapper clear">
+                    <div class="score-left">
+                        <div class="players">
+                            @foreach (var user in Model.Player1.Team.Roaster(Model.ID))
+                            {
+                                <a href="@Url.Action("Index", "User", new { login = user.Login })" class="user">@user.Login</a><text> </text>
+                            }
+                        </div>
+
+                    </div>
+                    <div class="score-center">&nbsp;</div>
+                    <div class="score-right">
+                        <div class="players">
+                            @foreach (var user in Model.Player2.Team.Roaster(Model.ID))
+                            {
+                                <a href="@Url.Action("Index", "User", new { login = user.Login })" class="user">@user.Login</a><text> </text>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="comment-wrapper">
+            @Html.Partial("ShowComments", Model) 
+            <div id="CommentMatchInput">
+                @if (currentUser != null)
+                {
+                    @Html.Action("CreateComment", "Match", new { id = Model.ID })
+                }
+            </div>
+        </div>
+    </div>
+</div>

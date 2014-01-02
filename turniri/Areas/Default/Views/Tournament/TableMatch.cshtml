@@ -1,0 +1,76 @@
+﻿@model turniri.Model.Match
+@{
+    var type = (int)ViewData["type"];
+}
+
+<div class="item  match-item group-match-item" id="Match_@Model.ID">
+    @if (Model.IsLive)
+    {
+        <div class="icon-live sprite"></div>
+    }
+    else
+    {
+        if ((Model.Tournament.Status == (int)turniri.Model.Tournament.StatusEnum.InGame ||
+Model.Tournament.Status == (int)turniri.Model.Tournament.StatusEnum.PlayedOut) &&
+Model.Status != (int)turniri.Model.Match.MatchStatusEnum.Empty)
+        {
+            if (Model.CommentCount > 0)
+            {
+                if (Model.HasCommentImage)
+                {
+        <div class="icon-info @Model.InfoSubmitClass photo sprite">
+        </div>  
+                }
+                if (Model.HasCommentVideo)
+                {
+        <div class="icon-info @Model.InfoSubmitClass camera sprite">
+        </div>  
+                }
+                if (!Model.HasCommentImage && !Model.HasCommentVideo)
+                {
+        <div class="icon-info @Model.InfoSubmitClass comment sprite">
+        </div>  
+                }
+            }
+            else
+            {
+        <div class="icon-info @Model.InfoSubmitClass sprite">
+        </div>  
+            }
+        }
+    }
+    @foreach (var round in Model.SubRounds)
+    {
+        if (type == 1)
+        {
+
+            if (round.Technical)
+            {
+<span class="tech" title="@(round.Score1 > round.Score2 ? "Техническая победа" : "Техническое поражение")">@round.Score1View&nbsp;:&nbsp;@round.Score2View</span>
+            }
+            else if (round.Extended)
+            {
+<span class="extended" title="Дополнительное время">@round.Score1View&nbsp;:&nbsp;@round.Score2View</span>
+            }
+            else
+            {
+<span>@round.Score1View&nbsp;:&nbsp;@round.Score2View</span>
+            }
+        }
+        else
+        {
+            if (round.Technical)
+            {
+<span class="tech" title="@(round.Score2 > round.Score1 ? "Техническая победа" : "Техническое поражение")">@round.Score2View&nbsp;:&nbsp;@round.Score1View</span>
+            }
+            else if (round.Extended)
+            {
+<span class="extended" title="Дополнительное время">@round.Score2View&nbsp;:&nbsp;@round.Score1View</span>
+            }
+            else
+            {
+<span>@round.Score2View&nbsp;:&nbsp;@round.Score1View</span>
+            }
+        }
+    }
+</div>

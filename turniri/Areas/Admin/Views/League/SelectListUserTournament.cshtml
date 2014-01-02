@@ -1,0 +1,14 @@
+﻿@model IList<SelectListItem>
+@{
+    var id = (int)ViewBag.ID;
+    var levelId = (int?)ViewBag.LevelID;
+    var hasLevel = (bool)ViewBag.НasLevel;
+}
+@if (hasLevel)
+{
+    @Html.DropDownList("LeagueParticipantTournament", Model, new { data_id = id, data_level_id = levelId, @class = "input-xxlarge tournament-season" })
+}
+else
+{
+    @Html.DropDownList("LeagueParticipantTournament", Model, new { data_id = id, data_level_id = levelId, @class = "input-xxlarge tournament-season", disabled = "disabled" })
+}

@@ -1,0 +1,155 @@
+﻿@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="span3">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            @if (currentUser.InRoles("admin,game_admin"))
+            {
+                <li class="nav-header">Лиги</li>
+                <li>
+                    @Html.ActionLink("Лиги", "Index", "League")
+                </li>
+            }
+            @if (currentUser.InRoles("admin,seller"))
+            {
+                <li class="nav-header">Товары</li>
+                <li>@Html.ActionLink("Жанры", "Index", "Catalog")</li>
+                <li>@Html.ActionLink("Категории", "Index", "Category")</li>
+                <li>@Html.ActionLink("Правила активации", "Index", "Vendor")</li>
+                <li>@Html.ActionLink("Товары", "Index", "Product")</li>
+                <li>
+                    <a href="@Url.Action("Index", "Cart")">Заказы @Html.Action("Count", "Cart")
+                    </a>
+                </li>
+@*<li>@Html.ActionLink("Промо-акции", "Index", "PromoAction")</li>*@
+            }
+            @if (currentUser.InRoles("admin"))
+            {
+                <li class="nav-header">Бабло</li>
+                <li>@Html.ActionLink("Проценты", "Index", "MoneyFee")</li>
+                <li>@Html.ActionLink("Баланс сайта", "Index", "Money")</li>
+                <li>@Html.ActionLink("Пополнения", "Index", "Recharge")</li>
+                <li>@Html.ActionLink("Уведомления пополнений", "Index", "MoneyNotify")</li>
+                <li>
+                    <a href="@Url.Action("Index", "MoneyWithdraw")">Вывод @Html.Action("Count", "MoneyWithdraw")
+                    </a>
+                </li>
+            }
+            @if (currentUser.InRoles("editor,admin"))
+            {
+                <li class="nav-header">Новости</li>
+                <li>
+                    @Html.ActionLink("Новости", "Index", "New")
+                </li>
+                <li>
+                    @Html.ActionLink("Видео", "Index", "Video")
+                </li>
+                <li>
+                    @Html.ActionLink("Блоги", "Index", "Blog")
+                </li>
+                <li>
+                    @Html.ActionLink("Главная камера", "Main", "Camera")
+                </li>
+            }
+           
+            
+            @if (currentUser.InRoles("admin"))
+            {
+                <li class="nav-header">Игры</li>
+                <li>@Html.ActionLink("Платформы", "Index", "Platform")</li>
+                <li>
+                    @Html.ActionLink("Игры", "Index", "Game")
+                </li>
+                <li>
+                    <strong>@Html.ActionLink("Турниры", "Index", "Tournament")</strong>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Match")">Оспоренные @Html.Action("Count", "Match")
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Unplayed", "Match")">Несыгранные @Html.Action("CountUnplayed", "Match")
+                    </a>
+                </li>
+                <li class="nav-header">Форум</li>
+                <li>
+                    @Html.ActionLink("Форум", "Index", "Forum")
+                    @Html.ActionLink("Голосования", "Index", "Poll")
+                    @Html.ActionLink("Чаты", "Index", "Chat")
+                </li>
+                <li class="nav-header">Пользователи</li>
+                <li>
+                    <strong>@Html.ActionLink("Пользователи", "Index", "User") </strong>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Group")">Команды @Html.Action("Count", "Group")</a>
+                </li>
+                <li>
+                    @Html.ActionLink("Рассылки", "Index", "Distribution")
+                    @Html.ActionLink("Уведомления", "Index", "NoticeDistribution")
+                </li>
+                <li class="nav-header">Роли</li>
+                <li>
+                    @Html.ActionLink("Роли", "Index", "Role")
+                </li>
+                <li>
+                    @Html.ActionLink("Редакторы", "Index", "Editor")
+                </li>
+                <li>
+                    @Html.ActionLink("Продавцы", "Index", "Seller")
+                </li>
+                <li class="nav-header">Контент</li>
+                <li>
+                    @Html.ActionLink("Страницы", "Index", "Page")
+                </li>
+                <li>
+                    @Html.ActionLink("Фотографии", "Index", "PhotoAlbum")
+                </li>
+                <li>
+                    @Html.ActionLink("Баннеры", "Index", "Banner")
+                </li>
+                <li>
+                    @Html.ActionLink("Фоны", "Index", "Background")
+                </li>
+                <li class="nav-header">Иное</li>
+                
+                <li>@Html.ActionLink("Типы новостей", "Index", "NewType")</li>
+                <li>@Html.ActionLink("Плохие слова", "Index", "BannedWord")</li>
+           
+            }
+            else if (currentUser.InRoles("game_admin,tournament_admin"))
+            {
+                <li class="nav-header">Игры</li>
+                <li>
+                    @Html.ActionLink("Турниры", "Index", "Tournament")
+                </li>
+                if (currentUser.InRoles("game_admin"))
+                {
+                <li>
+                    <a href="@Url.Action("Index", "Group")">Команды @Html.Action("Count", "Group")</a>
+                </li>
+                }
+                <li class="nav-header">Форум</li>
+                <li>
+                    @Html.ActionLink("Форум", "Index", "Forum")
+                    @if (currentUser.InRoles("game_admin"))
+                    {
+                        @Html.ActionLink("Голосования", "Index", "Poll")
+                    }
+                </li>
+                <li class="nav-header">Рассылки</li>
+                <li>
+                    @Html.ActionLink("Рассылки", "Index", "Distribution")
+                    @Html.ActionLink("Уведомления", "Index", "NoticeDistribution")
+                </li>
+            }
+            @if (currentUser.InRoles("admin,manager,editor,game_admin,tournament_admin"))
+            {
+                <li class="nav-header">Социальные сети</li>
+                <li>@Html.ActionLink("Коннект", "Index", "Connect")</li>
+                <li>@Html.ActionLink("Группы", "Index", "SocialGroup")</li>
+            }
+        </ul>
+    </div>
+</div>

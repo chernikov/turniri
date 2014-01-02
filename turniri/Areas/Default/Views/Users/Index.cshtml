@@ -1,0 +1,137 @@
+﻿@model turniri.Model.PageableData<turniri.Model.User>
+@{
+    ViewBag.Title = "Пользователи";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header {
+    <script src="/Media/scripts/default/gamers.js" type="text/javascript"></script>
+    <script src="/Media/scripts/default/friends.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        //так надо 
+        var friends;
+        $().ready(function () {
+            friends = new Friends();
+            friends.init();
+        });
+    </script>
+    <script src="/Media/scripts/default/messages.js" type="text/javascript"></script>
+}
+@Html.Partial("UserMenu", "")
+<div class="main-bootom">
+    <div class="long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>Пользователи
+            </h3>
+            <div class="gamers_search_wrapper">
+                @using (Html.BeginForm("Index", "Users", FormMethod.Post, new { id = "SearchForm" }))
+                {
+                    <div id="gamer_search" class="gamer-inner-search">
+                        @Html.TextBox("searchString", "", new { title = "Поиск по игрокам", @class = "gamers-search" })<span
+                            class="icon-search sprite"></span>
+                    </div>
+                }
+            </div>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="gamers-list clear">
+            <div class="top-grid">
+                <div class="number">
+                    №
+                </div>
+                <div class="name">
+                    ИМЯ
+                </div>
+                <div class="thumbs-up">
+                    <div class="icon-thumbs-up sprite">
+                    </div>
+                </div>
+                <div class="thumbs-down">
+                    <div class="icon-thumbs-down sprite">
+                    </div>
+                </div>
+                <div class="reputation">
+                    РЕПУТАЦИЯ
+                </div>
+                <div class="bandwidth">
+                    СВЯЗЬ
+                </div>
+            </div>
+            <div class="gamers-scroll">
+                <ul class="clear">
+                    @{
+                        var i = 1;
+                    }
+                    @foreach (var item in Model.List)
+                    {
+                        <li class="@(i % 2 == 0 ? "" : "second") gamer-item" id="User_@item.ID">
+                            <div class="number">
+                                @i
+                            </div>
+                            <div class="name">
+                                <div class="preview-image">
+                                    <a href="@Url.Action("Index", "User", new { login = item.Login })">
+                                        <img src="@item.FullAvatarPath18" alt="avatar" />
+                                    </a>
+                                    @if (item.IsOnline)
+                                    {
+                                        <div class="dot"></div>
+                                    }
+                                </div>
+                                <a href="@Url.Action("Index", "User", new { login = item.Login })" class="user">
+                                    @item.Login
+                                </a>
+                                @if (currentUser != null)
+                                {
+                                    if (currentUser.ID != item.ID)
+                                    {
+                                    <div class="gray-16-button-wrapper write-fight-message">
+                                        <span>Сразиться</span>
+                                    </div>
+                                    }
+                                    if (!item.AskForFriend(currentUser.ID) && currentUser.ID != item.ID)
+                                    {
+                                    <div class="gray-16-button-wrapper make-friend">
+                                        <span>Дружить</span>
+                                    </div>
+                                    }
+                                }
+                            </div>
+                            <div class="thumbs-up">
+                                @item.CountPlus
+                            </div>
+                            <div class="thumbs-down">
+                                @item.CountMinus
+                            </div>
+                            <div class="reputation">
+                                @Html.Partial("_ShowReputation", item)
+                            </div>
+                            <div class="bandwidth">
+                                @if (item.ReputationConnection.HasValue)
+                                {
+                                    <div class="icon-bandwidth-@((int)item.ReputationConnection.Value) sprite">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="icon-bandwidth-null sprite">
+                                    </div> 
+                                }
+                            </div>
+                        </li>
+                                i++;
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="paging light-paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list">
+            @Html.PageLinksTurniri(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+        </div>
+    </div>
+</div>

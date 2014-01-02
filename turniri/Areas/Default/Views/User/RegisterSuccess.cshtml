@@ -1,0 +1,34 @@
+﻿@model turniri.Models.ViewModels.User.UserCode
+@{
+    ViewBag.Title = "Регистрация";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+<div class="main-bootom">
+    <div class="box-registration box-forum-update box">
+        <div class="top-bar">
+            <h3>
+                РЕГИСТРАЦИЯ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="registration-accepr registration-wrapper clear">
+            <div class="title">
+                На указанный вами email при регистрации был выслан код, для подтверждения email
+                введите код ниже</div>
+            @using (Html.BeginForm("RegisterSuccess", "User", FormMethod.Post))
+            {
+                <div class="item clear">
+                    <div class="lable-title">
+                        Код</div>
+                    <div class="registration-input">
+                        @Html.TextBox("Code", Model.Code)
+                    </div>
+                    <div class="registration-accept-button">
+                        <input class="gray-24-submit" type="submit" value="ПОДТВЕРДИТЬ" /></div>
+                </div>
+                @Html.ValidationMessage("Code")
+            }
+        </div>
+    </div>
+</div>

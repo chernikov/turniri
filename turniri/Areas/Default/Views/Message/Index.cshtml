@@ -1,0 +1,46 @@
+﻿@model turniri.Model.User
+@{
+    ViewBag.Title = "Сообщения";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var tabId = (int)ViewBag.Tab;
+    var messageID = (int?)ViewBag.MessageID;
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/messages.js"></script>
+}
+@Html.Hidden("MessageID", messageID);
+@Html.Hidden("TabID", tabId);
+@Html.Partial("UserMenu", Model.Login)
+<div class="main-bootom">
+    <div class="big-box-messages big-box turnirs">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_message_1">Входящие сообщения</li>
+                <li id="tab_message_2" class="fight-message">Боевые сообщения</li>
+                <li id="tab_message_3" class="invoice-message">Приглашения</li>
+                <li id="tab_message_4">Исходящие сообщения</li>
+            </ul>
+            <input class="gray-28-submit" type="submit" id="deleteMarked" value="УДАЛИТЬ ОТМЕЧЕННЫЕ" />
+            <div class="blue-28-button-wrapper">
+                <span class="popup-big-open" id="WriteMessage">НАПИСАТЬ</span>
+            </div>
+        </div>
+        <div class="message-box turnirs-wrapper">
+            <div id="tab_message_1_content" class="switcher-content">
+                @Html.Action("IncomeSubjects", "Message")
+            </div>
+            <div id="tab_message_2_content" class="switcher-content" style="display: none">
+                @Html.Action("FightSubjects", "Message")
+            </div>
+            <div id="tab_message_3_content" class="switcher-content" style="display: none">
+                @Html.Action("InvoiceSubjects", "Message")
+            </div>
+            <div id="tab_message_4_content" class="switcher-content" style="display: none">
+                @Html.Action("OutcomeSubjects", "Message")
+            </div>
+        </div>
+    </div>
+    <div id="MessageWrapper">
+    </div>
+</div>
+

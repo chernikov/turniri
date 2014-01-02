@@ -1,0 +1,52 @@
+﻿@model turniri.Models.Info.YandexRechargeInfo
+@{
+    ViewBag.Title = "ОПЛАТА ЯНДЕКС.ДЕНЬГИ";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-bootom">
+    <div class="main-bootom">
+        <div class="turnir long-box big-box">
+            <div class="switcher clear">
+                <ul>
+                    <li id="tab_cart_1" class="current">ОПЛАТА ЯНДЕКС.ДЕНЬГИ</li>
+                </ul>
+            </div>
+            <div class="turnirs-wrapper">
+                <div id="tab_cart_1_content" class="edit-main-profile switcher-content clear cart">
+                    <div class="main-profile-wrapper money-wrapper">
+                        <div class="money-recharge">
+                            <form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
+                                @Html.Hidden("receiver", Model.Receiver)
+                                @Html.Hidden("formcomment", Model.FormComment)
+                                @Html.Hidden("short-dest", Model.ShortDest)
+                                @Html.Hidden("writable-targets", Model.WritableTargets)
+                                @Html.Hidden("comment-needed", Model.CommentNeeded)
+                                @Html.Hidden("label", Model.Label)
+                                @Html.Hidden("quickpay-form", Model.QuickpayForm)
+                                @Html.Hidden("targets", Model.Targets)
+                                @Html.Hidden("sum", Model.Sum.ToString().Replace(',', '.'))
+                                @Html.Hidden("comment", Model.Comment)
+                                @Html.Hidden("fio", 0)
+                                @Html.Hidden("mail", 0)
+                                @Html.Hidden("phone", 0)
+                                @Html.Hidden("address", 0)
+
+                                <div class="yandex-image">
+                                    <img src="/Media/images/yandex-money.png" alt="Yandex money" />
+                                </div>
+                                <div class="money-info">
+                                    <div class="title">Оплата</div>
+                                    <div class="value">@Model.Sum руб.</div>
+                                </div>
+                                <div class="form-button">
+                                    <input class="blue-28-submit" type="submit" value="ПРОДОЛЖИТЬ" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

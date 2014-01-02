@@ -1,0 +1,50 @@
+﻿@model turniri.Model.User
+@{
+    var controllerName = ViewContext.RequestContext.RouteData.Values["controller"] as string;
+    var actionName = ViewContext.RequestContext.RouteData.Values["action"] as string;
+
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@if (currentUser != null)
+{
+    <div class="controll-box box-forum-update box">
+        <div class="top-bar">
+            <h3>КОНТРОЛЬНАЯ ПАНЕЛЬ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="box-wrapper box-wrapper-scroll profile"  id="User_@Model.ID">
+            <div class="content">
+                <ul>
+                    <li class="write-message"><span>
+                        <div class="icon-letter-blue sprite">
+                        </div>
+                        НАПИСАТЬ СООБЩЕНИЕ</span></li>
+                    <li class="write-fight-message"><span>
+                        <div class="icon-letter-red sprite">
+                        </div>
+                        НАПИСАТЬ БОЕВОЕ СООБЩЕНИЕ</span></li>
+                    @if (!currentUser.AskForFriend(Model.ID))
+                    {
+                        <li class="make-friend"><span>
+                            <div class="icon-msn sprite">
+                            </div>
+                            ПРИГЛАСИТЬ ДРУЖИТЬ</span></li>
+                    }
+                    @if (currentUser.GroupsForInvoiceFor(Model.ID).Any())
+                    {
+                        <li class="write-invoice-message"><span>
+                            <div class="icon-invoice sprite"></div>
+                            ПРИГЛАСИТЬ В КОМАНДУ</span></li>
+                    }
+                    
+                    <li class="send-money"><span>
+                            <div class="icon-gold sprite"></div>
+                            ПОСЛАТЬ ТИ</span></li>
+                  
+                </ul>
+            </div>
+        </div>
+    </div>
+}

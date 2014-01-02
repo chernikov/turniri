@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[MatchRoaster] (
+    [ID]      INT IDENTITY (1, 1) NOT NULL,
+    [MatchID] INT NOT NULL,
+    [TeamID]  INT NOT NULL,
+    [UserID]  INT NOT NULL,
+    CONSTRAINT [PK_MatchRoaster] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_MatchRoaster_Match] FOREIGN KEY ([MatchID]) REFERENCES [dbo].[Match] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_MatchRoaster_Team] FOREIGN KEY ([TeamID]) REFERENCES [dbo].[Team] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_MatchRoaster_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID])
+);
+

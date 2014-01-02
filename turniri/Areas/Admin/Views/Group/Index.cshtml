@@ -1,0 +1,141 @@
+@model turniri.Model.PageableData<turniri.Model.Group>
+
+@{
+    ViewBag.Title = "Команды";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/index-group.js"></script>
+}
+<h2>Команды</h2>
+
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Внимание!</strong>
+        @(TempData["message"] as string)
+    </div>
+}
+@Html.ActionLink("Добавить", "Create", "Group", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Игра
+            </th>
+            <th>Наименование
+            </th>
+            <th>Лат. имя
+            </th>
+            <th>Лидер
+            </th>
+            <th>Дата создания
+            </th>
+            <th>Статус
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Game.Name (@item.Game.Platform.Name)
+            </td>
+            <td>
+                <img src="@item.FullLogoPath18" />
+                @item.Name
+            </td>
+            <td>
+                @item.Url
+            </td>
+            <td>
+                <a href="@Url.Action("Index", "User", new { login = item.User.Login, area = "Default" }, null)">@item.User.Login</a>
+            </td>
+            <td>
+                @item.AddedDate
+            </td>
+            <td>
+                @if (item.State == (int)turniri.Model.Group.StateType.Registered)
+                {
+                    <span class="label label-important">Зарегистрирована</span>
+                }
+                else if (item.State == (int)turniri.Model.Group.StateType.Live)
+                {
+                    <span class="label label-success">Активная</span>
+                }
+                else
+                {
+                    <span class="label">Удалена</span>
+                }
+            </td>
+            <td>
+                <div class="btn-group pull-right">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Действия<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Html.ActionLink("Изменить", "Edit", "Group", new { id = item.ID }, new { @class = "" })
+                        </li>
+                        @if (item.State != (int)(turniri.Model.Group.StateType.Removed))
+                        {
+                            if (item.State != (int)(turniri.Model.Group.StateType.Live))
+                            {
+                            <li>
+                                <a href="@Url.Action("Active", "Group", new { id = item.ID })">Активировать</a>
+                            </li>
+                            }
+                            <li>
+                                <a href="@Url.Action("Delete", "Group", new { id = item.ID })"  class="delete-action">
+                                    <i class="icon-trash"></i>Удалить</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Restore", "Group", new { id = item.ID })">Восстановить</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Purge", "Group", new { id = item.ID })"  class="delete-action">
+                                    <i class="icon-remove"></i>Уничтожить</a>
+                            </li>
+                        }
+                        <li><a href="#" class="change-money" data-id="@item.ID">Деньги</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr class="no-border">
+            <td colspan="2">Участников :
+            @if (item.MembersCount > item.Game.MaxCountPlayer)
+            {
+                <span class="label label-important">@item.MembersCount</span>
+            }
+            else
+            {
+                <span class="label label-success">@item.MembersCount </span>
+            }
+            </td>
+            <td>Рейтинг : @item.TotalRating </td>
+            <td colspan="2">Суммарный рейтинг игроков : @item.TotalUserRating </td>
+            <td  colspan="2">Деньги : <strong>@item.MoneyGold</strong> / @item.MoneyWood / @item.MoneyCrystal </td>
+        </tr>
+    }
+
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>
+
+<div id="popupWrapper" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+</div>

@@ -1,0 +1,46 @@
+﻿@model IList<turniri.Models.Info.BothTexts>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AllTexts</title>
+</head>
+<body>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>link</td>
+                    <td>Html</td>
+                    <td>Html Again</td>
+                    <td>BbCode</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Link", "OneText", "Home", new { id = item.ID, type = item.TextType }, null)
+                        </td>
+                        <td>
+                            @item.HtmlText
+                        </td>
+                        <td>
+                            @item.BbCodeText.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name))
+                        </td>
+                        <td>
+                            @item.BbCodeText.NlToBr()
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

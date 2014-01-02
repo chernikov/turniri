@@ -1,0 +1,110 @@
+﻿@model turniri.Model.Match
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var viewData = new ViewDataDictionary();
+    viewData["inteam"] = true;
+}
+
+<div class="popup-window-big popup-window">
+    <div class="top-bar">
+        <h3>Опубликовать результаты матча #@Model.Number <span id="GameTitle"></span>
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper">
+        <div class="round-item-wrapper">
+            <div class="result-table">
+                @Html.Hidden("ID", Model.ID)
+                <div class="top-grid">
+                    <div class="gamers">
+                        ИГРОКИ
+                    </div>
+                    <div class="result">
+                        РЕЗУЛЬТАТ ИГРЫ
+                    </div>
+                    @if (Model.CountRounds > 1)
+                    {
+                        @Html.Partial("_RoundsHeaders", Model)
+                    }
+                </div>
+                <ul>
+                    <li class="clear">
+                        <div class="gamers">
+                            @Html.Partial("__StatisticPlayerView", Model.Player1, viewData)
+                        </div>
+                        <div class="result">
+                            @if (Model.IsAdmin(currentUser))
+                            {
+                                <div class="gray-16-button-wrapper set-tech-winner left-float" data-player1="true"><span>
+                                    TЕХ. ПОБЕДА</span></div>
+                            }
+                            &nbsp;
+                        </div>
+                        @foreach (var round in Model.SubRounds)
+                        {
+                            @Html.Partial("RoundPublish_1", round)
+                        }
+                    </li>
+                    <li class="clear">
+                        <div class="gamers">
+                            @Html.Partial("__StatisticPlayerView", Model.Player2, viewData)
+                        </div>
+                        <div class="result">
+                            @if (Model.IsAdmin(currentUser))
+                            {
+                                <div class="gray-16-button-wrapper set-tech-winner left-float" data-player1="false">
+                                    <span>TЕХ. ПОБЕДА</span></div>
+                            }&nbsp;
+                        </div>
+                        @foreach (var round in Model.SubRounds)
+                        {
+                            @Html.Partial("RoundPublish_2", round)
+                        }
+                    </li>
+                    <li class="clear">
+
+                        <div class="result-game-buttons">
+                            @if (Model.IsAdmin(currentUser))
+                            {
+                                <div class="gray-16-button-wrapper set-tech-lose left-float"><span>TЕХ. ПОРАЖЕНИЕ ОБОИМ</span>
+                                </div>
+                            }
+                            @foreach (var round in Model.SubRounds)
+                            {
+                                @Html.Partial("RoundSubmit", round)
+                            }
+                        </div>
+                    </li>
+                </ul>
+                @if (Model.IsMatchPlayer(currentUser))
+                { 
+                    <div class="reputation-table clear">
+                        <div class="text">
+                            Оцените соперника 
+                        </div>
+                        <div class="canvote" id="TournamentReputationWrapper">
+                            @if (Model.Status != (int)turniri.Model.Match.MatchStatusEnum.Created)
+                            {
+                                @Html.Action("TournamentReputation", "User", new { id = Model.Rival(currentUser.ID).UserID, userID = currentUser.ID })
+                            }
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+        <div class="comment-wrapper">
+            @Html.Partial("ShowComments", Model) 
+          
+            <div id="CommentMatchInput">
+                @if (currentUser != null)
+                {
+                    @Html.Action("CreateComment", "Match", new { id = Model.ID })
+                }
+            </div>
+        </div>
+    </div>
+</div>

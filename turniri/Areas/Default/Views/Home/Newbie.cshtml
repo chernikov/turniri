@@ -1,0 +1,33 @@
+﻿@model IEnumerable<turniri.Model.User>
+
+<div id="tab_newest_1_content" class="switcher-content">
+    <div class="content  scroll-wrapper">
+        <div class="scroll-pane">
+            <ul class="newest-list">
+                @foreach (var user in Model)
+                {
+                    <li class="clear">
+                        <div class="user-preview">
+                            <a href="@Url.Action("Index", "User", new { login = user.Login })">
+                                <img src="@user.FullAvatarPath18" alt="image" />
+                            </a>
+                            @if (user.IsOnline)
+                            {
+                                <div class="dot"></div>
+                            }
+                        </div>
+                        <div class="username">
+                            <a href="@Url.Action("Index", "User", new { login = user.Login })" class="user">
+                                @user.Login
+                            </a>
+                        </div>
+                        <div class="last-visit">
+                            Был @user.LastVisitDate.ToString("dd.MM.yyyy HH:mm")
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+

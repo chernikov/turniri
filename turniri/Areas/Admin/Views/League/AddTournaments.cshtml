@@ -1,0 +1,33 @@
+﻿@model turniri.Models.Info.AddLeagueTournaments
+@using (Html.BeginForm("Edit", "League", FormMethod.Post, new { @class = "form-horizontal", id = "AddTournamentsForm" }))
+{
+    @Html.Hidden("LeagueSeasonID", Model.LeagueSeasonID)
+    @Html.Hidden("LeagueLevelID", Model.LeagueLevelID)
+    @Html.Hidden("ParticipantCount", Model.ParticipantCount)
+    @Html.Hidden("LeagueName", Model.LeagueName)
+    @Html.Hidden("LeagueSeasonName", Model.LeagueSeasonName)
+    @Html.Hidden("LeagueLevelName", Model.LeagueLevelName)
+    <fieldset>
+        <div class="control-group">
+            Создание (добавление) турниров для 
+        лиги @Model.LeagueName сезон: (<strong>@Model.LeagueSeasonName</strong>) 
+        и уровень: (<strong>@Model.LeagueLevelName</strong>) для <strong>@Model.ParticipantCount @Model.ParticipantCount.CountWord("участника", "участников", "участников")</strong>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Количество турниров</label>
+            <div class="controls">
+                @Html.TextBox("Count", Model.Count, new { @class = "input-large" })
+                <p>
+                @Html.ValidationMessage("Count")</p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Count">
+                Автозаполнение участников</label>
+            <div class="controls">
+                @Html.CheckBox("AutoFillParticipants", Model.AutoFillParticipants)
+            </div>
+        </div>
+    </fieldset>
+}

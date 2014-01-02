@@ -1,0 +1,12 @@
+﻿@model turniri.Model.Team
+
+<h2 class="replacement">Замены</h2>
+<ol class="replacements">
+    @foreach (var teamReplacement in Model.SubTeamReplacements)
+    {
+        <li>
+            <a href="@Url.Action("Index", "User", new { login = teamReplacement.UserOut.Login })">@teamReplacement.UserOut.Login</a> на 
+            <a href="@Url.Action("Index", "User", new { login = teamReplacement.UserIn.Login })">@teamReplacement.UserIn.Login</a> / @teamReplacement.AddedDate.ToString("dd.MM.yyyy | HH:mm")
+        </li>
+    }
+</ol>

@@ -1,0 +1,84 @@
+﻿@model turniri.Models.Info.QiwiRechargeInfo
+@{
+    ViewBag.Title = "ОПЛАТА QIWI.КОШЕЛЕК";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-bootom">
+    <div class="main-bootom">
+        <div class="turnir long-box big-box">
+            <div class="switcher clear">
+                <ul>
+                    <li id="tab_cart_1" class="current">ОПЛАТА ЯНДЕКС.ДЕНЬГИ</li>
+                </ul>
+            </div>
+            <div class="turnirs-wrapper">
+                <div id="tab_cart_1_content" class="edit-main-profile switcher-content clear cart">
+                    <div class="main-profile-wrapper money-wrapper">
+                        <div class="money-recharge">
+                            @Html.Hidden("TransactionId", Model.Label)
+                            <div class="yandex-image">
+                                <img src="/Media/images/qiwi-gorizontal.png" alt="Qiwi" />
+                            </div>
+                            <form action="http://w.qiwi.ru/setInetBill_utf.do" method="post" accept-charset="utf-8"
+                                onsubmit="return checkSubmit();">
+                                <input type="hidden" name="from" value="@Model.QiwiID" />
+                                <input type="hidden" name="lifetime" value="@Model.LifeTime" />
+                                <input type="hidden" name="check_agt" value="false" />
+                                <input type="hidden" name="com" value="@Model.Sum" />
+                                <input type="hidden" name="amount_kop" value="0" />
+                                <input type="hidden" name="amount_rub" value="@Model.Sum" />
+                                <!-- используйте это поле для передачи уникального идентификатора заказа/платежа в вашей системе -->
+                                <input type="hidden" name="txn_id" value="@Model.Label"/>
+                                <div class="input-item clear">
+                                    <div class="lable-name">
+                                        Мобильный телефон
+                                    </div>
+                                    <div class="input">
+                                        @Html.TextBox("to", Model.To, new { id = "idto" })
+                                    </div>
+                                    <div class="hint">
+                                        Введите номер телефона в федеральном формате без "8" и без "+7". Пример: 9057772233
+                                    </div>
+                                </div>
+                                <div class="money-info">
+                                    <div class="title">Оплата</div>
+                                    <div class="value">@Model.Sum руб.</div>
+                                </div>
+                                <div class="money-info">
+                                    <div class="title">Оплатить необходимо будет в течение шести часов</div>
+                                </div>
+                                <div class="form-button">
+                                    <input class="blue-28-submit" type="submit" id="writesum" value="Оплатить" />
+                                </div>
+                            </form>
+                            <div class="qiwi-text">
+                                <p>С помощью <a href="https://w.qiwi.ru/" mce_href="https://w.qiwi.ru/" target="_blank">
+                                    QIWI Кошелька</a> вы можете оплатить наши товары и услуги <strong>моментально</strong>
+                                    и <strong>без комиссии</strong>!</p>
+                                <p>Для этого:<br />
+                                    <strong>1</strong>. Сформируйте заказ;<br />
+                                    <strong>2</strong>. Выберите в качестве оплаты QIWI Кошелек и введите номер своего
+                                    сотового телефона;<br />
+                                    <strong>3</strong>. Оплатите автоматически созданный счет на оплату: наличными в
+                                    терминалах QIWI, на сайте <a href="https://w.qiwi.ru/" mce_href="https://w.qiwi.ru/"
+                                        target="_blank">QIWI Кошелька</a> или с помощью приложений для социальных сетей
+                                    и <a href="https://w.qiwi.ru/mobile.action" mce_href="https://w.qiwi.ru/mobile.action"
+                                        target="_blank">мобильных телефонов и планшетов</a>.</p>
+                                <p>QIWI Кошелек легко <a href="http://w.qiwi.ru/fill.action" mce_href="http://w.qiwi.ru/fill.action"
+                                    target="_blank">пополнить</a> в терминалах QIWI и партнеров, салонах сотовой связи,
+                                    супермаркетах, банкоматах или интернет-банк.</p>
+                                <p>Оплатить счет на оплату можно не только со счета QIWI Кошелька, но и банковской картой,
+                                    наличными, а также с лицевых счетов мобильных телефонов Билайн, МегаФон и МТС.
+                                </p>
+                                <p>Если у вас еще нет QIWI Кошелька – вы можете зарегистрировать его на <a href="http://w.qiwi.ru/"
+                                    mce_href="http://w.qiwi.ru/" target="_blank">сайте</a> QIWI Кошелька или в любом
+                                    из приложений за несколько минут.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

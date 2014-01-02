@@ -1,0 +1,41 @@
+﻿@model turniri.Models.ViewModels.PromoCodeView
+@using (Html.BeginForm("GeneratePromoCode", "PromoAction", FormMethod.Post, new { id = "GeneratePromoCodeForm", @class = "form-horizontal" }))
+{ 
+    <div class="modal-body">
+        <fieldset>
+            @Html.Hidden("ID", Model.ID)
+            @Html.Hidden("PromoActionID", Model.PromoActionID)
+            <div class="control-group">
+                <label class="control-label" for="ReferralCode">
+                    Код
+                </label>
+                <div class="controls">
+                    @Html.TextBox("Code", Model.Code)
+                    @Html.ValidationMessage("Code")
+                    
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Reusable">
+                    Многоиспользуемое
+                </label>
+                <div class="controls">
+                    @Html.CheckBox("Reusable", Model.Reusable)
+                </div>
+            </div>
+             <div class="control-group">
+                <label class="control-label" for="Quantity">
+                    Количество
+                </label>
+                <div class="controls">
+                    @Html.TextBox("Quantity", Model.Quantity)
+                    @Html.ValidationMessage("Quantity")
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="GenerateButton">Сгенерировать</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Отмена</button>
+    </div>    
+}

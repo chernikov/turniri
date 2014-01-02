@@ -1,0 +1,159 @@
+﻿@model turniri.Model.User
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@if (Model.CurrentMatches.Any() || Model.IncomingMatches.Any() || Model.OutcomingMatches.Any() || Model.PlayedOutMatches.Any())
+{
+    <div class="big-box turnirs">
+        <div class="switcher clear">
+            <ul>
+                @if (Model.CurrentMatches.Any())
+                {
+                    <li id="tab_match_1" class="current">Текущие матчи</li>    
+                }
+                @if (Model.IncomingMatches.Any())
+                {
+                    <li id="tab_match_2">Входящие матчи</li>
+                }
+                @if (Model.OutcomingMatches.Any())
+                {
+                    <li id="tab_match_3">Исходящие матчи</li>
+                }
+                @if (Model.PlayedOutMatches.Any())
+                {
+                    <li id="tab_match_4">Завершенные матчи</li>
+                }
+            </ul>
+        </div>
+        <div class="match-wrapper turnirs-wrapper">
+            @if (Model.CurrentMatches.Any())
+            {
+                <div id="tab_match_1_content" class="switcher-content">
+                    <div class="top-panel">
+                        <div class="name">
+                            Имя
+                        </div>
+                        <div class="platform">
+                            ПЛАТФОРМА
+                        </div>
+                        <div class="game">
+                            ИГРА
+                        </div>
+                        <div class="stage">
+                            СТАДИЯ
+                        </div>
+                        <div class="result">
+                            РЕЗУЛЬТАТ
+                        </div>
+                    </div>
+                    <div class="match-list">
+                        <div class="">
+                            <ul>
+                                @foreach (var match in Model.CurrentMatches)
+                                {
+                                    @Html.Partial("_MatchItem", match)
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.IncomingMatches.Any())
+            {
+                <div id="tab_match_2_content" class="switcher-content" style="display: none">
+                    <div class="top-panel">
+                        <div class="name">
+                            Имя
+                        </div>
+                        <div class="platform">
+                            ПЛАТФОРМА
+                        </div>
+                        <div class="game">
+                            ИГРА
+                        </div>
+                        <div class="stage">
+                            СТАДИЯ
+                        </div>
+                        <div class="result">
+                            РЕЗУЛЬТАТ
+                        </div>
+                    </div>
+                    <div class="match-list">
+                        <div>
+                            <ul>
+                                @foreach (var match in Model.IncomingMatches)
+                                {
+                                    @Html.Partial("_MatchItem", match)
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.OutcomingMatches.Any())
+            {
+                <div id="tab_match_3_content" class="switcher-content" style="display: none">
+                    <div class="top-panel">
+                        <div class="name">
+                            Имя
+                        </div>
+                        <div class="platform">
+                            ПЛАТФОРМА
+                        </div>
+                        <div class="game">
+                            ИГРА
+                        </div>
+                        <div class="stage">
+                            СТАДИЯ
+                        </div>
+                        <div class="result">
+                            РЕЗУЛЬТАТ
+                        </div>
+                    </div>
+                    <div class="match-list">
+                        <div>
+                            <ul>
+                                @foreach (var match in Model.OutcomingMatches)
+                                {
+                                    @Html.Partial("_MatchItem", match)
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.PlayedOutMatches.Any())
+            {
+                <div id="tab_match_4_content" class="switcher-content" style="display: none">
+                    <div class="top-panel">
+                        <div class="name">
+                            Имя
+                        </div>
+                        <div class="platform">
+                            ПЛАТФОРМА
+                        </div>
+                        <div class="game">
+                            ИГРА
+                        </div>
+                        <div class="stage">
+                            СТАДИЯ
+                        </div>
+                        <div class="result">
+                            РЕЗУЛЬТАТ
+                        </div>
+                    </div>
+                    <div class="match-list">
+                        <div>
+                            <ul>
+                                @foreach (var match in Model.PlayedOutMatches)
+                                {
+                                    @Html.Partial("_MatchItem", match)
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

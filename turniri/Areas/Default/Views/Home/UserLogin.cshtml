@@ -1,0 +1,73 @@
+﻿@model turniri.Model.User
+@if (Model != null)
+{
+    <div class="enter">
+        <div class="user-wrapper">
+            <div class="username">
+                <span id="UnreadMessagesWrapper">
+                    @Html.Partial("UnreadMessages", Model)
+                </span>
+                <a href="@Url.Action("Index", "User", new { login = "" })">
+                    @Model.Login
+                </a>
+            </div>
+        </div>
+        <div class="tools-wrapper">
+            <span class="icon-tools sprite"></span>
+            @Html.ActionLink("Настройки", "Index", "User", new { login = "" }, null)
+        </div>
+
+        @if (Model.InRoles("admin,game_admin,tournament_admin,editor,seller"))
+        {
+            <div class="admin-wrapper">
+                @Html.ActionLink("Админка", "Index", "Home", new { area = "Admin" }, null)
+            </div>
+        }
+        @if (Model.AnyNotice)
+        {
+            <div class="notice-wrapper" id="NoticeWrapper">
+                @Html.Action("Count", "Notice")
+            </div>
+        }
+        <div class="money">
+            <div class="item">
+                <div class="sprite icon-gold"></div>
+                @Model.MoneyGold.Round()
+            </div>
+            <div class="item">
+                <div class="sprite icon-wood"></div>
+                @Model.MoneyWood.Round()
+            </div>
+            <div class="item">
+                <div class="sprite icon-crystal"></div>
+                @Model.MoneyCrystal.Round()
+            </div>
+        </div>
+        <div id="CartWrapper" class="cart">
+            @Html.Action("TopCart", "Cart")
+        </div>
+        <div class="exit-wrapper">
+            <span class="icon-exit sprite"></span>
+            @Html.ActionLink("Выход", "Logout", "Login")
+        </div>
+    </div>
+}
+else
+{
+    <div class="enter">
+        <div class="enter-wrapper">
+            <span class="icon-enter sprite"></span>
+            <div class="enter-link">
+                Войти
+            </div>
+            @Html.Action("LoginPartial", "Login")
+        </div>
+        <div class="registration-wrapper">
+            <span class="icon-plus sprite"></span>
+            @Html.ActionLink("Регистрация", "Register", "User")
+        </div>
+        <div id="CartWrapper" class="cart">
+            @Html.Action("TopCart", "Cart")
+        </div>
+    </div>
+}

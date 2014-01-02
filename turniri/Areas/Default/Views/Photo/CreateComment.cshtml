@@ -1,0 +1,13 @@
+﻿@model turniri.Models.ViewModels.CommentView
+<div class="comment-input">
+    @using (Html.BeginForm("CreateComment", "Photo", FormMethod.Post, new { id = "CommentForm" }))
+    {
+        @Html.Hidden("OwnerID", Model.OwnerID)
+
+        @Html.ValidationMessage("Text")
+        @Html.TextArea("Text", Model.Text, new { @class = "hide-inner-text", placeholder = "Добавить комментарий" })
+        <div class="comment-button">
+            <input class="gray-24-submit" type="submit" value="ОТПРАВИТЬ" id="SubmitComment" />
+        </div>    
+    }
+</div>

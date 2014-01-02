@@ -1,0 +1,41 @@
+﻿@model IEnumerable<turniri.Model.Platform>
+
+@{
+    ViewBag.Title = "Платформы игр";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Платформы игр</h2>
+
+@Html.ActionLink("Создать", "Create", "Platform", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Наименование
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Platform", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Platform", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+

@@ -1,0 +1,51 @@
+﻿@model turniri.Model.User
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    
+}
+
+@foreach (var game in Model.SubGames)
+{
+    <div class="gallery-item" id="Game_@game.ID">
+        <div class="preview-image">
+            <img src="@game.ImagePath144v" alt="preview" />
+        </div>
+        <div class="content">
+            <div class="title">
+                @game.Name.Teaser(13, "...")
+            </div>
+            <div class="game-platform">
+                @game.Platform.Name
+            </div>
+            @if (game.GameCategory == (int)turniri.Model.Game.GameCategoryEnum.Soccer)
+            {
+                 <div class="text soccer">
+                Уровень: @Model.Level(game.ID)
+                <br />
+                Побед: @Model.CountWins(game.ID)
+                <br />
+                Поражений: @Model.CountLoses(game.ID)<br />
+                Ничьих: @Model.CountDraws(game.ID)<br />
+            </div>
+            } else {
+            <div class="text">
+                Уровень: @Model.Level(game.ID)
+                <br />
+                Побед: @Model.CountWins(game.ID)
+                <br />
+                Поражений: @Model.CountLoses(game.ID)<br />
+            </div>
+            }
+            <div class="gray-16-button-wrapper">
+                <a href="@Url.Action("Gamers", "Game", new { platformUrl = game.Platform.Url, url = game.Url })">
+                    МАТЧ</a>
+            </div>
+            <div class="gray-16-button-wrapper">
+                <a href="@Url.Action("Tournaments", "Game", new { platformUrl = game.Platform.Url, url = game.Url })">
+                    ТУРНИР</a>
+            </div>
+        </div>
+        <div class="icon-close-image sprite stop_play" style="display: none;">
+        </div>
+    </div>
+}

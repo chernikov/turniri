@@ -1,0 +1,83 @@
+﻿@model turniri.Model.Group
+
+@{
+    ViewBag.Title = @Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/group.js"></script>
+}
+
+@Html.Partial("GroupMenu", Model.Url)
+@Html.Hidden("ID", Model.ID)
+
+<div class="left">
+    <div class="main-profile gamers-rating">
+        <div class="top-bar">
+            <h3>
+                @Model.Name [@Model.Game.Name (@Model.Game.Platform.Name)]
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="main-profile-wrapper clear">
+            <div class="user-preview">
+                <div class="preview-image">
+                    <img src="@Model.LogoPath173" alt="userpic" />
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="top-info">
+                    <div class="name">
+                        @Model.Name
+                        <span class="gray">(@Model.User.Login)</span>
+                    </div>
+                    <div class="info-stat">
+                        Регистрация: @Model.AddedDate.ToString("dd.MM.yyyy") &nbsp;|&nbsp; Просмотров: @Model.VisitCount
+                        @if (Model.Game.MaxCountPlayer.HasValue && Model.MembersCount > Model.Game.MaxCountPlayer)
+                        {
+                            <div class="error">
+                                Количество участников команды больше @Model.Game.MaxCountPlayer @Model.Game.MaxCountPlayer.Value.CountWord("человека", "человек", "человек")
+                            </div>
+                        }
+                        @if (currentUser.IsLeaderOfGroup(Model))
+                        {
+                            <div class="info-money">
+                                <div class="item">
+                                    <div class="sprite icon-gold"></div>
+                                    @Model.MoneyGold.Round()
+                                </div>
+                                <div class="item">
+                                    <div class="sprite icon-wood"></div>
+                                    @Model.MoneyWood.Round()
+                                </div>
+                                <div class="item">
+                                    <div class="sprite icon-crystal"></div>
+                                    @Model.MoneyCrystal.Round()
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                <div class="bottom-info group">
+                    @Html.Raw(Model.Description.BBCodeToHTML())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right">
+    @Html.Partial("GroupControlPanel", Model)
+</div>
+<div class="main-bootom">
+    @Html.Partial("Users", Model)
+
+    @if (currentUser.IsLeaderOfGroup(Model))
+    {
+        @Html.Partial("Money", Model)
+    }
+</div>

@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[UserComment] (
+    [ID]        INT IDENTITY (1, 1) NOT NULL,
+    [UserID]    INT NOT NULL,
+    [CommentID] INT NOT NULL,
+    CONSTRAINT [PK_UserComment] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_UserComment_Comment] FOREIGN KEY ([CommentID]) REFERENCES [dbo].[Comment] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_UserComment_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE
+);
+

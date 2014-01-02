@@ -1,0 +1,244 @@
+﻿@model turniri.Models.ViewModels.User.UserView
+@{
+    ViewBag.Title = "Редактировать профиль";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/edit-user.js"></script>
+}
+@Html.Partial("UserMenu", "")
+<div class="left">
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post))
+    {
+        @Html.Hidden("ID", Model.ID)
+       
+        @Html.Hidden("AvatarPath173", Model.AvatarPath173)
+        @Html.Hidden("AvatarPath96", Model.AvatarPath96)
+        @Html.Hidden("AvatarPath84", Model.AvatarPath84)
+        @Html.Hidden("AvatarPath57", Model.AvatarPath57)
+        @Html.Hidden("AvatarPath30", Model.AvatarPath30)
+        @Html.Hidden("AvatarPath26", Model.AvatarPath26)
+        @Html.Hidden("AvatarPath18", Model.AvatarPath18)
+       
+        <div class="edit-main-profile main-profile gamers-rating">
+            <div class="top-bar">
+                <h3>РЕДАКТИРОВАНИЕ ПРОФИЛЯ
+                </h3>
+                <div class="bar-arrow-down sprite">
+                </div>
+            </div>
+            <div class="main-profile-wrapper clear">
+                <div class="input-block top-border-none">
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Имя
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("FirstName", Model.FirstName)
+                        </div>
+                        @Html.ValidationMessage("FirstName")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Фамилия
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("LastName", Model.LastName)
+                        </div>
+                        @Html.ValidationMessage("LastName")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Ник
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Login", Model.Login)
+                        </div>
+                        @Html.ValidationMessage("Login")
+                    </div>
+                </div>
+                <div class="input-block">
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Страна
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Country", Model.Country)
+                        </div>
+                        @Html.ValidationMessage("Country")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Город
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("City", Model.City)
+                        </div>
+                        @Html.ValidationMessage("City")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Адрес для доставки
+                        </div>
+                        <div class="input">
+                            @Html.TextArea("Address", Model.Address, new { @class = "address" })
+                        </div>
+                        @Html.ValidationMessage("Address")
+                    </div>
+
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Дата рождения*
+                        </div>
+                        <div class="input">
+                            @Html.DropDownList("BirthdateDay", Model.BirthdateDaySelectList, new { @class = "date" })
+                            @Html.DropDownList("BirthdateMonth", Model.BirthdateMonthSelectList, new { @class = "month" })
+                            @Html.DropDownList("BirthdateYear", Model.BirthdateYearSelectList, new { @class = "month" })
+                        </div>
+                    </div>
+                </div>
+                <div class="input-block">
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Email
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Email", Model.Email)
+                        </div>
+                        @Html.ValidationMessage("Email")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            ICQ
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("ICQ", Model.ICQ)
+                        </div>
+                        @Html.ValidationMessage("ICQ")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Skype
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Skype", Model.Skype)
+                        </div>
+                        @Html.ValidationMessage("Skype")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Vk
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Vk", Model.Vk)
+                        </div>
+                        @Html.ValidationMessage("Vk")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Телефон
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Phone", Model.Phone)
+                        </div>
+                        @Html.ValidationMessage("Phone")
+                    </div>
+                </div>
+                <div class="input-block">
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Playstation ID
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("PlaystationID", Model.PlaystationID)
+                        </div>
+                        @Html.ValidationMessage("PlaystationID")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            XBOX Gametag
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("XboxGametag", Model.XboxGametag)
+                        </div>
+                        @Html.ValidationMessage("XboxGametag")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            EA Account
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("EAAccount", Model.EAAccount)
+                        </div>
+                        @Html.ValidationMessage("EAAccount")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Steam Account
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("SteamAccount", Model.SteamAccount)
+                        </div>
+                        @Html.ValidationMessage("SteamAccount")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Garena Account
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("GarenaAccount", Model.GarenaAccount)
+                        </div>
+                        @Html.ValidationMessage("GarenaAccount")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Подпись на форуме 
+                        </div>
+                        <div class="input">
+                            @Html.TextArea("Signature", Model.Signature, new {@class="signature" })
+                        </div>
+                        @Html.ValidationMessage("Signature")
+                    </div>
+                </div>
+                <div id="ChangePasswordWrapper">
+                    @Html.Action("ChangePassword", "User")
+                </div>
+                <div class="input-block bottom-border-none">
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Фотография
+                        </div>
+                        <div class="input-image">
+                            <img src="@Model.FullAvatarPath173" alt="avatar" id="AvatarImage" />
+                            <div class="userpic-action" id="DeleteAvatar">
+                                удалить
+                            </div>
+                            <div class="userpic-action" id="ChangeAvatar">
+                                загрузить фото
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-block bottom-border-none">
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                        </div>
+                        <div class="input">
+                            <label>
+                                @Html.CheckBox("Subscription", Model.Subscription)
+                                <span>Подписка на уведомления</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-button">
+                    <input class="gray-24-submit" type="submit" value="СОХРАНИТЬ" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="right">
+    @Html.Partial("ControlPanel")
+</div>

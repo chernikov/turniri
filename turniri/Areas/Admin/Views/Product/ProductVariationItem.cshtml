@@ -1,0 +1,13 @@
+﻿@model KeyValuePair<string, turniri.Models.ViewModels.ProductVariationView>
+
+<li class="span2 ProductVariationWrapper">
+    @Html.Hidden("ProductVariations.index", Model.Key)
+    @Html.Hidden("ProductVariations[" + Model.Key + "].Key", Model.Key)
+    @Html.Hidden("ProductVariations[" + Model.Key + "].Value.Image", Model.Value.Image)
+    <div class="thumbnail normalsize">
+        <div class="remove-variation">
+            <i class="icon-remove"></i>
+        </div>
+        <img src="@(Model.Value.Image)?width=200&height=200&mode=crop" />
+    </div>
+</li>

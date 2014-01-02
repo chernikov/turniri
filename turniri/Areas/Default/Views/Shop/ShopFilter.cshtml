@@ -1,0 +1,194 @@
+﻿@model turniri.Models.Info.ProductFilter
+
+@using (Html.BeginForm("Index", "Shop", FormMethod.Post, new { id = "ShopFilterForm" }))
+{
+    @Html.Hidden("Page", Model.Page)
+    @Html.Hidden("TypeCategory", Model.TypeCategory)
+    @Html.Hidden("CatalogID", Model.CatalogID)
+    @Html.Hidden("Price", Model.Price)
+    @Html.Hidden("Period", Model.Period)
+    <div id="selectedPlatformValues">
+        @foreach (var platform in Model.SelectedPlatform)
+        {
+            var key = Guid.NewGuid();
+            Html.Hidden("SelectedPlatform.index", key, new { @class = "selected-platform-key" });
+            Html.Hidden("SelectedPlatform[" + key + "]", platform, new { @class = "selected-platform-value" });
+        }
+    </div>
+    <div class="filter-wrapper top-menu-wrapper">
+        <ul class="top-menu">
+            <li class="menu-item">
+                <a href="#" id="TypeHeader">
+                    @if (Model.TypeCategory == 0)
+                    {
+                        <span>Тип</span>
+                    }
+                    else
+                    {
+                        <span class="selected-blue">@Model.TypeCategoryDesc<i class="remove">×</i></span>
+                    }
+                </a>
+                <div class="menu-arrow">
+                    <span class="icon-arrow-down sprite"></span>
+                </div>
+                <div class="dropdown-wrapper" style="display: none;">
+                    <div class="dropdown-arrow sprite" style="left: 19px;">
+                    </div>
+                    <div class="dropdown-outer">
+                        <div class="dropdown-inner clear">
+                            <ul>
+                                @foreach (var @type in Model.SelectListCategories)
+                                {
+                                    <li>
+                                        <a href="#" class="type-switcher" data-value="@type.Value">
+                                            <div class="radiobox @(@type.Selected ? "selected" : "")"></div>@type.Text</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="menu-item">
+                <a href="#" id="PlatformHeader">
+                    @if (!Model.SelectedPlatform.Any())
+                    {
+                        <span>Платформа</span>
+                    }
+                    else
+                    {
+                        <span class="selected-blue">@Model.SelectedPlatformDesc<i class="remove">×</i></span>
+                    }
+                </a>
+                <div class="menu-arrow">
+                    <span class="icon-arrow-down sprite"></span>
+                </div>
+                <div class="dropdown-wrapper" style="display: none;">
+                    <div class="dropdown-arrow sprite" style="left: 19px;">
+                    </div>
+                    <div class="dropdown-outer">
+                        <div class="dropdown-inner clear">
+                            <ul>
+                                @foreach (var platform in Model.SelectListPlatforms)
+                                {
+                                    <li>
+                                        <a href="#" class="platform-switcher" data-value="@platform.Value">
+                                            <div class="checkbox @(platform.Selected ? "selected" : "")"></div>@platform.Text</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            @if (Model.Type != 2)
+            {
+                <li class="menu-item"><a href="#" id="CatalogHeader">
+                    @if (Model.CatalogID == null)
+                    {
+                        <span>Жанр</span>
+                    }
+                    else
+                    {
+                        <span class="selected-blue">@Model.SelectedCatalogDesc<i class="remove">×</i></span>
+                    }
+                </a>
+                    <div class="menu-arrow">
+                        <span class="icon-arrow-down sprite"></span>
+                    </div>
+                    <div class="dropdown-wrapper" style="display: none;">
+                        <div class="dropdown-arrow sprite" style="left: 19px;">
+                        </div>
+                        <div class="dropdown-outer">
+                            <div class="dropdown-inner clear">
+                                <ul>
+                                    @foreach (var catalog in Model.SelectListCatalogs)
+                                    {
+                                        <li>
+                                            <a href="#" class="catalog-switcher" data-value="@catalog.Value">
+                                                <div class="radiobox @(catalog.Selected ? "selected" : "")"></div>@catalog.Text</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+            else
+            {
+                Model.CatalogID = null;
+            }
+            <li class="menu-item">
+                <a href="#" id="PriceHeader">
+                    @if (Model.Price == null)
+                    {
+                        <span>Цена</span>
+                    }
+                    else
+                    {
+                        <span class="selected-blue">@Model.SelectedPriceDesc<i class="remove">×</i></span>
+                    }
+                </a>
+                <div class="menu-arrow">
+                    <span class="icon-arrow-down sprite"></span>
+                </div>
+                <div class="dropdown-wrapper" style="display: none;">
+                    <div class="dropdown-arrow sprite" style="left: 19px;">
+                    </div>
+                    <div class="dropdown-outer">
+                        <div class="dropdown-inner clear">
+                            <ul>
+                                @foreach (var price in Model.SelectListPrice)
+                                {
+                                    <li>
+                                        <a href="#" class="price-switcher" data-value="@price.Value">
+                                            <div class="radiobox @(price.Selected ? "selected" : "")"></div>@price.Text</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="menu-item no-last">
+                <a href="#" id="PeriodHeader">
+                    @if (Model.Period == null)
+                    {
+                        <span>Дата релиза</span>
+                    }
+                    else
+                    {
+                        <span class="selected-blue">@Model.SelectedPeriodDesc<i class="remove">×</i></span>
+                    }
+                </a>
+                <div class="menu-arrow">
+                    <span class="icon-arrow-down sprite"></span>
+                </div>
+
+                <div class="dropdown-wrapper" style="display: none;">
+                    <div class="dropdown-arrow sprite" style="left: 19px;">
+                    </div>
+                    <div class="dropdown-outer">
+                        <div class="dropdown-inner clear">
+                            <ul>
+                                @foreach (var period in Model.SelectListPeriod)
+                                {
+                                    <li>
+                                        <a href="#" class="period-switcher" data-value="@period.Value">
+                                            <div class="radiobox @(period.Selected ? "selected" : "")"></div>@period.Text</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="search_wrapper">
+            <div id="gamer_search" class="inner-search">
+                @Html.TextBox("SearchWord", Model.SearchWord, new { placeholder = "Поиск", @class = "search blur", id = "searchString" })<span class="icon-search sprite"></span>
+            </div>
+        </div>
+    </div>
+}

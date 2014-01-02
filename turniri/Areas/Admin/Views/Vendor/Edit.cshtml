@@ -1,0 +1,40 @@
+@model turniri.Models.ViewModels.VendorView
+@{
+    ViewBag.Title = Model.ID == 0 ? "Добавить правила активации" : "Изменить правила активации";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/edit-vendor.js"></script>
+}
+<h2>@(Model.ID == 0 ? "Добавить правила активации" : "Изменить правила активации")</h2>
+<p></p>
+@using (Html.BeginForm("Edit", "Vendor", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+	<fieldset>
+		@Html.Hidden("ID", Model.ID)
+		<div class="control-group">
+            <label class="control-label" for="Name">
+                Заголовок
+			</label>
+            <div class="controls">
+				@Html.TextBox("Name", Model.Name)
+                @Html.ValidationMessage("Name")
+            </div>
+        </div>
+		<div class="control-group">
+            <label class="control-label" for="Text">
+                Правила активации
+			</label>
+            <div class="controls">
+                @Html.ValidationMessage("Text")
+				@Html.TextArea("Text", Model.Text, new {@class = "input-xlarge html-description"})
+            </div>
+        </div>
+	   <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Сохранить
+			</button>
+            @Html.ActionLink("Отмена", "Index", null, null, new { @class = "btn" })
+        </div>
+	</fieldset>
+}

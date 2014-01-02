@@ -1,0 +1,12 @@
+﻿@model turniri.Model.MainCamera
+
+<div class="main-gallery clear">
+    @if (Model.CameraID != null)
+    {
+        @Html.Raw(Model.Camera.Code)
+    }
+    else
+    {
+        @Html.Raw(Model.Code)
+    }
+</div>

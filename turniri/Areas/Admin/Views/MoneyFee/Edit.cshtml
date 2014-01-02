@@ -1,0 +1,35 @@
+﻿@model turniri.Models.ViewModels.MoneyFeeView
+@{
+    ViewBag.Title = Model.ID == 0 ? "Добавление процента" : "Изменение процента";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>@(Model.ID == 0 ? "Добавление процента" : "Изменение процента")</h2>
+<p></p>
+@using (Html.BeginForm("Edit", "MoneyFee", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">
+                Тип</label>
+            <div class="controls">
+                @Html.DropDownList("Type", Model.SelectListTypes, new { @class = "input-xlarge" })
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Процент </label>
+            <div class="controls">
+                @Html.TextBox("PercentFee", Model.PercentFee, new { @class = "input-xlarge" })
+                @Html.ValidationMessage("PercentFee")
+                 <div class="hint">
+                       <i>Работает десятичная запятая</i>
+                    </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Сохранить</button>
+            @Html.ActionLink("Отменить", "Index", null, new { @class = "btn" })
+        </div>
+    </fieldset>
+}

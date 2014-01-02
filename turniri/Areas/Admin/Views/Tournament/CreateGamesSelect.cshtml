@@ -1,0 +1,8 @@
+﻿@model IEnumerable<SelectListItem>
+<div class="control-group">
+    <label class="control-label">
+        Игра</label>
+    <div class="controls">
+        @Html.DropDownList("GameID", Model, new { @class = "input-xlarge" })
+    </div>
+</div>

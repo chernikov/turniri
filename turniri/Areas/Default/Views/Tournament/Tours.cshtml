@@ -1,0 +1,85 @@
+﻿@model turniri.Model.Tour
+@{
+    var spin = (int)ViewBag.Spin;
+    var viewData = new ViewDataDictionary();
+    viewData["inteam"] = true;
+}
+
+<div class="tour-list">
+    <div class="header-list clear">
+        <div class="date">
+            Дата
+        </div>
+        <div class="user">
+            Игрок
+        </div>
+        <div class="result">
+            Результат
+        </div>
+        <div class="user">
+            Игрок
+        </div>
+    </div>
+    @foreach (var match in Model.SubMatches)
+    {
+        <div class="item clear">
+            <div class="date">
+                @match.PublishedDate
+            </div>
+            <div class="user @(match.Participant1ID == match.WinnerID ? "winner" : "")">
+                @Html.Partial("__StatisticPlayerView", match.Player1, viewData)
+            </div>
+            <div class="result">
+                @if (Model.TourType == (int)turniri.Model.Tour.TourTypeEnum.RoundRobin && match.CountRounds > 1)
+                {
+                    turniri.Model.Round round = spin == 0 ? match.Round1 : match.Round2;
+                    <span class="round-result">
+                        @if (round.IsAdditional)
+                        {
+                            <span>(@round.Score1View : @round.Score2View)</span>
+                        }
+                        else if (round.Technical)
+                        {
+                            <span>@round.Score1View<sub>Tx</sub> : @round.Score2View<sub>Tx</sub></span>
+                        }
+                        else if (round.Extended)
+                        {
+                            <span class="extended">@round.Score1View : @round.Score2View</span>
+                        }
+                        else
+                        {
+                            <span>@round.Score1View : @round.Score2View</span>
+                        }
+                    </span>
+                }
+                else
+                {
+                    foreach (var round in match.SubRounds)
+                    {
+                    <span class="round-result">
+                        @if (round.IsAdditional)
+                        {
+                            <span>(@round.Score1View : @round.Score2View)</span>
+                        }
+                        else if (round.Technical)
+                        {
+                            <span>@round.Score1View<sub>Tx</sub> : @round.Score2View<sub>Tx</sub></span>
+                        }
+                        else if (round.Extended)
+                        {
+                            <span class="extended">@round.Score1View : @round.Score2View</span>
+                        }
+                        else
+                        {
+                            <span>@round.Score1View : @round.Score2View</span>
+                        }
+                    </span>
+                    }
+                }
+            </div>
+            <div class="user @(match.Participant2ID == match.WinnerID ? "winner" : "")">
+                @Html.Partial("__StatisticPlayerView", match.Player2, viewData)
+            </div>
+        </div>
+    }
+</div>

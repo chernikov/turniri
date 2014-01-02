@@ -1,0 +1,19 @@
+﻿@model turniri.Model.Tournament
+@if (Model.MatchesCount > 0)
+{
+    switch ((turniri.Model.Tournament.TournamentTypeEnum)Model.TournamentType)
+    {
+        case turniri.Model.Tournament.TournamentTypeEnum.SingleElimination: 
+    @Html.Partial("SingleElimination", Model);
+                                      break;
+        case turniri.Model.Tournament.TournamentTypeEnum.DoubleElimination: 
+    @Html.Partial("DoubleElimination", Model);
+                                      break;
+        case turniri.Model.Tournament.TournamentTypeEnum.RoundRobin:
+    @Html.Partial("RoundRobin", Model);
+                               break;
+        case turniri.Model.Tournament.TournamentTypeEnum.GroupTournament:
+    @Html.Partial("GroupTournament", Model);
+                                    break;
+    }
+}

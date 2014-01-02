@@ -1,0 +1,24 @@
+﻿@model turniri.Model.Award
+
+
+@if (Model.MoneyCrystal.HasValue && Model.MoneyCrystal.Value > 0)
+{
+    <div class="money-award-item">
+        @Model.MoneyWood.Value <span class="sprite icon-crystal-mini"></span>
+    </div>
+}
+
+@if (Model.MoneyWood.HasValue && Model.MoneyWood.Value > 0)
+{
+    <div class="money-award-item">
+        @Model.MoneyWood.Value <span class="sprite icon-wood-mini"></span>
+    </div>
+}
+
+@if (Model.MoneyGoldPercent.HasValue && Model.MoneyGoldPercent.Value > 0 && Model.Tournament.MoneyType == (int)turniri.Model.Tournament.MoneyTypeEnum.Gold)
+{
+    <div class="money-award-item">
+        @Model.MoneyGoldPercent %
+         <span class="sprite icon-gold-mini"></span>
+    </div>
+}

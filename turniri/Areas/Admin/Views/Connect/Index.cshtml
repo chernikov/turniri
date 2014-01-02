@@ -1,0 +1,43 @@
+﻿@model turniri.Model.User
+
+@{
+    ViewBag.Title = "Коннект к соц сетям";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Коннект к соц. сетям</h2>
+@using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">
+                Facebook 
+            </label>
+            <div class="controls">
+                <a class="btn @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.facebook) ? "btn-primary" : "")" href="@Url.Action("FacebookConnect", "Connect")">
+                    @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.facebook) ? "Включено" : "Выключено")
+                </a>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Vkontakte 
+            </label>
+            <div class="controls">
+                <a class="btn @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.vk) ? "btn-primary" : "")" href="@Url.Action("VkontakteConnect", "Connect")">
+                    @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.vk) ? "Включено" : "Выключено")
+                </a>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Twitter 
+            </label>
+            <div class="controls">
+                <a class="btn @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.twitter) ? "btn-primary" : "")" href="@Url.Action("TwitterConnect", "Connect")">
+                    @(Model.HasAdvansedSocial(turniri.Model.Social.ProviderType.twitter) ? "Включено" : "Выключено")
+                </a>
+            </div>
+        </div>
+    </fieldset>
+}

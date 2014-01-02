@@ -1,0 +1,59 @@
+﻿@model turniri.Model.PageableData<turniri.Model.MoneyWithdraw>
+@{
+    ViewBag.Title = "Вывод денег";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Вывод денег</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Пользователь</th>
+            <th>Сумма
+            </th>
+            <th>Номер кошелька
+            </th>
+            <th>Дата
+            </th>
+            <th>Статус
+            </th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                <span class="label label-info">@item.User.Login</span>
+            </td>
+            <td>
+                @item.Sum
+            </td>
+            <td>
+                @item.Account
+            </td>
+            <td>
+                @item.AddedDate
+            </td>
+            <td>
+                @if (item.Submitted)
+                {
+                    <span class="label label-info">Проведен</span>
+                }
+                else
+                {
+                    <span class="label label-important">Не проведен</span>
+                    <a href="@Url.Action("Submit", "MoneyWithdraw", new { id = item.ID })"><i class="icon-ok-sign" title="Провести вывод"></i></a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>

@@ -1,0 +1,41 @@
+﻿@model turniri.Models.Info.SubscriberSearch
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Добавить подписчиков</h3>
+</div>
+<div class="modal-body for-dropdown">
+    @using (Html.BeginForm("Add", "Subscriber", FormMethod.Post, new { @class = "form-horizontal", id = "AddSubscriberForm" }))
+    {
+        @Html.Hidden("ID", Model.ID)
+
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">
+                    Категория</label>
+                <div class="controls">
+                    @Html.DropDownList("RoleID", Model.RolesSelectList, new { @class = "input-xlarge" })
+                </div>
+            </div>
+            <div class="control-group" id="TournamentWrapper">
+                <label class="control-label">
+                    Турниры</label>
+                <div class="controls">
+                    @Html.ListBox("SelectedTournaments", Model.SelectListTournaments, new { @class = "input-xlarge chzn-select" })
+                </div>
+            </div>
+            <div class="control-group" id="GameWrapper">
+                <label class="control-label">
+                    Игры</label>
+                <div class="controls">
+                    @Html.ListBox("SelectedGames", Model.SelectListGames, new { @class = "input-xlarge chzn-select" })
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+<div class="modal-footer">
+    <button id="AddSubscriberSubmit" class="btn btn-primary">Добавить</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+</div>

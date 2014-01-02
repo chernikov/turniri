@@ -1,0 +1,31 @@
+﻿@model turniri.Models.ViewModels.UserTeamView 
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Добавить игрока
+    </h3>
+</div>
+
+<div class="modal-body">
+    @using (Html.BeginForm("AddUser", "Team", FormMethod.Post, new { @class = "form-vertical", id = "AddUserForm" }))
+    {
+        @Html.Hidden("_ID", Model._ID)
+        @Html.Hidden("TeamID", Model.TeamID)
+        @Html.Hidden("UserID", Model.UserID)
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">
+                    Игрок</label>
+                <div class="controls">
+                    @Html.TextBox("UserLogin", Model.UserLogin, new { @class = "input-xlarge" })
+                    @Html.ValidationMessage("UserLogin")
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+<div class="modal-footer">
+    <button id="AddUserSubmit" class="btn btn-primary">Сохранить</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+</div>

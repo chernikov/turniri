@@ -1,0 +1,9 @@
+﻿@model IEnumerable<turniri.Models.Info.EnumerableOfSelectListItem>
+@{
+    var forumID = (int?)ViewBag.ForumID;
+}
+@Html.Hidden("ForumID", forumID)
+@foreach (var item in Model)
+{
+@Html.DropDownList("CatalogList", item.EnumerableOfSelectListItems)
+}

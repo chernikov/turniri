@@ -1,0 +1,41 @@
+@model IEnumerable<turniri.Model.Category>
+
+@{
+    ViewBag.Title = "Категория";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Категория
+</h2>
+@Html.ActionLink("Добавить", "Create", "Category", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Наименование
+            </th>
+            <th>Url
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Url
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Category", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Category", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+

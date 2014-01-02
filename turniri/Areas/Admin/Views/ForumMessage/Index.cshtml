@@ -1,0 +1,64 @@
+﻿@model turniri.Model.Forum
+@{
+    ViewBag.Title = "Сообщения форума \"" + Model.Name + "\"";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header 
+{
+    <script type="text/javascript" src="/Media/scripts/admin/edit-forum-message.js"></script>
+}
+@Html.Hidden("ID", Model.ID)
+
+<h2>Сообщения форума "@Model.Name"</h2>
+<a href="#newMessageWrapper" role="button" class="btn" data-toggle="modal" id="AddMessage">
+    Добавить</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Пользователь
+            </th>
+            <th>Дата
+            </th>
+            <th>Сообщение
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.ForumMessagesPage(page))
+    {
+        <tr>
+            <td>
+                <img src="@item.Author.AvatarPath57" alt="@item.Author.Login"/>
+                @Html.ActionLink(item.Author.Login, "Index", "User", new { login = item.Author.Login, area = "Default" }, null)
+            </td>
+            <td>
+                @item.AddedDate.ToString("dd.MM.yyyy HH:mm")
+            </td>
+            <td>
+                @if (item.Parent != null)
+                {
+                    <blockquote>@item.Parent.Quote</blockquote>
+                }
+                @item.Message
+            </td>
+            <td>
+                <span class="btn answer-message" data-id="@item.ID">Ответить</span>
+                @if (item.CanEdit(currentUser))
+                {
+                    <span class="btn edit-message" data-id="@item.ID">Изменить</span>
+                }
+                @if (item.CanDelete(currentUser))
+                {
+                    <span class="btn btn-danger remove-message" data-id="@item.ID">Удалить</span>
+                }
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(page, Model.MessagesCountPage(), x => Url.Action("Index", new { page = x }))
+</div>
+<div id="newMessageWrapper" class="modal big" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+</div>

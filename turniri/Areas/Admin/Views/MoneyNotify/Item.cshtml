@@ -1,0 +1,56 @@
+﻿@model turniri.Model.MoneyNotify
+
+@{
+    ViewBag.Title = "Данные перевода денег";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Данные перевода денег</h2>
+<div class="row">
+    <div class="span5">
+        <table class="table">
+            <tr>
+                <td>ID        
+                </td>
+                <td>
+                    @Model.ID
+                </td>
+            </tr>
+            <tr>
+                <td>Тип       
+                </td>
+                <td>
+                    @Model.TypeStr
+                </td>
+            </tr>
+            <tr>
+                <td>Создан       
+                </td>
+                <td>
+                    @Model.AddedDate.ToString("dd.MM.yyyy HH:mm")
+                </td>
+            </tr>
+            <tr>
+                <td>Данные обработки       
+                </td>
+                <td>
+                    @Model.Data
+                </td>
+            </tr>
+            <tr>
+                <td>Данные ошибки       
+                </td>
+                <td>
+                    @Model.Exception
+                </td>
+            </tr>
+            <tr>
+                <td>Успех
+                </td>
+                <td>
+                    @(Model.IsSuccess == true ? "Да" : (Model.IsSuccess == false ? "Нет" : "Не ясно"))
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

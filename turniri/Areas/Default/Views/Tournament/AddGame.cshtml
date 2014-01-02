@@ -1,0 +1,25 @@
+﻿@model turniri.Model.Tournament
+
+
+<div class="popup-window">
+    <div class="top-bar">
+        <h3>Ошибка
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper clear">
+        Вы не указали что играете в @Model.Game.Name (@Model.Game.Platform.Name). Добавить эту игру?
+        <br />
+        <div class="popup-button-wrapper clear">
+            <div class="gray-16-button-wrapper" id="AcceptTournamentWithGame" data-id="@Model.ID">
+                <a href="#">ДА</a>
+            </div>
+            <div class="gray-16-button-wrapper popup-close">
+                <a href="#">НЕТ</a>
+            </div>
+        </div>
+    </div>
+</div>

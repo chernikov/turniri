@@ -1,0 +1,277 @@
+﻿@model IList<turniri.Model.LeagueSeason>
+
+@{
+    var league = (turniri.Model.League)ViewBag.League;
+    var levels = (List<turniri.Model.LeagueLevel>)ViewBag.Levels;
+    var lastSeason = league.LastSeason;
+    ViewBag.Title = "Турниры лиги " + league.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/admin/league-tournaments.js"></script>
+}
+
+@Html.ActionLink("← К лигам", "Index", "League", null, new { @class = "btn btn-mini" })
+
+@if (league.IsGroup)
+{
+    @Html.ActionLink("К Участникам →", "Groups", "League", new { id = league.ID }, new { @class = "btn btn-mini" })
+}
+else
+{
+    @Html.ActionLink("К Участникам →", "Players", "League", new { id = league.ID }, new { @class = "btn btn-mini" })
+}
+
+<h2>Турниры лиги @league.Name</h2>
+
+
+@if (lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Created ||
+    lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Prepared)
+{
+    <h3>Новый сезон @lastSeason.Name</h3>
+    if (lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Created
+        && lastSeason.AnyTournaments
+        && !lastSeason.AnyUnregisteredParticipants)
+    {
+        if (!lastSeason.AnyMatches)
+        {
+            <a href="@Url.Action("CreateMatches", "League", new { id = lastSeason.ID })" class="btn btn-small btn-primary">
+                Создать матчи
+            </a>
+        }
+    }
+    if (lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Prepared)
+    {
+        <a href="@Url.Action("StartSeason", "League", new { id = lastSeason.ID })" class="btn btn-small btn-primary">
+            Стартовать сезон
+        </a>
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Уровень
+                </th>
+                <th>
+                    Турниры
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in levels)
+        {
+            if (lastSeason.Status == (int)turniri.Model.LeagueSeason.StatusEnum.Created)
+            {
+                <tr>
+                    <td>
+                        @item.ID
+                    </td>
+                    <td>
+                        <img src="@item.Image?width=24&height=24&mode=crop" />
+                        @item.Name
+
+                        @item.CountParticipants(lastSeason)/@item.Quantity
+                    </td>
+                    <td>
+                        @if (item.CountParticipants(lastSeason) > 0 && item.CountTournaments(lastSeason) == 0)
+                        {
+                            <span class="btn btn-mini AddTournaments" data-id="@item.ID" data-season="@lastSeason.ID"><i class="icon-plus"></i>&nbsp; Добавить турниры</span>
+                        }
+                        else
+                        {
+                            if (item.CountTournaments(lastSeason) > 0)
+                            {
+                                <span class="btn btn-mini btn-danger no-stop RemoveTournaments" data-id="@item.ID" data-season="@lastSeason.ID"><i class="icon-minus icon-white"></i>&nbsp; Удалить турниры</span>
+                            }
+                        }
+                    </td>
+                    <td></td>
+                </tr>
+            }
+            foreach (var tournament in item.SubTournaments(lastSeason))
+            {
+                <tr>
+                    <td>
+                        @item.ID
+                    </td>
+                    <td>
+                        <img src="@item.Image?width=24&height=24&mode=crop" />
+                        @item.Name
+                    </td>
+                    <td>
+                        <img src="@tournament.ImagePath?width=24&height=24&mode=crop" />
+                        @tournament.Name
+                        @if (@tournament.RegisteredPlayersCount > 0)
+                        {
+                            <span class="label label-info">@tournament.RegisteredPlayersCount&nbsp;/&nbsp;@(tournament.MaxPlayersCount.HasValue ? tournament.MaxPlayersCount.ToString() : "--")</span>
+                        }
+                        else
+                        {
+                            <span class="label label-important">@tournament.RegisteredPlayersCount&nbsp;/&nbsp;@(tournament.MaxPlayersCount.HasValue ? tournament.MaxPlayersCount.ToString() : "--")</span>
+                        }
+
+                        @foreach (var participant in tournament.SubPlayers)
+                        {
+                            <span>@participant.ActualName, </span>
+                        }
+                    </td>
+                    <td>
+                        @if (tournament.AnyMatches)
+                        {
+                            @Html.ActionLink("К матчам", "Matches", "Tournament", new { id = tournament.ID }, new { @class = "btn btn-mini" })
+                        }
+                    </td>
+                </tr>
+            }
+
+        }
+    </table>
+}
+
+<h3>Турниры по сезонам</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Сезон
+            </th>
+            <th>
+                Уровень
+            </th>
+            <th>
+                Турниры
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var season in Model)
+    {
+        if (season.Status != (int)turniri.Model.LeagueSeason.StatusEnum.Finished)
+        {
+            <tr>
+                <td>
+                    @season.ID
+                </td>
+                <td>
+                    <img src="@season.Image?width=24&height=24&mode=crop" />
+                    @season.Name
+                </td>
+                <td colspan="3">
+                    @if (season.AllTournamentPlayed)
+                    {
+                        if (season.Status == (int)turniri.Model.LeagueSeason.StatusEnum.InPlay)
+                        {
+                            @Html.ActionLink("Закрыть турниры", "FinishTournaments", "League", new { id = season.ID }, new { @class = "btn btn-mini" })
+                        }
+                        else
+                        {
+                            if (!season.AnyOffsMatches)
+                            {
+                                @Html.ActionLink("Создать стыковые матчи", "CreateOffsMatches", "League", new { id = season.ID }, new { @class = "btn btn-mini" })
+                            }
+                            else
+                            {
+                                if (season.Status == (int)turniri.Model.LeagueSeason.StatusEnum.PreparedOffMatches)
+                                {
+                                    @Html.ActionLink("Запустить стыковые матчи", "StartOffsMatches", "League", new { id = season.ID }, new { @class = "btn btn-mini" })
+                                }
+                                if (season.Status == (int)turniri.Model.LeagueSeason.StatusEnum.InPlayOffMatches)
+                                {
+                                    @Html.ActionLink("Закрыть стыковые матчи", "FinishOffsMatches", "League", new { id = season.ID }, new { @class = "btn btn-mini" })
+                                }
+                            }
+                        }
+                    }
+                    @if (season.AnyOffsMatches)
+                    {
+                        @Html.ActionLink("Стыковые матчи", "Matches", "League", new { id = season.ID }, null)
+                    }
+                </td>
+            </tr>
+        }
+
+        foreach (var level in levels)
+        {
+            foreach (var tournament in level.SubTournaments(season))
+            {
+                <tr>
+                    <td>
+                        @season.ID
+                    </td>
+                    <td>
+                        <img src="@season.Image?width=24&height=24&mode=crop" />
+                        @season.Name
+                    </td>
+                    <td>
+                        <img src="@level.Image?width=24&height=24&mode=crop" /> @level.Name
+                    </td>
+                    <td>
+                        <img src="@tournament.ImagePath?width=24&height=24&mode=crop" />
+                        <a href="@Url.Action("Index", "Tournament", new { area = "Default", platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">@tournament.Name</a>
+
+
+                    </td>
+                    <td>
+                        @if (tournament.Status == (int)turniri.Model.Tournament.StatusEnum.InGame)
+                        {
+                            if (tournament.AllGamesPlayed)
+                            {
+                                @Html.ActionLink("Закрыть турнир", "FinishTournament", "Tournament", new { id = tournament.ID }, new { @class = "btn btn-mini" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Прекратить турнир", "TechFinishTournament", "Tournament", new { id = tournament.ID }, new { @class = "btn btn-mini btn-danger" })
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr class="no-border">
+                    @if (tournament.MatchesCount > 0)
+                    {
+                        <td colspan="5">
+                            @if (tournament.PlayedMatchesCount == tournament.MatchesCount)
+                            {
+                                <div class="progress progress-success progress-striped">
+                                    <div class="bar" style="width: 100%">
+                                        @tournament.PlayedMatchesCount / @tournament.MatchesCount
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="progress progress-info progress-striped">
+                                    @{
+                                var percent = tournament.PlayedMatchesCount * 100 / tournament.MatchesCount;
+                                    }
+                                    <div class="bar" style="width: @percent%">
+                                        @tournament.PlayedMatchesCount / @tournament.MatchesCount
+                                    </div>
+                                </div>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    }
+</table>
+<div id="addTournamentModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Добавить турниры</h3>
+    </div>
+    <div class="modal-body" id="addTournamentModalWrapper">
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+        <button class="btn btn-primary" id="AddTournamentsBtn">Добавить</button>
+    </div>
+</div>

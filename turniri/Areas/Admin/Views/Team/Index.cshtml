@@ -1,0 +1,68 @@
+﻿@model turniri.Model.Tournament
+@{
+    ViewBag.Title = "Команды турнира" + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Команды турнира @Model.Name
+</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Наименование
+            </th>
+
+            <th>Капитан
+            </th>
+            <th>Игроки
+            </th>
+            <th>Статус
+            </th>
+            <th>Дейст.</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.SubPlayers)
+    {
+        <tr>
+            <td>
+                @(item.TeamID.HasValue ? item.TeamID.ToString() : "--")
+            </td>
+            <td>
+                @if (item.TeamID.HasValue)
+                {
+                    <img src="@item.Team.FullImagePath30" />
+                    <span>@item.Team.Name</span>
+                }
+                else
+                {
+                    <span>--</span>
+                }
+            </td>
+            <td>
+                @item.User.Login
+            </td>
+            <th>@if (item.TeamID.HasValue)
+                {
+                <span>@item.Team.AcceptedCount / @item.Team.PlayerCount / <strong>@Model.TeamCount </strong>
+                </span>
+                }
+            </th>
+            <td>
+                @(item.TeamID.HasValue ? (item.Team.IsClosed ? "готова" : "регистрация") : "не создан")
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Team", new { id = item.TeamID })" class="btn">Изменить</a>
+                <a href="@Url.Action("Roster", "Team", new { id = item.TeamID })" class="btn">Ростер</a>
+                @if (item.TeamID.HasValue && item.Team.AcceptedCount == Model.TeamCount && !item.Team.IsClosed)
+                {
+                    <a href="@Url.Action("Close", "Team", new { id = item.TeamID })" class="btn">Закрыть
+                        регистрацию</a>
+                }
+            </td>
+        </tr>
+    }
+</table>

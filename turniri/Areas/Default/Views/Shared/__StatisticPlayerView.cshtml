@@ -1,0 +1,84 @@
+﻿@model turniri.Model.Participant
+@{
+    var inTeam = (bool)ViewData["inteam"];
+}
+@if (Model != null && Model.IsTeam && Model.Team != null)
+{
+    if (Model.Team.IsGroup && !inTeam)
+    {
+        <div class="preview-image">
+
+            <a href="@Url.Action("Index", "User", new { login = Model.User.Login })">
+                <img src="@Model.Team.FullImagePath30" alt="userpic" title="@Model.User.Login" />
+            </a>
+        </div>
+        <div class="name">
+            @if (!string.IsNullOrWhiteSpace(Model.Name))
+            {
+                <a href="@Url.Action("Item", "Group", new { url = Model.Team.Group.Url })" class="user double-line">
+                    @Model.Team.Group.Name
+                    <span class="avatar-name">@Model.Name</span>
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Item", "Group", new { url = Model.Team.Group.Url })" class="user">
+                    @Model.Team.Group.Name
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="preview-image">
+            <a href="/show-team" class="show-team" data-id="@Model.TeamID">
+                <img src="@Model.Team.FullImagePath30" alt="userpic" />
+            </a>
+
+        </div>
+        <div class="name">
+            @if (!string.IsNullOrWhiteSpace(Model.Name))
+            {
+                <a href="/show-team" class="show-team user double-line" data-id="@Model.TeamID">
+                    @Model.Team.Name
+                    <span class="avatar-name">@Model.Name</span>
+                </a>
+            }
+            else
+            {
+                <a href="/show-team" class="show-team user" data-id="@Model.TeamID">
+                    @Model.Team.Name
+                </a>
+            }
+        </div>
+    }
+}
+else
+{
+    <div class="preview-image">
+
+        <a href="@Url.Action("Index", "User", new { login = Model.User.Login })">
+            <img src="@Model.FullImagePath30" alt="userpic" title="@Model.User.Login" />
+        </a>
+        @if (Model.User.IsOnline)
+        {
+            <div class="dot"></div>
+        }
+    </div>
+    <div class="name">
+        @if (!string.IsNullOrWhiteSpace(Model.Name))
+        {
+            <a href="@Url.Action("Index", "User", new { login = Model.User.Login })" class="user double-line">
+                @Model.User.Login
+                <span class="avatar-name">@Model.Name</span>
+            </a>
+        }
+        else
+        {
+            <a href="@Url.Action("Index", "User", new { login = Model.User.Login })" class="user">
+                @Model.User.Login
+            </a>
+        }
+    </div>
+
+}

@@ -1,0 +1,104 @@
+﻿@model turniri.Model.Tournament
+
+<div class="main-turnir-grid gamers-rating">
+    <div class="top-bar">
+        <h3>
+            Турнирная сетка
+        </h3>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="gamers-list clear">
+        <div class="header-user">
+            Пользователи
+        </div>
+        <div class="top-panel-wrapper">
+            <div class="top-panel" style="width : @(85 * Model.RegisteredPlayersCount)px;">
+                @{
+                    var i = 1;
+                }
+                @foreach (var player in Model.SubPlayers)
+                {
+                    <div class="item">
+                        <div class="number">
+                            @i
+                        </div>
+                    </div>
+                    i++;
+                }
+            </div>
+        </div>
+        <div class="left-panel-wrapper @(Model.RegisteredPlayersCount > 8 ? "" : "no-height")">
+            <div class="left-panel">
+                @{
+                    var j = 1;
+                }
+                @foreach (var player in Model.SubPlayers)
+                {
+                    <div class="item">
+                        <div class="number">
+                            @j
+                        </div>
+                        <div class="name">
+                            @Html.Partial("__PlayerView", player, new ViewDataDictionary())
+                        </div>
+                    </div>
+                    j++;
+                }
+            </div>
+        </div>
+        <div class="tournament @(Model.RegisteredPlayersCount > 8 ? "scroll-bars" : "no-height")">
+            <div class="container" style="width : @(85 * Model.RegisteredPlayersCount)px;">
+                @foreach (var player in Model.SubPlayers)
+                {
+                    <div class="col">
+                        @foreach (var player2 in Model.SubPlayers)
+                        {
+                            if (player.ID == player2.ID)
+                            {
+                                <div class="empty-item">&nbsp;</div>
+                            }
+                            else
+                            {
+                                var match = Model.RoundMatch(player.ID, player2.ID);
+                                if (match != null)
+                                {
+                                    if (player2.ID == match.Participant1ID)
+                                    {
+                                        @Html.Partial("TableMatch", match, new ViewDataDictionary() { { "type", 1 } })
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("TableMatch", match, new ViewDataDictionary() { { "type", 2 } })
+                                    }
+                                }
+                            }
+                            j++;
+                        }
+                    </div>
+                        i++;
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div id="StatisticWrapper">
+    @Html.Action("StatisticRoundRobin", "Tournament", new { id = Model.ID })
+</div>
+@if (Model.PlayedMatchesCount > 0 && Model.SelectableSubTours.Any())
+{
+    <div class="main-turnir-grid gamers-rating">
+        <div class="top-bar">
+            <h3 class="left">По турам</h3>
+            <div class="top-right">
+                Показать тур номер&nbsp;&nbsp;
+                @Html.Action("SelectListTours", "Tournament", new { id = Model.ID })
+            </div>
+            <div class="bar-arrow-down for-left sprite">
+            </div>
+        </div>
+        <div class="gamers-list clear" id="Tours">
+            @Html.Action("Tours", "Tournament", new { id = Model.SelectableSubTours.First().ID })
+        </div>
+    </div>
+}

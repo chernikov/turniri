@@ -1,0 +1,36 @@
+﻿@model turniri.Model.Camera
+@{
+    var match = (turniri.Model.Match)ViewBag.Match;
+}
+
+<div class="popup-window camera-popup-window" style="display: block;">
+    <div class="top-bar">
+        <h3>@Model.Name
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        @foreach (var other in match.SubEnableCameras)
+        {
+            if (other.ID != Model.ID)
+            {
+                <div class="gray-16-button-wrapper">
+                <a href="#" class="camera-match-show" data-id="@other.ID" data-match-id="@match.ID">@other.Name</a>
+                </div>
+            }
+        }
+        
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper">
+       @if (Model.MatchID.HasValue)
+       {
+            <div class="match-info">
+                <h2>Матч @Model.Match.Desc</h2>
+            </div>           
+       }
+       <div class="camera-wrapper">
+            @Html.Raw(Model.Code)
+           </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿@model turniri.Model.Product
+
+@{
+    if (Model.Type == (int)turniri.Model.Product.TypeEnum.Code)
+    {
+        ViewBag.Title = "Коды" + "(" + Model.Name + ")";
+    }
+    if (Model.Type == (int)turniri.Model.Product.TypeEnum.RealGood)
+    {
+        ViewBag.Title = Model.Name;
+    }
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header 
+{
+    <script type="text/javascript" src="/Media/scripts/admin/product-code.js"></script>
+}
+
+
+@Html.Hidden("ProductID", Model.ID)
+@if (Model.Type == (int)turniri.Model.Product.TypeEnum.Code)
+{
+    <div id="EditProductCodeWrapper">
+    @Html.Partial("EditProductCode", new turniri.Models.ViewModels.ProductCodeView() { ProductID = Model.ID })
+    </div>
+}
+
+@if (Model.Type == (int)turniri.Model.Product.TypeEnum.RealGood)
+{
+   @Html.Partial("EditProductRest", Model)
+}
+@if (Model.Type == (int)turniri.Model.Product.TypeEnum.Code)
+{
+    <h2>Коды (@Model.Name)</h2>
+}
+@if (Model.Type == (int)turniri.Model.Product.TypeEnum.RealGood)
+{
+    <h2>@Model.Name</h2>
+}
+<div id="CodesTableWrapper">
+    @Html.Partial("CodeTable", Model)
+</div>
+
+

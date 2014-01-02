@@ -1,0 +1,30 @@
+﻿@model turniri.Models.ViewModels.ForumMessageView
+<script type="text/javascript" src="/Media/scripts/admin/comment.js"></script>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">@(Model.ID == 0 ? "Добавить сообщение" : "Изменить сообщение")
+    </h3>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("Edit", "ForumMessage", FormMethod.Post, new { @class = "form-vertical", id = "ForumMessageForm" }))
+    {
+        @Html.Hidden("_ID", Model._ID)
+        @Html.Hidden("UserID", Model.UserID)
+        @Html.Hidden("ForumID", Model.ForumID)
+        @Html.Hidden("ParentID", Model.ParentID)
+        <fieldset>
+            <div class="control-group">
+                <label class="control-label">
+                    Сообщение</label>
+                <div class="controls">
+                    @Html.TextArea("Message", Model.Message, new { @class = "input-xlarge comment-html-description" })
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+<div class="modal-footer">
+    <button id="ForumMessageSubmit" class="btn btn-primary">Сохранить</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Отменить</button>
+</div>

@@ -1,0 +1,76 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Recharge>
+@{
+    ViewBag.Title = "Пополнения и вывод";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var parameters = ViewContext.HttpContext.Request.Params;
+}
+<h2>Пополнения и вывод</h2>
+@Html.Action("Balance", "Recharge")
+@Html.ActionLink("Удалить непроведенные", "RemoveUnsubmitted", "Recharge", null, new { @class = "btn" })
+<br />
+<br />
+@using (Html.BeginForm("Index", "Recharge", FormMethod.Post, new { @class = "well" }))
+{
+    @Html.TextBox("search", parameters["search"], new { @class = "input-medium search-query" })
+
+    <button type="submit" class="btn">
+        Поиск</button> 
+    <br />
+    <br />
+    <span>С </span>@Html.TextBox("beginDate", parameters["beginDate"], new { @class = "input-medium datePicker" })
+    <span>По </span> @Html.TextBox("endDate", parameters["endDate"], new { @class = "input-medium datePicker" })
+    <label class="checkbox">
+        @Html.CheckBox("submitted", parameters["submitted"]) только проведенные
+    </label>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th></th>
+            <th>Сумма
+            </th>
+            <th>Описание
+            </th>
+            <th>Дата
+            </th>
+            <th>Статус
+            </th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                <span class="label label-inverse">@(item.User != null ? item.User.Login : "")</span>
+            </td>
+            <td>
+                @item.Sum
+            </td>
+            <td>
+                <span title="@item.Description">@item.Description.Teaser(50)</span>
+            </td>
+            <td>
+                @item.AddedDate
+            </td>
+            <td>
+                @if (item.IsSubmitted)
+                {
+                    <span class="label label-info">Проведен</span>
+                }
+                else
+                {
+                    <span class="label label-important">Не проведен</span>
+                }
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x, search = parameters["search"], gold = parameters["gold"], beginDate = parameters["beginDate"], endDate = parameters["endDate"] }))
+</div>

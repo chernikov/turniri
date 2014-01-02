@@ -1,0 +1,24 @@
+﻿@model turniri.Model.Page
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <meta name="description" content="@Model.Description" />
+    <meta name="keywords" content="@Model.Keywords" />
+}
+@Html.Partial("UserMenu", "")
+<div class="main-bootom">
+    <div class="howtoplay long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>   @Model.Name
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+            <div class="text">
+            @Html.Raw(Model.Text)
+            </div>
+    </div>
+</div>
+

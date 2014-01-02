@@ -1,0 +1,77 @@
+﻿@model turniri.Model.Notice
+
+<div class="item @(Model.ReadedDate.HasValue ? "readed" : "")" data-id="@Model.ID">
+
+    <div class="caption clear">
+        @Model.Caption
+        <div class="date">@Model.AddedDate.ToString("dd.MM.yyyy HH:mm")</div>
+    </div>
+    <div class="text">
+        @if (Model.Type == (int)turniri.Model.Notice.TypeEnum.Forum)
+        {
+            <text>В ветке форума "@Model.Forum.Name" есть @Model.UnreadCount @Model.UnreadCount.CountWord("непрочитанное сообщение", "непрочитанных сообщения", "непрочитанных сообщений")</text>   
+        }
+        else if (Model.Type == (int)turniri.Model.Notice.TypeEnum.Chat)
+        {
+            if (Model.ChatRoom.Tournament != null)
+            {
+            <text>В чате турнира "@Model.ChatRoom.Tournament.Name" есть @Model.UnreadCount @Model.UnreadCount.CountWord("непрочитанное сообщение", "непрочитанных сообщения", "непрочитанных сообщений")</text>   
+            }
+            else
+            {
+            <text>В общем чате есть @Model.UnreadCount @Model.UnreadCount.CountWord("непрочитанное сообщение", "непрочитанных сообщения", "непрочитанных сообщений")</text>   
+            }
+
+        }
+        else
+        {
+            @Html.Raw(Model.Text.BBCodeToHTML().ReplaceSmiles((index, name) => Html.SetSmiles(index, name)))
+        }
+    </div>
+    @if (Model.Sender != null)
+    {
+        <div class="sender">@Model.Sender.Login</div>
+    }
+    @switch ((turniri.Model.Notice.TypeEnum)Model.Type)
+    {
+        case turniri.Model.Notice.TypeEnum.Tournament: 
+        <div class="subject">
+            Это касается турнира: <a href="@Url.Action("Index", "Tournament", new { platformUrl = Model.Tournament.Platform.Url, gameUrl = Model.Tournament.Game.Url, url = Model.Tournament.Url })">@Model.Tournament.Name</a>
+        </div>
+            break;
+        case turniri.Model.Notice.TypeEnum.Game: 
+        <div class="subject">
+            Это касается игры: <a href="@Url.Action("Index", "Game", new { platformUrl = Model.Game.Platform.Url, url = Model.Game.Url })">@Model.Game.Name</a>
+        </div>
+            break;
+        case turniri.Model.Notice.TypeEnum.Group: 
+        <div class="subject">
+            Это касается группы: <a href="@Url.Action("Item", "Group", new { url = Model.Group.Url })">@Model.Group.Name</a>
+        </div>
+            break;
+        case turniri.Model.Notice.TypeEnum.Match:
+            if (Model.Match.TournamentID != null)
+            {
+        <div class="subject">
+            Это касается матча:
+                    <a href="@Url.Action("Index", "Tournament", new { platformUrl = Model.Match.Tournament.Platform.Url, gameUrl = Model.Match.Tournament.Game.Url, url = Model.Match.Tournament.Url, matchID = Model.MatchID })">@Model.Match.Name</a>
+        </div>
+            }
+            break;
+    }
+    <div class="actions clear">
+        @if (Model.AnyNoticeAction)
+        {
+            foreach (var noticeAction in Model.SubNoticeActions)
+            {
+            @Html.Partial("NoticeAction", noticeAction)
+            }
+        }
+        @if (!Model.IsCloseForRead && (Model.Type != (int)turniri.Model.Notice.TypeEnum.Chat && Model.Type != (int)turniri.Model.Notice.TypeEnum.Forum))
+        {
+            <div class="gray-16-button-wrapper">
+                <a href="#remove" class="remove-notice">Удалить</a>
+            </div>
+        }
+    </div>
+</div>

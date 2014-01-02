@@ -1,0 +1,24 @@
+﻿@model turniri.Model.SocialPost
+@{
+ 
+    var groupID = (int)ViewBag.GroupID;
+}
+
+<script type="text/javascript">
+    $().ready(function() {    
+       
+        VK.Api.call('wall.post', {message: "@(Model.Teaser.Replace("\r\n", "\\r\\n"))",
+            attachments : "@(Model.VkPrepared)",
+            @if(groupID != 0) {
+                <text>
+                owner_id : @(groupID),
+                from_group : 1,
+                signed : 1
+                </text>
+            }
+        }, function(r) 
+        {
+            window.location.reload();
+        });
+    });
+</script>

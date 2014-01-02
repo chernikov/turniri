@@ -1,0 +1,111 @@
+﻿@model IEnumerable<turniri.Model.Match>
+@if (Model.Any())
+{
+    <div id="tab_stat_1_content" class="switcher-content">
+        <div class="content  scroll-wrapper">
+            <div class="scroll-pane">
+                <ul class="stat-list">
+                    @foreach (var match in Model)
+                    {
+                        <li>
+                            <div class="top-user clear">
+                                <div class="title">
+                                    @match.Game.Name
+                                </div>
+                                <div class="result">
+                                    Результат
+                                </div>
+                                <div class="report">
+                                    <a href="@Url.Action("Index", "Tournament", new { platformUrl = match.Tournament.Platform.Url, gameUrl = match.Tournament.Game.Url, url = match.Tournament.Url, matchID = match.ID })">
+                                        Отчет</a>
+                                </div>
+                            </div>
+                            <div class="user clear">
+                                @if (match.Player1 != null)
+                                {
+                                    <div class="userpic">
+                                        <a href="@Url.Action("Index", "User", new { login = match.Player1.User.Login })">
+                                            <img src="@match.Player1.FullImagePath18" alt="userpic" />
+                                        </a>
+                                        @if (match.Player1.User.IsOnline)
+                                        {
+                                            <div class="dot"></div>
+                                        }
+                                    </div>
+                                    <div class="name">
+                                        <a href="@Url.Action("Index", "User", new { login = match.Player1.User.Login })" class="user">
+                                            @match.Player1.User.Login
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="userpic">
+                                        <img src="/Media/images/default_avatar_18.png" alt="userpic" />
+                                    </div>
+                                    <div class="name">
+                                        &mdash;
+                                    </div>
+                                }
+                                @if (match.Score1 > match.Score2)
+                                {
+                                    <div class="result-value win">
+                                        @match.Score1View
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="result-value lose">
+                                        @match.Score1View
+                                    </div>
+                                }
+                            </div>
+                            <div class="user clear">
+                                @if (match.Player2 != null)
+                                {
+                                    <div class="userpic">
+                                        <a href="@Url.Action("Index", "User", new { login = match.Player2.User.Login })">
+                                            <img src="@match.Player2.FullImagePath18" alt="userpic" />
+                                        </a>
+                                        @if (match.Player2.User.IsOnline)
+                                        {
+                                            <div class="dot"></div>
+                                        }
+                                    </div>
+                                    <div class="name">
+                                        <a href="@Url.Action("Index", "User", new { login = match.Player2.User.Login })" class="user">
+                                            @match.Player2.User.Login
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="userpic">
+                                        <img src="/Media/images/default_avatar_18.png" alt="userpic" />
+
+                                    </div>
+                                    <div class="name">
+                                        &mdash;
+                                    </div>
+
+                                }
+                                @if (match.Score2 > match.Score1)
+                                {
+                                    <div class="result-value win">
+                                        @match.Score2View
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="result-value lose">
+                                        @match.Score2View
+                                    </div>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

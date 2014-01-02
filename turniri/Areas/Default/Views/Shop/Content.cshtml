@@ -1,0 +1,18 @@
+﻿@model turniri.Models.Info.ProductFilter
+
+
+<ul class="list">
+    @foreach (var item in Model.Data.List)
+    {
+        @Html.Partial("ProductShortItem", item)
+    }
+</ul>
+<div class="clear"></div>
+<div class="paging light-paging">
+    <div class="title">
+        Страницы:
+    </div>
+    <div class="paging-list">
+        @Html.PageLinksTurniri(Model.Page, Model.Data.CountPage, x => Url.Action(Model.Data.Action, new { Page = x }))
+    </div>
+</div>

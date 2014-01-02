@@ -1,0 +1,33 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<# 
+    var modelType = (EnvDTE.CodeType)Model.EntityType; 
+	var modelName = modelType.Name; 
+    var modelNamePlural = Model.EntityTypeNamePluralized; 
+#>
+private IEnumerable<<#= modelName #>> <#= modelNamePlural #>
+{
+	get 
+    { 
+        var repository = DependencyResolver.Current.GetService<IRepository>();
+<# if(Model.Lang) { #>
+		var list = repository.<#= modelNamePlural #>.ToList();
+		list.ForEach(p => p.CurrentLang = CurrentLang);
+        return list;
+<# }  else { #>
+	    return repository.<#= modelNamePlural #>.ToList();
+<# } #>
+	}
+}
+
+public IEnumerable<SelectListItem> SelectList<#= modelName #>ID
+{
+	get
+	{
+	    return <#= modelNamePlural #>.Select(p => new SelectListItem
+	                                        {
+                                                Value = p.ID.ToString(),
+                                                Text = p.Name,
+                                                Selected = p.ID == <#= modelName #>ID
+	                                        });
+	}
+}

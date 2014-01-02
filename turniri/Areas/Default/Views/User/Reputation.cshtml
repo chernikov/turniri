@@ -1,0 +1,78 @@
+﻿@model turniri.Model.User
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    string classReputation = string.Empty;
+    if (currentUser != null && currentUser.ID != Model.ID)
+    {
+        classReputation = "canvote";
+    }
+}
+<div class="bottom-panel">
+    <div class="left-side">
+        <div class="title">
+            РЕПУТАЦИЯ:</div>
+        <div class="rating-wrapper">
+            <div class="rating-item">
+                <div class="text">
+                    Связь:
+                </div>
+                <div class="star-wrapper @classReputation" data-type="connection">
+                    @Html.Partial("_ShowReputation", Model.ReputationConnection.HasValue ? Model.ReputationConnection.Value : 0)
+                </div>
+            </div>
+            <div class="rating-item">
+                <div class="text">
+                    Честность:
+                </div>
+                <div class="star-wrapper @classReputation" data-type="honest">
+                  @Html.Partial("_ShowReputation", Model.ReputationHonest)
+                </div>
+            </div>
+            <div class="rating-item">
+                <div class="text">
+                    Ответственность:
+                </div>
+                <div class="star-wrapper @classReputation" data-type="responsibility">
+                    @Html.Partial("_ShowReputation", Model.ReputationResponsibility)
+                </div>
+            </div>
+            <div class="rating-item" style="margin: 0;">
+                <div class="text">
+                    ИТОГО:
+                </div>
+                <div class="star-wrapper">
+                    @Html.Partial("_ShowReputation", Model.Reputation)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="title">
+            Оценка игроков:</div>
+        <div class="plus">
+            
+            @if (currentUser == null || currentUser.ID == Model.ID) 
+            {
+                <span class="icon-plus-gray sprite"></span>
+            }
+            else if (currentUser.IsVotedGrade(Model.ID, 1))
+            {
+                 <span class="icon-plus-selected sprite"></span>
+            } else {
+                <span class="icon-plus sprite"></span>
+            }
+            @Model.CountPlus</div>
+        <div class="minus">
+            @if (currentUser == null || currentUser.ID == Model.ID) 
+            {
+                <span class="icon-minus-gray sprite"></span>
+            }
+            else if (currentUser.IsVotedGrade(Model.ID, -1))
+            {
+                 <span class="icon-minus-selected sprite"></span>
+            } else {
+                <span class="icon-minus sprite"></span>
+            }
+            @Model.CountMinus</div>
+    </div>
+</div>

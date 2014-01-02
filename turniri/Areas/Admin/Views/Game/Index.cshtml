@@ -1,0 +1,70 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Game>
+
+@{
+    ViewBag.Title = "Игры";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Игры</h2>
+
+@Html.ActionLink("Создать", "Create", "Game", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Платформа
+            </th>
+            <th>Категория
+            </th>
+            <th>Наименование
+            </th>
+            <th>Кол-во
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+
+            <td>
+                @item.Platform.Name
+            </td>
+            <td>
+                @((turniri.Model.Game.GameCategoryEnum)item.GameCategory)
+            </td>
+            <td>
+                <img src="@item.ImagePath22" alt="@item.Name"/>
+                @item.Name
+            </td>
+            <td>
+                @item.MaxCountPlayer
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Game", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Game", new { id = item.ID }, new { @class = "btn btn-danger" })
+                <div class="btn-group pull-right">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Действия<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Html.ActionLink("Уведомления", "CreateNotice", "Game", new { id = item.ID }, new { @class = "" })
+                        </li>
+                    </ul>
+                </div>
+
+
+
+            </td>
+        </tr>
+    }
+</table>
+
+
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x }))
+</div>

@@ -1,0 +1,39 @@
+﻿@model turniri.Models.ViewModels.ForumMessageView
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<script type="text/javascript" src="/Media/scripts/default/comment.js"></script>
+
+<div class="top-bar">
+    <h3>ОТВЕТИТЬ
+    </h3>
+</div>
+<div class="forum-new-comment forum-comment-wrapper clear">
+    @using (Html.BeginForm("CreateMessage", "Forum", FormMethod.Post, new { id = "ForumMessageForm" }))
+    {
+        @Html.Hidden("_ID", Model._ID)
+        @Html.Hidden("ForumID", Model.ForumID)
+        @Html.Hidden("UserID", Model.UserID)
+        @Html.Hidden("ParentID", Model.ParentID)
+        <div class="comment-wrapper clear">
+            <div class="user-info-wrapper">
+                <div class="forum-userpic">
+                    <div class="preview-image">
+                        <img src="@currentUser.FullAvatarPath96" alt="userpic" />
+                        @if (currentUser.IsOnline)
+                        {
+                            <div class="online"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="text">
+                @Html.TextArea("Message", Model.Message)
+            </div>
+        </div>
+        <div class="comment-button">
+            <input class="blue-28-submit" type="submit" value="НАПИСАТЬ" id="ForumMessageSubmit" />
+            @Html.Action("IsNoticed", "Forum", new { id = Model.ForumID })
+        </div>
+    }
+</div>

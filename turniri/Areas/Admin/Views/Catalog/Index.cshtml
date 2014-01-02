@@ -1,0 +1,38 @@
+﻿@model IEnumerable<turniri.Model.Catalog>
+@{
+    ViewBag.Title = "Жанры";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <link rel="stylesheet" type="text/css" href="/Media/css/jquery-ui-1.8.14.custom.css" media="all" />
+    <script type="text/javascript" src="/Media/scripts/jquery-ui-1.8.14.custom.min.js"></script>
+}
+<h2>Жанры</h2>
+@Html.ActionLink("Добавить", "Create", "Catalog", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+           <th>Наименование
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Catalog", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Catalog", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,33 @@
+﻿@model turniri.Model.PageableData<turniri.Model.BannerStatistic>
+
+@{
+    var banner = (turniri.Model.Banner)ViewBag.Banner;
+    ViewBag.Title = "Детализация кликов по баннеру";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<img scr="@banner.ImagePath.GetPreviewPath("_banner")" alt=""/>
+
+@Html.ActionLink("Назад", "Index", "Banner", null, new { @class = "btn" })
+
+<h2>Детализация кликов</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Время
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.AddedDate.ToString("dd.MM.yyyy HH:mm")
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new {id = banner.ID, page = x }))
+</div>

@@ -1,0 +1,97 @@
+﻿@model List<turniri.Models.Info.TournamentStatistic>
+@{
+    var isHomeGuest = (bool)ViewBag.IsHomeGuest;
+    var id = (int)ViewBag.ID;
+    var viewData = new ViewDataDictionary();
+    viewData["inteam"] = true;
+}
+@Html.Hidden("StatisticGroupID", id)
+<div class="main-turnir-grid gamers-rating">
+    <div class="top-bar">
+        <h3 class="left">Статистика
+        </h3>
+        @if (isHomeGuest)
+        {
+            <div class="statistic-top-right">
+                <span id="StatisticGroupCommon">ОБЩАЯ</span>
+                <span id="StatisticGroupHome">ХОЗЯЕВА</span>
+                <span id="StatisticGroupGuest">ГОСТИ</span>
+            </div>
+        }
+        <div class="bar-arrow-down for-left sprite">
+        </div>
+    </div>
+    <div class="gamers-list clear">
+        <div class="statistic-header clear">
+            <div class="user">
+                Игрок
+            </div>
+            <div class="score">
+                Опыт
+            </div>
+            <div class="score">
+                И
+            </div>
+            <div class="score">
+                В
+            </div>
+            <div class="score">
+                Н
+            </div>
+            <div class="score">
+                П
+            </div>
+            <div class="score">
+                +
+            </div>
+            <div class="score">
+                -
+            </div>
+            <div class="score">
+                +/-
+            </div>
+            <div class="score">
+                О
+            </div>
+        </div>
+        <div class="turnir-statistic-wrapper @(Model.Count > 8 ? "scroll-pane" : "no-height")">
+            <div class="turnir-statistic">
+                @{
+                    var i = 1;
+                }
+                @foreach (var statistic in Model.OrderByDescending(p => p.TournamentPoints).ThenByDescending(p => p.Diff).ThenByDescending(p => p.GuestPoint))
+                {
+                    <div class="item clear">
+                        <div class="user">
+                            <div class="number">
+                                @i
+                            </div>
+                            <div class="user-wrapper">
+                                @Html.Partial("__StatisticPlayerView", @statistic.Participant, viewData)
+                            </div>
+                        </div>
+                        <div class="score">@statistic.Exp
+                        </div>
+                        <div class="score">@statistic.TotalGamed
+                        </div>
+                        <div class="score">@statistic.WinCount
+                        </div>
+                        <div class="score">@statistic.DrawnCount
+                        </div>
+                        <div class="score">@statistic.LoseCount
+                        </div>
+                        <div class="score">@statistic.PointWinCount
+                        </div>
+                        <div class="score">@statistic.PointLoseCount
+                        </div>
+                        <div class="score">@statistic.Diff
+                        </div>
+                        <div class="score">@statistic.TournamentPoints
+                        </div>
+                    </div>    
+                    i++;
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+@model turniri.Model.PageableData<turniri.Model.BannedWord>
+
+@{
+    ViewBag.Title = "Слова для запикивания";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>
+	Слова для запикивания
+</h2>
+@Html.ActionLink("Создать", "Create", "BannedWord", null, new { @class = "btn" })
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				#
+			</th>
+			<th>
+				Слово
+			</th>
+			<th>
+				Подстрока
+			</th>
+			<th>
+			</th>
+		</tr>
+	</thead>
+	<tr>
+	@foreach(var item in Model.List) {
+		<td> 
+			@item.ID
+		</td>		
+		<td> 
+			@item.Word
+		</td>		
+		<td> 
+			@(item.IsCanBeSubWord ? "Да" : "Нет")
+		</td>		
+		<td>
+			@Html.ActionLink("Изменить", "Edit", "BannedWord", new { id = item.ID }, new { @class = "btn edit-action" })
+            @Html.ActionLink("Удалить", "Delete", "BannedWord", new { id = item.ID }, new { @class = "btn btn-danger" })
+		</td>
+	}
+	</tr>
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new {page = x}))
+</div>

@@ -1,0 +1,47 @@
+@model turniri.Model.Tournament
+@{
+    ViewBag.Title = "Камеры";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Камеры</h2>
+
+@Html.ActionLink("Добавить", "Create", "Camera", new { id = Model.ID }, new { @class = "btn btn-primary" })
+
+@Html.ActionLink("К турнирам", "Index", "Tournament")
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#			
+            </th>
+            <th>Матч
+            </th>
+            <th>Name
+            </th>
+            <th>Вкл/выкл
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.SubCameras)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @(item.MatchID.HasValue ? item.Match.Desc : "")
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Enabled
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Camera", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Camera", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>

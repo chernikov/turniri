@@ -1,0 +1,39 @@
+﻿@model turniri.Models.ViewModels.CommentView
+@{
+    var allowImage = (bool)ViewBag.AllowImage;
+}
+@using (Html.BeginForm("CreateComment", "Match", FormMethod.Post, new { id = "CommentForm_" + Model.OwnerID }))
+{
+    @Html.Hidden("OwnerID", Model.OwnerID)
+    @Html.Hidden("ImagePath", Model.ImagePath)
+    <div class="comment-input">
+        @Html.ValidationMessage("Text")
+        @Html.TextArea("Text", Model.Text, new { @class = "hide-inner-text", placeholder = "Добавить комментарий" })
+        @if (allowImage)
+        {
+            <div class="upload-image">
+                Скриншот: <div class="UploadMatchImage upload-image-button">загрузить</div>
+                <div class="uploaded-image">
+                    @if (!string.IsNullOrWhiteSpace(Model.ImagePath))
+                    {
+                        <img src="@Model.ImagePath" />
+                    }
+                </div>
+            </div>
+        }
+        <div class="upload-video">
+            <div class="title">
+                Ссылка на YouTube:
+            </div>
+            @Html.TextBox("VideoUrl", Model.VideoUrl)
+        </div>
+    </div>
+    <div class="massage-button clear">
+        <div class="gray-24-button-wrapper">
+            <span class="send-match-comment">ОТПРАВИТЬ</span>
+        </div>
+        <div class="gray-24-button-wrapper">
+            <span class="popup-close">ОТМЕНА</span>
+        </div>
+    </div>
+}

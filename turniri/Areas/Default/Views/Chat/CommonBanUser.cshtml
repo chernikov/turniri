@@ -1,0 +1,52 @@
+﻿@model turniri.Models.ViewModels.ChatBannedUserView
+<div class="popup-window-big popup-window">
+    <div class="top-bar">
+        <h3></h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper edit-forum-comment">
+        @using (Html.BeginForm("BanUser", "Chat", FormMethod.Post, new { @class = "form-horizontal", id = "BanUserForm" }))
+        {
+            @Html.Hidden("UserID", Model.UserID)
+                
+            <div class="input-item clear">
+                <div class="lable-name">
+                    За что
+                </div>
+                <div class="input">
+                    @Html.TextArea("Reason", Model.Reason, new { style = "width : 700px;" })
+                </div>
+            </div>
+            <div class="input-item clear">
+                <div class="lable-name">
+                    На сколько
+                </div>
+                <div class="input">
+                    <label>
+                        @Html.RadioButton("ChoisePeriod", (int)turniri.Models.ViewModels.ChatBannedUserView.DateTillTo._20min, Model.ChoisePeriod == (int)turniri.Models.ViewModels.ChatBannedUserView.DateTillTo._20min)
+                        20 минут
+                    </label>
+                    <label>
+                        @Html.RadioButton("ChoisePeriod", (int)turniri.Models.ViewModels.ChatBannedUserView.DateTillTo.one_hour, Model.ChoisePeriod == (int)turniri.Models.ViewModels.ChatBannedUserView.DateTillTo.one_hour)
+                        1 час
+                    </label>
+                    <label>
+                        @Html.RadioButton("ChoisePeriod", (int)turniri.Models.ViewModels.ChatBannedUserView.DateTillTo.one_day, Model.ChoisePeriod == (int)turniri.Models.ViewModels.ChatBannedUserView.DateTillTo.one_day)
+                        1 день
+                    </label>
+                    <label>
+                        @Html.RadioButton("ChoisePeriod", (int)turniri.Models.ViewModels.ChatBannedUserView.DateTillTo.forever, Model.ChoisePeriod == (int)turniri.Models.ViewModels.ChatBannedUserView.DateTillTo.forever)
+                        навсегда
+                    </label>
+                </div>
+            </div>
+            <div class="registration-button">
+                <input class="blue-28-submit" type="submit" id="BanUserButton" value="ЗАБАНИТЬ" />
+            </div>
+        }
+    </div>
+</div>
+

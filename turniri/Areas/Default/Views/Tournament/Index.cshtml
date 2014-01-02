@@ -1,0 +1,258 @@
+﻿@model turniri.Model.Tournament
+@{
+    ViewBag.Title = @Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var roundID = (int?)ViewBag.RoundID;
+    var matchID = (int?)ViewBag.MatchID;
+    var groupID = (int?)ViewBag.GroupID;
+    var playOff = (bool?)ViewBag.PlayOff;
+    var rulesOn = (bool?)ViewBag.RulesOn;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var currentPage = Request.Url.AbsoluteUri;
+}
+@section header {
+    <script src="/Media/scripts/scrollsync.js" type="text/javascript"></script>
+    <script src="/Media/scripts/dragscrollable.js" type="text/javascript"></script>
+    <script src="/Media/scripts/default/match.js" type="text/javascript"></script>
+    <script src="/Media/scripts/default/common-tournament.js" type="text/javascript"></script>
+    <script src="/Media/scripts/default/camera.js" type="text/javascript"></script>
+    <script src="/Media/scripts/default/messages.js" type="text/javascript"></script>
+    <script src="/Media/scripts/default/tournament.js" type="text/javascript"></script>
+    <script src="/Media/scripts/default/team.js" type="text/javascript"></script>
+    <script src="/Media/scripts/default/chat.js" type="text/javascript"></script>
+     @Html.Partial("_SocialLikesScripts")
+    <script type="text/javascript">
+        VK.Widgets.Like('vk_like', {
+            width: 200,
+            pageTitle: '@Model.Name - turniri.ru',
+            pageUrl: '@currentPage',
+            pageImage: '@Model.FullImagePath'
+        });
+    </script>
+}
+@if (roundID.HasValue)
+{
+    @Html.Hidden("RoundShow", roundID.Value)
+    @Html.Hidden("MatchShow", matchID.Value)
+    if (groupID.HasValue)
+    {
+    @Html.Hidden("GroupShow", groupID.Value)
+    }
+}
+else if (matchID.HasValue)
+{
+    @Html.Hidden("MatchShow", matchID.Value)
+    if (groupID.HasValue)
+    {
+    @Html.Hidden("GroupShow", groupID.Value)
+    }
+}
+else if (groupID.HasValue)
+{
+    @Html.Hidden("GroupShow", groupID.Value)
+}
+@if (playOff.HasValue)
+{
+    @Html.Hidden("PlayOff", playOff.Value)
+}
+@if (rulesOn.HasValue)
+{
+    @Html.Hidden("RulesOn", rulesOn.Value)
+}
+@Html.Hidden("TournamentID", Model.ID)
+@Html.Hidden("TournamentUrl", Model.Platform.Url + "/" + Model.Game.Url + "/" + Model.Url)
+@Html.Action("Menu", "Game", new { id = Model.GameID })
+<div class="main-bootom">
+    <div class="rules-wrapper">
+        <div class="turnir-item">
+            <div class="preview-image">
+                <img src="@Model.FullImagePath" alt="preview" />
+            </div>
+            <div class="content" id="Tournament_@Model.ID">
+                <div class="title">
+                    <h2>
+                        @Model.Name</h2>
+                </div>
+                <div class="block-1">
+                    <ul>
+                        <li>статус: <span class="green">@Model.StatusName</span></li>
+                        <li>платформа: @Model.Game.Name (@Model.Game.Platform.Name)</li>
+                        <li>дата начала: @Model.BeginDate.ToString("dd.MM.yyyy")</li>
+                        <li>дата окончания: @Model.EndDate.ToString("dd.MM.yyyy")</li>
+                        <li>условия участия: <span class="red">@Model.TakePartCondition</span></li>
+                    </ul>
+                </div>
+                <div class="block-2">
+                    <div class="gamers">
+                        участники  <span class="Registered">@Model.RegisteredPlayersCount</span> / @(Model.MaxPlayersCount.HasValue ? Model.MaxPlayersCount.ToString() : "--")
+                    </div>
+                    <ul>
+                        @if (Model.FirstPlaceAward != null)
+                        {
+                            <li>приз за 1 место: <span class="green">@Model.FirstPlaceAward.Point @Model.FirstPlaceAward.Point.CountWord("очко", "очка", "очков")</span>
+                            </li>    
+                        }
+                        @if (Model.SecondPlaceAward != null)
+                        {
+                            <li>приз за 2 место: <span class="green">@Model.SecondPlaceAward.Point @Model.SecondPlaceAward.Point.CountWord("очко", "очка", "очков")</span>
+                            </li>    
+                        }
+                        @if (Model.ThirdPlaceAward != null)
+                        {
+                            <li>приз за 3 место: <span class="green">@Model.ThirdPlaceAward.Point @Model.ThirdPlaceAward.Point.CountWord("очко", "очка", "очков")</span>
+                            </li>    
+                        }
+                    </ul>
+                </div>
+                <div class="block-3">
+                    <div class="link-wrapper">
+                        @if (Model.Forum != null)
+                        {
+                            <a href="@Url.Action("Index", "Forum", new { url = Model.Forum.Url })">раздел на форуме</a><br />
+                        }
+                        <a href="@Url.Action("Index", "Tournament", new { platformUrl = Model.Platform.Url, gameUrl = Model.Game.Url, url = Model.Url, rulesOn = true })">
+                            правила</a>
+                    </div>
+                    @if (currentUser != null && Model.Status == (int)turniri.Model.Tournament.StatusEnum.Created)
+                    {
+                        if (Model.IsGetPart(currentUser.ID))
+                        {
+                            if (Model.IsTeam && !Model.IsGetTeam(currentUser.ID))
+                            {
+                        <div class="gray-29-button-wrapper">
+                            <a class="set-team-name-tournament" href="/setName">Назвать команду</a>
+                        </div>
+                            }
+                        <div class="gray-29-button-wrapper">
+                            <a class="get-part-tournament" href="/getPart">Снять заявку с участия</a>
+                        </div>
+                        }
+                        else if (Model.MaxPlayersCount.HasValue && Model.MaxPlayersCount > Model.RegisteredPlayersCount)
+                        {
+                            if (Model.IsTeam)
+                            {
+                        <div class="gray-29-button-wrapper">
+                            <a class="register-team-tournament" href="/registerTeam">Зарегистрировать команду</a>
+                        </div>
+                            }
+                            else
+                            {
+                        <div class="gray-29-button-wrapper">
+                            <a class="get-part-tournament" href="/getPart">Подать заявку на участие</a>
+                        </div>
+                            }
+                        }
+                    }
+
+                    @if (Model.IsAdmin(currentUser) && Model.AllGamesPlayed && Model.Status == (int)turniri.Model.Tournament.StatusEnum.InGame)
+                    {
+                        <div class="gray-29-button-wrapper">
+                            <a class="" href="@Url.Action("FinishTournament", "Tournament", new { id = Model.ID })">
+                                Завершить турнир</a>
+                        </div>
+                    }
+                    @if (Model.IsAdmin(currentUser) && Model.IsGroupAllocated && Model.Status == (int)turniri.Model.Tournament.StatusEnum.InGame)
+                    {
+                        <div class="gray-29-button-wrapper">
+                            <a class="" href="@Url.Action("AllocatePlayoff", "Tournament", new { id = Model.ID })">
+                                Создать плейофф</a>
+                        </div>
+                    }
+                    @if (Model.IsAdmin(currentUser) && Model.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated)
+                    {
+                        <div class="gray-29-button-wrapper">
+                            <a class="" href="@Url.Action("Start", "Tournament", new { id = Model.ID })">Старт</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="turnir-likes">
+            <div class="facebook">
+                <div class="fb-like" data-href="@currentPage" data-send="false" data-layout="button_count" data-width="200" data-show-faces="true" data-font="arial">
+                </div>
+            </div>
+            <div class="vk">
+                <div id="vk_like"></div>
+            </div>
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru" data-hashtags="turniriru">
+                    Твитнуть</a>
+                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="google">
+                <!-- Place this tag where you want the +1 button to render. -->
+                <div class="g-plusone" data-size="medium" data-annotation="inline" data-width="200">
+                </div>
+
+                <!-- Place this tag after the last +1 button tag. -->
+                <script type="text/javascript">
+                    window.___gcfg = { lang: 'ru' };
+
+                    (function () {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+            </div>
+        </div>
+        <div class="rules-text">
+            <h2><span class="action" id="switchRules">ПРАВИЛА ТУРНИРА</span> </h2>
+            <div id="rules" style="display: none;">
+                @Html.Raw(Model.Rules.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+            </div>
+
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <div class="description-text">
+                <h2><span class="action" id="switchDescription">ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ</span>
+                </h2>
+                <div id="description" style="display: none;">
+                    @Html.Raw(Model.Description.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                </div>
+            </div>
+        }
+        @if (Model.SubEnableCameras.Any())
+        {
+            <div class="cameras clear">
+                <h2>Онлайн камеры</h2>
+                @foreach (var camera in Model.SubEnableCameras)
+                {
+                    <div class="gray-29-button-wrapper">
+                        <a class="camera-show" href="#" data-id="@camera.ID">@camera.Name</a>
+                    </div>
+                }
+            </div>
+        }
+        <div class="admins clear">
+            <h2>Администраторы и модераторы турнира</h2>
+            @foreach (var admin in Model.AllAdmins)
+            {
+                <a href="@Url.Action("Index", "User", new { login = admin.Login })" class="admin">@admin.Login</a> <span class="icon-mail sprite" data-id="@admin.ID"></span><text>&nbsp;&nbsp;
+                </text>
+            }
+            @foreach (var admin in Model.AllModerators)
+            {
+                <a href="@Url.Action("Index", "User", new { login = admin.Login })" class="moderator">@admin.Login</a> <span class="icon-mail sprite" data-id="@admin.ID"></span><text>&nbsp;&nbsp;
+                </text>
+            }
+        </div>
+    </div>
+    @if (Model.IsTeam)
+    {
+        @Html.Action("Teams", "Tournament", new { id = Model.ID })
+    }
+    else
+    {
+        @Html.Action("UserRating", "Tournament", new { id = Model.ID })
+    }
+    @Html.Action("Index", "Chat", new { id = Model.ID })
+    @Html.Partial("Table", Model)
+    @if (Model.Status == (int)turniri.Model.Tournament.StatusEnum.PlayedOut)
+    {
+        @Html.Partial("Winner", Model)
+        @Html.Partial("SpecialPrized", Model)
+    }
+</div>

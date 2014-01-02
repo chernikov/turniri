@@ -1,0 +1,132 @@
+﻿@model turniri.Model.Round
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@if (Model.Match.CountRounds > 1)
+{
+    if (Model.IsAdditional)
+    {
+    <div class="title">
+        @Model.GameAdditionalLong.ToUpper()
+    </div>
+    }
+    else if (Model.Match.Tournament != null && Model.Match.Tournament.HostGuest)
+    {
+        if (Model.Player1IsHost)
+        {
+    <div class="title">
+        ДОМАШНЯЯ ИГРА @Model.Match.Player1.User.Login
+    </div>
+        }
+        else
+        {
+    <div class="title">
+        ДОМАШНЯЯ ИГРА @Model.Match.Player2.User.Login
+    </div>
+        }
+    }
+    else
+    {
+        if (Model.Match.Round1.ID == Model.ID)
+        {
+    <div class="title">
+        ИГРА 1
+    </div>
+        }
+        else
+        {
+    <div class="title">
+        ИГРА 2
+    </div>
+        }
+    }
+}
+else
+{
+    <div class="title">
+        ИГРА
+    </div>
+}
+
+<div class="score-wrapper clear">
+    @if (Model.Match.IsAdmin(currentUser) && Model.Match.Tournament != null && Model.Match.Tournament.Status != (int)turniri.Model.Tournament.StatusEnum.PlayedOut)
+    {
+        <div class="button-rollback-wrapper">
+            <div class="gray-16-button-wrapper rollback-round left-float" data-id="@Model.ID">
+                <span>Переиграть</span>
+            </div>
+        </div>
+    }
+    <div class="score-left">
+
+        @if (Model.Match.Player1 != null)
+        {
+            var viewData = new ViewDataDictionary();
+            viewData.Add("home", (Model.Match.CountRounds > 1 && !Model.IsAdditional && Model.Match.Tournament != null && Model.Match.Tournament.HostGuest && Model.Player1IsHost) ? "(Д)" : "");
+            @Html.Partial("__MatchPlayerView", Model.Match.Player1, viewData)
+        }
+        else
+        {
+            <div class="preview-image">
+                <img src="/Media/images/default_avatar_30.png" alt="preview" title="Model.Match.Participant2Participant.FullName" />
+            </div>
+            <div class="name">
+                <span>Нет участника</span>
+            </div>
+        }
+    </div>
+    <div class="score-center">
+        <div class="date">
+            @if (Model.PlayedDate.HasValue)
+            {
+                @Model.PlayedDate.Value.ToString("dd.MM.yyyy")
+            }
+            else if (Model.Match.Tour != null)
+            {
+                <text>@Model.Match.Tour.RecommendDate.Value.ToString("dd.MM.yyyy")</text>
+            }
+            else
+            {
+                <text>&nbsp;</text>
+            }
+        </div>
+        <div class="score">
+            @if (Model.Technical)
+            {
+                <span>@Model.Score1View <span class="tech">Тх</span> : @Model.Score2View <span class="tech">
+                    Тх</span></span>
+            }
+            else if (Model.IsAdditional)
+            {
+                <span><span class="tech">@Model.GameAdditionalShort</span> @Model.Score1View : @Model.Score2View
+                    <span class="tech">@Model.GameAdditionalShort</span></span>
+            }
+            else if (Model.Extended)
+            {
+                <span class="extended">@Model.Score1View : @Model.Score2View</span>
+            }
+            else
+            {
+                <span>@Model.Score1View : @Model.Score2View</span>
+            }
+        </div>
+    </div>
+    <div class="score-right">
+        @if (Model.Match.Player2 != null)
+        {
+            var viewData = new ViewDataDictionary();
+            viewData.Add("home", (Model.Match.CountRounds > 1 && !Model.IsAdditional && Model.Match.Tournament != null && Model.Match.Tournament.HostGuest && !Model.Player1IsHost) ? "(Д)" : "");
+            @Html.Partial("__MatchPlayerView", Model.Match.Player2, viewData)
+        }
+        else
+        {
+            <div class="preview-image">
+                <img src="/Media/images/default_avatar_30.png" alt="preview" title="Model.Match.Participant2Participant.FullName" />
+            </div>
+            <div class="name">
+                <span>Нет участника</span>
+            </div>
+        }
+    </div>
+</div>
+

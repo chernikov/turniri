@@ -1,0 +1,50 @@
+﻿@model turniri.Model.User
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var gameID = (int)ViewData["gameId"];
+}
+
+
+<div class="name">
+    <div class="user-login-wrapper">
+        <div class="preview-image">
+            <a href="@Url.Action("Index", "User", new { login = Model.Login })">
+                <img src="@Model.FullAvatarPath18" alt="avatar" title="@Model.Login"/>
+            </a>
+            @if (Model.IsOnline)
+            {
+                <div class="dot"></div>
+            }
+        </div>
+        <a href="@Url.Action("Index", "User", new { login = Model.Login })" class="user">
+            @Model.Login
+        </a>
+    </div>
+</div>
+<div class="thumbs-up">
+    @Model.CountPlus
+</div>
+<div class="thumbs-down">
+    @Model.CountMinus
+</div>
+<div class="reputation">
+    @Html.Partial("_ShowReputation", Model)
+</div>
+<div class="score">
+    @Model.Rating(gameID).TotalScore/@turniri.Model.User.PointsToNextLevel(Model.Rating(gameID).TotalScore)
+</div>
+<div class="level">
+    @Model.Rating(gameID).Level
+</div>
+<div class="bandwidth">
+    @if (Model.ReputationConnection.HasValue)
+    {
+        <div class="icon-bandwidth-@((int)Model.ReputationConnection.Value) sprite">
+        </div>
+    }
+    else
+    {
+        <div class="icon-bandwidth-null sprite">
+        </div> 
+    }
+</div>

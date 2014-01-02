@@ -1,0 +1,90 @@
+﻿@model turniri.Model.Product
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Цена 
+            </th>
+            <th>Номер 
+            </th>
+            <th>Картинка 
+            </th>
+            <th>Продан
+            </th>
+            <th>Зарезервирован
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.SubProductCodes)
+    {
+        <tr>
+            <td>
+                @if (item.ProductPrice.PlatformID.HasValue)
+                {
+                    <span class="label label-success">@item.ProductPrice.Platform.Name: @item.ProductPrice.Price.ToString("0,00")</span>
+                }
+                else
+                {
+                    <span class="label label-success">@item.ProductPrice.Price.ToString("0,00")</span>
+                }
+            </td>
+            <td>
+                @if (Model.Type == (int)turniri.Model.Product.TypeEnum.Code)
+                {
+                    @item.Code 
+                }
+                @if (Model.Type == (int)turniri.Model.Product.TypeEnum.RealGood)
+                {
+                    @item.Product.Name
+                }
+            </td>
+            <td>
+                @if (Model.Type == (int)turniri.Model.Product.TypeEnum.Code && !string.IsNullOrEmpty(item.Image))
+                {
+                    <img src="@item.Image" width="20"/>
+                } 
+               @if (Model.Type == (int)turniri.Model.Product.TypeEnum.RealGood)
+               {
+                   if (item.ProductVariationID.HasValue)
+                   {
+                       <img src="@item.ProductVariation.Image?width=30&mode=crop"/>
+                   } else {
+                    <img src="@item.Product.Image?width=30&mode=crop"/>
+                   }
+               }
+            </td>
+            <td>
+                @if (item.CartProductID.HasValue && item.IsSelled)
+                {
+                    <span class="label label-info">продан</span>
+                }
+            </td>
+            <td>
+                @if (!item.IsSelled && item.IsReserved)
+                {
+                    <span class="label label-error">зарезервирован @item.CartProduct.Cart.LastVisitDate.ToString("dd.MM.yyyy HH:mm")</span>
+                }
+            </td>
+            <td>
+             @if (!item.IsSelled) 
+             {
+                if (!item.IsReserved)
+                {
+                    <span class="btn btn-danger delete" data-id="@item.ID">Удалить</span>
+                }
+                if (item.IsReserved)
+                {
+                    <span class="btn unreserve" data-id="@item.ID">Снять с резерва</span>
+                }
+                if (!item.IsReserved && Model.Type == (int)turniri.Model.Product.TypeEnum.Code)
+                {
+                    <span class="btn change" data-id="@item.ID">Изменить</span>
+                }
+             }
+              
+            </td>
+        </tr>
+    }
+</table>

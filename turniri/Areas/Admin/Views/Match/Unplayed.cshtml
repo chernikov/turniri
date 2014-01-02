@@ -1,0 +1,61 @@
+﻿@model IEnumerable<turniri.Model.Match>
+
+@{
+    ViewBag.Title = "Старые несыгранные матчи";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Старые несыгранные матчи</h2>
+  @Html.ActionLink("Удалить все", "DeleteAllUnplayed", "Match", null, new { @class = "btn btn-danger" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <td>
+                Дата
+            </td>
+            <th>
+                Матч
+            </th>
+            <th>
+                Игрок 1
+            </th>
+            <th>
+                Игрок 2
+            </th>
+            <th>
+                Статус
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Message.AddedDate.ToString("dd.MM.yyyy")
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Player1.User.Login
+            </td>
+            <td>
+                @item.Player2.User.Login
+            </td>
+            <td>
+                @item.MatchStatusName
+            </td>
+            <td>
+                @Html.ActionLink("Удалить", "DeleteUnplayed", "Match", new { id = item.ID }, new { @class = "btn" })
+            </td>
+        </tr>
+    }
+</table>

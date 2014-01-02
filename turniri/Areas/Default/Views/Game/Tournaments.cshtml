@@ -1,0 +1,51 @@
+﻿@model turniri.Model.Game
+
+@{
+    ViewBag.Title = "Турниры";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/game-tournaments.js"></script>
+}
+@Html.Action("Menu", "Game", new { id = Model.ID})
+
+<div class="main-bootom">
+    <div class="turnir long-box big-box">
+        <div class="switcher clear">
+            <ul>
+                @if (Model.TournamentsAnyCreated)
+                {
+                    <li id="tab_turnir_1">Предстоящие турниры</li>    
+                }
+                @if (Model.TournamentsAnyPlaying)
+                {
+                    <li id="tab_turnir_2">Текущие турниры</li>
+                }
+                @if (Model.TournamentsAnyPlayed)
+                {
+                    <li id="tab_turnir_3">Завершенные турниры</li>
+                }
+            </ul>
+        </div>
+        <div class="turnirs-wrapper">
+            @if (Model.TournamentsAnyCreated)
+            {
+                <div id="tab_turnir_1_content" class="switcher-content turnir-switcher-content">
+                    @Html.Action("TournamentsList", "Game", new { id = Model.ID, type = 1 })
+                </div>
+            }
+            @if (Model.TournamentsAnyPlaying)
+            {
+                <div id="tab_turnir_2_content" class="switcher-content turnir-switcher-content">
+                    @Html.Action("TournamentsList", "Game", new { id = Model.ID, type = 2 })
+                </div>
+            }
+            @if (Model.TournamentsAnyPlayed)
+            {
+                <div id="tab_turnir_3_content" class="switcher-content turnir-switcher-content">
+                    @Html.Action("TournamentsList", "Game", new { id = Model.ID, type = 3 })
+                </div>
+            }
+        </div>
+    </div>
+</div>

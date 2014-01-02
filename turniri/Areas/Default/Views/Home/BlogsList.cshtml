@@ -1,0 +1,63 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Blog>
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div id="tab_news_100_content" class="switcher-content">
+    <ul>
+        @foreach (var blog in Model.List)
+        {
+            <li class="clear">
+                @if (!string.IsNullOrWhiteSpace(blog.PreviewUrl))
+                {
+                    <div class="preview">
+                        <a href="@Url.Action("Item", "Blog", new { url = blog.Url })">
+                            <img src="@blog.PreviewUrl" alt="@blog.Header" />
+                        </a>
+                    </div>    
+                }
+                <div class="content">
+                    <div class="title">
+                        <h2>
+                            @Html.ActionLink(blog.Header, "Item", "Blog", new { url = blog.Url }, null)
+                        </h2>
+                    </div>
+                    <div class="text">
+                        @Html.Raw(blog.Text.BBCodeToHTML().StripTags().Teaser(300, "..."))
+                    </div>
+                    <div class="bottom-wrapper">
+                        <div class="date">
+                            @blog.AddedDate.ToString("dd.MM.yyyy")
+                        </div>
+                        <div class="user">
+                            <a href="@Url.Action("Index", "User", new { login = blog.User.Login })">@blog.User.Login</a>
+                        </div>
+                        <div class="comments">
+                            @blog.CommentCount
+                            <div class="sprite icon-comment"></div>
+                        </div>
+                        <div class="comments">
+                            @blog.VisitCount
+                            <div class="sprite icon-view"></div>
+                        </div>
+                        <div class="more">
+                            @Html.ActionLink("далее", "Item", "Blog", new { url = blog.Url }, null)
+                        </div>
+                        <div class="like blog" data-id="@blog.ID">
+                            <div class="sprite icon @(currentUser != null ? (blog.IsLikedBy(currentUser) ? "selected active" : "active") : "") ">
+                            </div>
+                            <div class="count">@blog.Likes</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+    <div class="paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list">
+            @Html.PageLinksTurniri(Model.PageNo, Model.CountPage, x => Url.Action("BlogsList", new { page = x }))
+        </div>
+    </div>
+</div>

@@ -1,0 +1,230 @@
+﻿@model turniri.Model.Match
+<div id="Match_@Model.ID" class="match-item" data-number="@Model.Number">
+
+    @if (Model.Place > 0 && Model.WinnerID.HasValue && Model.Participant2ID == Model.WinnerID)
+    {
+        <div class="gamer-wrapper">
+            <div class="gamer clear winner">
+                @Html.Partial("__GamePairPlayerView", Model.Player2, new ViewDataDictionary())
+                @if (Model.CountRounds > 1)
+                {
+                    <div class="round-scores">
+                        <div class="wrapper">
+                            @foreach (var round in Model.SubRounds)
+                            {
+                                if (round.IsAdditional)
+                                {
+                                <span class="score additional" title="@round.GameAdditionalLong">
+                                    @round.Score2View
+                                </span>
+                                }
+                                else if (round.Technical)
+                                {
+                                <span class="score tech" title="@(round.Score2 > round.Score1 ? "Техническая победа" : "Техническое поражение")">@round.Score2View</span>
+                                }
+
+                                else if (round.Extended)
+                                {
+                                <span class="score extended" title="Дополнительное время">@round.Score2View</span>
+                                }
+                                else
+                                {
+                                <span class="score">@round.Score2View</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="score @(Model.Technical ? "tech" : "")">
+                        @Model.Score2View
+                    </div>
+                }
+            </div>
+            @if ((Model.Tournament.Status == (int)turniri.Model.Tournament.StatusEnum.InGame ||
+            Model.Tournament.Status == (int)turniri.Model.Tournament.StatusEnum.PlayedOut) &&
+            Model.Status != (int)turniri.Model.Match.MatchStatusEnum.Empty)
+            {
+                if (Model.CommentCount > 0)
+                {
+                    if (Model.HasCommentImage)
+                    {
+                <div class="icon-info @Model.InfoSubmitClass photo sprite">
+                </div>  
+                    }
+                    if (Model.HasCommentVideo)
+                    {
+                <div class="icon-info @Model.InfoSubmitClass camera sprite">
+                </div>  
+                    }
+                <div class="icon-info @Model.InfoSubmitClass comment sprite">
+                </div>  
+                }
+                else
+                {
+                <div class="icon-info @Model.InfoSubmitClass sprite">
+                </div>  
+                }
+
+            }
+            @if (Model.IsLive)
+            {
+                <div class="icon-live sprite"></div>
+            }
+        </div>
+        <div class="gamer-wrapper">
+            <div class="gamer clear">
+                @Html.Partial("__GamePairPlayerView", Model.Player1, new ViewDataDictionary())
+                @if (Model.CountRounds > 1)
+                {
+                    <div class="round-scores">
+                        <div class="wrapper">
+                            @foreach (var round in Model.SubRounds)
+                            {
+                                if (round.IsAdditional)
+                                {
+                                <span class="score additional" title="@round.GameAdditionalLong">
+                                    @round.Score1View
+                                </span>
+                                }
+                                else if (round.Technical)
+                                {
+                                <span class="score tech" title="@(round.Score1 > round.Score2 ? "Техническая победа" : "Техническое поражение")">@round.Score1View</span>
+                                }
+
+                                else if (round.Extended)
+                                {
+                                <span class="score extended" title="Дополнительное время">@round.Score1View</span>
+                                }
+                                else
+                                {
+                                <span class="score">@round.Score1View</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="score @(Model.Technical ? "tech" : "")">
+                        @Model.Score1View
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="gamer-wrapper">
+            <div class="gamer clear @((Model.WinnerID.HasValue && Model.WinnerID == Model.Participant1ID) ? "winner" : "")">
+                @Html.Partial("__GamePairPlayerView", Model.Player1, new ViewDataDictionary())
+                @if (Model.CountRounds > 1)
+                {
+                    <div class="round-scores">
+                        <div class="wrapper">
+                            @foreach (var round in Model.SubRounds)
+                            {
+                                if (round.IsAdditional)
+                                {
+                                <span class="score additional" title="@round.GameAdditionalLong">
+                                    @round.Score1View
+                                </span>
+                                }
+                                else if (round.Technical)
+                                {
+                                <span class="score tech" title="@(round.Score1 > round.Score2 ? "Техническая победа" : "Техническое поражение")">@round.Score1View</span>
+                                }
+
+                                else if (round.Extended)
+                                {
+                                <span class="score extended" title="Дополнительное время">@round.Score1View</span>
+                                }
+                                else
+                                {
+                                <span class="score">@round.Score1View</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="score @(Model.Technical ? "tech" : "")">
+                        @Model.Score1View
+                    </div>
+                }
+            </div>
+            @if ((Model.Tournament.Status == (int)turniri.Model.Tournament.StatusEnum.InGame ||
+            Model.Tournament.Status == (int)turniri.Model.Tournament.StatusEnum.PlayedOut) &&
+            Model.Status != (int)turniri.Model.Match.MatchStatusEnum.Empty)
+            {
+                if (Model.CommentCount > 0)
+                {
+                    if (Model.HasCommentImage)
+                    {
+                <div class="icon-info @Model.InfoSubmitClass photo sprite">
+                </div>  
+                    }
+                    if (Model.HasCommentVideo)
+                    {
+                <div class="icon-info @Model.InfoSubmitClass camera sprite">
+                </div>  
+                
+                    }
+                <div class="icon-info @Model.InfoSubmitClass comment sprite">
+                </div>  
+                }
+                else
+                {
+                <div class="icon-info @Model.InfoSubmitClass sprite">
+                </div>  
+                }
+            }
+             @if (Model.IsLive)
+            {
+                <div class="icon-live sprite"></div>
+            }
+        </div>
+        <div class="gamer-wrapper">
+            <div class="gamer clear  @((Model.WinnerID.HasValue && Model.WinnerID == Model.Participant2ID) ? "winner" : "")">
+                @Html.Partial("__GamePairPlayerView", Model.Player2, new ViewDataDictionary())
+                @if (Model.CountRounds > 1)
+                {
+                    <div class="round-scores">
+                        <div class="wrapper">
+                            @foreach (var round in Model.SubRounds)
+                            {
+                                if (round.IsAdditional)
+                                {
+                                <span class="score additional" title="@round.GameAdditionalLong">
+                                    @round.Score2View
+                                </span>
+                                }
+                                else if (round.Technical)
+                                {
+                                <span class="score tech" title="@(round.Score2 > round.Score1 ? "Техническая победа" : "Техническое поражение")">@round.Score2View</span>
+                                }
+
+                                else if (round.Extended)
+                                {
+                                <span class="score extended" title="Дополнительное время">@round.Score2View</span>
+                                }
+                                else
+                                {
+                                <span class="score">@round.Score2View</span>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="score @(Model.Technical ? "tech" : "")">
+                        @Model.Score2View
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

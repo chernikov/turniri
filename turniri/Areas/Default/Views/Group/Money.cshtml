@@ -1,0 +1,17 @@
+﻿@model turniri.Model.Group
+
+<div class="turnir-gamers long-gamers-rating gamers-rating">
+    <div class="top-bar">
+        <h3>Деньги
+        </h3>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="money-wrapper">
+        <div id="tab_money_1_content" class="switcher-content">
+            <div id="MoneyListWrapper">
+                @Html.Action("MoneyList", "Group", new { id = Model.ID, page = 1 })
+            </div>
+        </div>
+    </div>
+</div>

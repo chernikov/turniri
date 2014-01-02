@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[UserTeam] (
+    [ID]        INT IDENTITY (1, 1) NOT NULL,
+    [TeamID]    INT NOT NULL,
+    [UserID]    INT NOT NULL,
+    [IsCaptain] BIT NOT NULL,
+    [Accepted]  BIT NOT NULL,
+    CONSTRAINT [PK_UserTeam] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_UserTeam_Team] FOREIGN KEY ([TeamID]) REFERENCES [dbo].[Team] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_UserTeam_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE
+);
+

@@ -1,0 +1,218 @@
+﻿@model turniri.Model.Tournament
+@{
+    ViewBag.Title = "Матчи турнира " + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header 
+{
+    <script type="text/javascript" src="/Media/scripts/admin/tournament-matches.js"></script>
+}
+
+<h2>Матчи турнира @Model.Name
+</h2>
+<p>
+    Тип: @Model.TournamentTypeName
+    <br />
+    Кол-во игроков : @Model.RegisteredPlayersCount
+    <br />
+    @if (Model.TournamentType == (int)turniri.Model.Tournament.TournamentTypeEnum.GroupTournament)
+    {
+        <text>
+            Групп : @Model.GroupCount
+        <br />
+        Игроков в группе : @Model.PlayersInGroup
+        <br />
+        Выход из группы : @Model.ExitFromGroup
+        <br />
+        </text>
+    }
+    Кол-во раундов в матче : @Model.CountRound
+    <br />
+    Дома\в гостях : @Model.HostGuest
+    <br />
+</p>
+@if (Model.Status == (int)turniri.Model.Tournament.StatusEnum.Created)
+{
+    @Html.ActionLink("Создать", "CreateMatches", "Tournament", new { id = Model.ID }, new { @class = "btn" })
+}
+@if (Model.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated)
+{
+    @Html.ActionLink("Очистить", "ClearMatches", "Tournament", new { id = Model.ID }, new { @class = "btn" })
+}
+@if (Model.Toss && Model.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated && Model.TournamentType == (int)turniri.Model.Tournament.TournamentTypeEnum.GroupTournament && !Model.IsGroupAllocated)
+{
+    @Html.ActionLink("Жеребьевка", "Toss", "Tournament", new { id = Model.ID }, new { @class = "btn" })
+}
+@if (Model.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated)
+{
+    if (Model.AllTeamClosed) 
+    {
+       @Html.ActionLink("Старт", "Start", "Tournament", new { id = Model.ID }, new { @class = "btn" })
+    }
+    else 
+    {
+        <span>Команды не готовы:  @Model.TeamNotClosed </span>
+    }
+}
+@if (Model.IsGroupAllocated)
+{
+    @Html.ActionLink("Расставить плейофф", "AllocatePlayoff", "Tournament", new { id = Model.ID }, new { @class = "btn" })
+}
+<table class="table matches">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Тур
+            </th>
+            <th>Время
+            </th>
+            <th>Группа
+            </th>
+            <th>Статус
+            </th>
+            <th>Наименование
+            </th>
+            <th>Игрок 1 
+            </th>
+            <th>Игрок 2
+            </th>
+            <th>Победитель
+            </th>
+            <th>Выигр.
+            </th>
+            <th>Проигр.
+            </th>
+            <th>Кол-во игр
+            </th>
+            <th>Дейст.</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.SubMatches)
+    {
+        <tr>
+            <td>
+               <span title="@item.ID">@item.Number</span>
+            </td>
+            <td>
+                @(item.Tour != null ? item.Tour.Name : "-")
+            </td>
+            <td>
+                @((item.Tour != null && item.Tour.RecommendDate.HasValue) ? item.Tour.RecommendDate.Value.ToString("dd.MM.yyyy HH:mm") : "-")
+            </td>
+            <td>
+                @(item.TournamentGroup != null ? item.TournamentGroup.Name : "-")
+            </td>
+             <td>
+                @item.MatchStatusName
+            </td>
+            <td>
+                @item.Name
+            </td>
+            @if (Model.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated && item.IsStartedMatches && Model.TournamentType != (int)turniri.Model.Tournament.TournamentTypeEnum.RoundRobin)
+            {
+                <td class="droppable" data-id="@item.ID" data-player1="true">
+                    <div class="draggable" data-id="@item.ID" data-player1="true">
+                        @(item.Participant1ID.HasValue ? item.Player1.ActualName : "-")
+                    </div>
+                </td>
+                <td class="droppable" data-id="@item.ID" data-player1="false">
+                    <div class="draggable" data-id="@item.ID" data-player1="false">
+                        @(item.Participant2ID.HasValue ? item.Player2.ActualName : "-")
+                    </div>
+                </td>
+            }
+            else if (Model.Status == (int)turniri.Model.Tournament.StatusEnum.InGame)
+            {
+                if (item.Player1 != null && Model.IsNeverPlayed(item.Player1))
+                {
+                <td class="changeable" data-id="@item.ID" data-player1="true">
+                    <a href="#changeParticipantModal" role="button" data-toggle="modal" title="Заменить игрока">@(item.Participant1ID.HasValue ? item.Player1.ActualName : "-")</a>
+                </td>
+                }
+                else
+                {
+                <td>
+                    @(item.Participant1ID.HasValue ? item.Player1.User.Login : "-")
+                </td>
+                }
+                if (item.Player2 != null && Model.IsNeverPlayed(item.Player2))
+                {
+                <td class="changeable" data-id="@item.ID" data-player1="false">
+                    <a href="#changeParticipantModal" role="button" data-toggle="modal" title="Заменить игрока">@(item.Participant2ID.HasValue ? item.Player2.ActualName : "-")</a>
+                </td>
+                }
+                else
+                {
+                <td>
+                    @(item.Participant2ID.HasValue ? item.Player2.ActualName : "-")
+                </td>
+                }
+            }
+            else
+            {
+                <td>
+                    @(item.Participant1ID.HasValue ? item.Player1.ActualName : "-")
+                </td>
+                <td>
+                    @(item.Participant2ID.HasValue ? item.Player2.User.Login : "-")
+                </td>
+            }
+            <td>
+                @if (item.WinnerID.HasValue)
+                {
+                    <text>@item.Winner.ActualName</text>
+                    
+                    if (item.Rating != null) {
+                        <span class="label">@item.Rating.Score </span>
+                    }
+                } 
+            </td>
+            <td>
+                @(item.WinMatch != null ? item.WinMatch.Number.ToString() : "-")
+            </td>
+            <td>
+                @(item.LoseMatch != null ? item.LoseMatch.Number.ToString() : "-")
+            </td>
+            <td>
+                @item.CountRounds
+            </td>
+            <td>
+                @if (item.Status == (int)turniri.Model.Match.MatchStatusEnum.Submit && item.Tournament.Status != (int)turniri.Model.Tournament.StatusEnum.PlayedOut)
+                {
+                    <a href="@Url.Action("RollbackMatch", "Tournament", new {id = item.ID})">Переиграть</a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<div id="changeParticipantModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Заменить игрока</h3>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm("SubstituteParticipant", "Tournament", FormMethod.Post, new { @class = "form-horizontal", id = "SubstituteParticipantForm" }))
+        {
+            @Html.Hidden("MatchID", "")
+            @Html.Hidden("Participant1", "")
+            @Html.Hidden("ParticipantID", "")
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="Login">
+                        Игрок для замены
+                    </label>
+                    <div class="controls">
+                        @Html.TextBox("Login", "")
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+        <button class="btn btn-primary" id="SubmitSubstituteBtn">Сохранить</button>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<turniri.Model.Award>
+
+@{
+    var tournament = (turniri.Model.Tournament)ViewBag.Tournament;
+    ViewBag.Title = "Награды турнира " + tournament.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Награды турнира @tournament.Name</h2>
+
+@Html.ActionLink("Создать", "Create", "Award", new { id = tournament.ID }, new { @class = "btn" })
+@if (tournament.Status == (int)turniri.Model.Tournament.StatusEnum.PlayedOut && Model.FirstOrDefault(p => !p.IsSpecial) != null && !Model.FirstOrDefault(p => !p.IsSpecial).IsAwarded)
+{
+    @Html.ActionLink("Перенаградить", "ReAward", "Award", new { id = tournament.ID }, new { @class = "btn" })
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Место
+            </th>
+            <th>Наименование
+            </th>
+            <th>Кол-во очков
+            </th>
+            <th>Награжден
+            </th>
+             <th>Деньги
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Place
+            </td>
+            <td>
+                <img src="@item.FullIconPath" alt="@item.Name"/>
+                @item.Name
+            </td>
+            <td>
+                @item.Point
+            </td>
+            <td>
+                @(item.User != null ? item.User.Login : "")
+            </td>
+             <td>
+                <strong>@(item.MoneyGoldPercent ?? 0) %</strong> / @(item.MoneyWood ?? 0) / @(item.MoneyCrystal ?? 0)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Award", new { id = item.ID }, new { @class = "btn" })
+                @if (item.IsSpecial && !item.IsAwarded)
+                {
+                    @Html.ActionLink("Наградить", "Award", "Award", new { id = item.ID }, new { @class = "btn" })
+                }
+                @Html.ActionLink("Удалить", "Delete", "Award", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,107 @@
+﻿ @model turniri.Model.Forum
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    int page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+
+@Html.Partial("UserMenu", "")
+<div class="top-photo-paging paging light-paging">
+    <div class="title">
+        Страницы:
+    </div>
+    <div class="paging-list">
+        @Html.PageLinksTurniri(page, Model.ForumsCountPage(), x => Url.Action("Index", new { page = x }))
+    </div>
+</div>
+<div class="main-bootom">
+    <div class="box-forum box-forum-update box">
+        <div class="top-bar">
+            <h3>
+                <a href="@Url.Action("Index", "Forum", new { url = string.Empty })">Форум</a> /
+                @(Html.BreadChunks<turniri.Model.Forum>(Model, p => Url.Action("Index", "Forum", new { id = p.ID }), p => p.Name, p => p.ParentForum, " / "))
+                @Model.Name
+            </h3>
+            @if (Model.IsFather)
+            {
+                <div class="gray-16-button-wrapper">
+                    @Html.ActionLink("НАПИСАТЬ", "Create", "Forum", new { id = Model.ID }, null)
+                </div>
+            }
+        </div>
+        <div class="forum-wrapper clear">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="title">Заголовок
+                        </th>
+                        <th class="answer">Ответов
+                        </th>
+                        <th class="views">Просмотров
+                        </th>
+                        <th class="last-message">Последнее сообщение
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ForumPage(page))
+                    {
+                        <tr>
+                            <td class="title">
+                                <div class="preview-image">
+                                    <img src="@item.FullImagePathRead(currentUser)" alt="subject preview" />
+                                </div>
+                                <div class="name">
+                                    @Html.ActionLink(item.Name, "Index", "Forum", new { url = item.Url }, null)
+                                </div>
+                                @if (string.IsNullOrWhiteSpace(item.SubTitle))
+                                {
+                                    <div class="description">
+                                        @item.SubTitle
+                                    </div>
+                                }
+                                @{
+                                var firstForumMessage = item.TotalFirstForumMessage;
+                                }
+                                @if (firstForumMessage != null)
+                                {
+                                    <div class="description">
+                                        @Html.ActionLink(firstForumMessage.Author.Login, "Index", "User", new { login = firstForumMessage.Author.Login }, new { @class = "gray" }),
+                                        @firstForumMessage.AddedDate.ForumDateNamed()
+                                    </div>
+                                }
+                            </td>
+                            <td class="answer">
+                                @item.MessagesCount
+                            </td>
+                            <td class="views">
+                                @item.TotalVisitCount
+                            </td>
+                            <td class="last-message">
+                                @{
+                                var lastForumMessage = item.TotalLastForumMessage;
+                                }
+                                @if (lastForumMessage != null)
+                                {
+                                    @Html.ActionLink(lastForumMessage.Message.StripBBCode().Teaser(20), "Index", "Forum", null, null, lastForumMessage.ID.ToString(), new { url = lastForumMessage.Forum.Url, lastMessage = true }, null)  
+                                    <br />
+                                    @lastForumMessage.AddedDate.ForumDateNamed()
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="photo-paging paging light-paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list">
+            @Html.PageLinksTurniri(page, Model.ForumsCountPage(), x => Url.Action("Index", new { page = x }))
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@model turniri.Model.User 
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="big-box">
+    <div class="switcher clear">
+        <ul>
+            @if(currentUser != null && currentUser.ID == Model.ID) 
+            {
+                <li class="current">Мои команды</li>
+            } else {
+                <li class="current">Команды игрока</li>
+            }
+        </ul>
+    </div>
+    <div class="group-wrapper turnirs-wrapper">
+
+        <div class="groups-list">
+            <ul>
+                @{
+                    var i = 0;
+                }
+                @foreach (var group in Model.GroupsWhereImMember.ToList())
+                {
+                    <li class="@(i % 2 == 1 ? "second" : "")">
+                        @Html.Partial("__GroupListItem", group)
+                    </li>
+                    i++;
+                }
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<turniri.Models.Info.EnumerableOfSelectListItem>
+@{
+    var createTopic = (bool)ViewBag.CreateTopic;
+    var forumID = (int?)ViewBag.ForumID;
+}
+@Html.Hidden("ForumID", forumID)
+@foreach (var item in Model)
+{
+@Html.DropDownList("CatalogList", item.EnumerableOfSelectListItems)
+}
+@if (createTopic)
+{
+    <text>
+    <br />
+    или создать новый
+    <br />
+    @Html.TextBox("ForumName", string.Empty)
+    </text>
+}

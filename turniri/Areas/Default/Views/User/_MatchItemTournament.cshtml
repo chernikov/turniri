@@ -1,0 +1,70 @@
+﻿@model turniri.Model.Match
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var rival = (Model.Player1 != null && Model.Player1.UserID == currentUser.ID) ? Model.Player2 : Model.Player1;
+}
+<li class="first clear match-item" id="Match_@Model.ID">
+    <div class="name">
+        @if (rival != null)
+        {
+            <div class="preview-image">
+                <a href="@Url.Action("Index", "User", new { login = rival.User.Login })">
+                    <img src="@rival.User.FullAvatarPath18" alt="userpic" />
+                </a>
+                @if (@rival.User.IsOnline)
+                {
+                    <div class="dot"></div>
+                }
+            </div>
+            <div class="text">
+                <a href="@Url.Action("Index", "User", new { login = rival.User.Login })" class="user">
+                    @rival.User.Login
+                </a>
+            </div>
+        }
+        else if (Model.Status == (int)turniri.Model.Match.MatchStatusEnum.Submit)
+        {
+            <div class="text">Нет участника</div>
+        }
+        else
+        {
+            <div class="text">Не определился</div>
+        }
+    </div>
+    <div class="platform">
+        @Model.Game.Name.Teaser(10)
+    </div>
+    <div class="game">
+        <a href="@Url.Action("Index", "Tournament", new { platformUrl = Model.Tournament.Platform.Url, gameUrl = Model.Tournament.Game.Url, url = Model.Tournament.Url })" class="user">
+            @Model.Tournament.Name.Teaser(10)
+        </a>
+    </div>
+    <div class="stage">
+        @Model.Stage(currentUser.ID)
+    </div>
+    <div class="result">
+        @Model.Result(currentUser.ID)
+    </div>
+
+    <div class="popup-arrow">
+        <div class="icon-down-arrow sprite">
+        </div>
+        <div class="match-dropdown dropdown-wrapper">
+            <div class="dropdown-arrow sprite">
+            </div>
+            <div class="dropdown-outer">
+                <div class="dropdown-inner clear">
+                    <ul>
+                        <li class="show-match"><span>Просмотреть</span></li>
+                        @if (Model.Status == (int)turniri.Model.Match.MatchStatusEnum.Created && Model.IsIncoming(currentUser.ID))
+                        {
+                            <li class="accept-match"><span>Согласиться</span></li>
+                            <li class="decline-match"><span>Отказаться</span></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</li>

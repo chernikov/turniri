@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{54305171-F603-4070-9E75-1F7173681E8A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>turniri.Model</RootNamespace>
+    <AssemblyName>turniri.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Proxy\Award.cs" />
+    <Compile Include="Proxy\Background.cs" />
+    <Compile Include="Proxy\BalanceSiteMoney.cs" />
+    <Compile Include="Proxy\BannedWord.cs" />
+    <Compile Include="Proxy\Banner.cs" />
+    <Compile Include="Proxy\Blog.cs" />
+    <Compile Include="Proxy\BlogComment.cs" />
+    <Compile Include="Proxy\BlogSocialPost.cs" />
+    <Compile Include="Proxy\Camera.cs" />
+    <Compile Include="Proxy\Cart.cs" />
+    <Compile Include="Proxy\CartProduct.cs" />
+    <Compile Include="Proxy\Catalog.cs" />
+    <Compile Include="Proxy\Category.cs" />
+    <Compile Include="Proxy\ChatBannedUser.cs" />
+    <Compile Include="Proxy\ChatMessage.cs" />
+    <Compile Include="Proxy\ChatRoom.cs" />
+    <Compile Include="Proxy\ChatRoomLog.cs" />
+    <Compile Include="Proxy\Comment.cs" />
+    <Compile Include="Proxy\Distribution.cs" />
+    <Compile Include="Proxy\Forum.cs" />
+    <Compile Include="Proxy\ForumLog.cs" />
+    <Compile Include="Proxy\ForumMessage.cs" />
+    <Compile Include="Proxy\Friendship.cs" />
+    <Compile Include="Proxy\Game.cs" />
+    <Compile Include="Proxy\GlobalUnique.cs" />
+    <Compile Include="Proxy\Grade.cs" />
+    <Compile Include="Proxy\Group.cs" />
+    <Compile Include="Proxy\GroupGame.cs" />
+    <Compile Include="Proxy\GroupRating.cs" />
+    <Compile Include="Proxy\League.cs" />
+    <Compile Include="Proxy\LeagueLevel.cs" />
+    <Compile Include="Proxy\LeagueParticipant.cs" />
+    <Compile Include="Proxy\LeagueSeason.cs" />
+    <Compile Include="Proxy\Mail.cs" />
+    <Compile Include="Proxy\MainCamera.cs" />
+    <Compile Include="Proxy\Match.cs" />
+    <Compile Include="Proxy\MatchComment.cs" />
+    <Compile Include="Proxy\MatchRoaster.cs" />
+    <Compile Include="Proxy\Message.cs" />
+    <Compile Include="Proxy\MoneyDetail.cs" />
+    <Compile Include="Proxy\MoneyFee.cs" />
+    <Compile Include="Proxy\MoneyNotify.cs" />
+    <Compile Include="Proxy\MoneyWithdraw.cs" />
+    <Compile Include="Proxy\New.cs" />
+    <Compile Include="Proxy\NewComment.cs" />
+    <Compile Include="Proxy\NewSocialPost.cs" />
+    <Compile Include="Proxy\NewType.cs" />
+    <Compile Include="Proxy\Notice.cs" />
+    <Compile Include="Proxy\NoticeAction.cs" />
+    <Compile Include="Proxy\NoticeDistribution.cs" />
+    <Compile Include="Proxy\Page.cs" />
+    <Compile Include="Proxy\Photo.cs" />
+    <Compile Include="Proxy\PhotoAlbum.cs" />
+    <Compile Include="Proxy\PhotoAlbumSocialPost.cs" />
+    <Compile Include="Proxy\PhotoComment.cs" />
+    <Compile Include="Proxy\Platform.cs" />
+    <Compile Include="Proxy\Poll.cs" />
+    <Compile Include="Proxy\PollItem.cs" />
+    <Compile Include="Proxy\PollVote.cs" />
+    <Compile Include="Proxy\Product.cs" />
+    <Compile Include="Proxy\ProductCode.cs" />
+    <Compile Include="Proxy\ProductImage.cs" />
+    <Compile Include="Proxy\ProductPrice.cs" />
+    <Compile Include="Proxy\ProductReview.cs" />
+    <Compile Include="Proxy\ProductVariation.cs" />
+    <Compile Include="Proxy\ProductVideo.cs" />
+    <Compile Include="Proxy\PromoAction.cs" />
+    <Compile Include="Proxy\PromoCode.cs" />
+    <Compile Include="Proxy\Rating.cs" />
+    <Compile Include="Proxy\RatingDetail.cs" />
+    <Compile Include="Proxy\Recharge.cs" />
+    <Compile Include="Proxy\Reputation.cs" />
+    <Compile Include="Proxy\Role.cs" />
+    <Compile Include="Proxy\Round.cs" />
+    <Compile Include="Proxy\SimilarProduct.cs" />
+    <Compile Include="Proxy\Social.cs" />
+    <Compile Include="Proxy\SocialGroup.cs" />
+    <Compile Include="Proxy\SocialPost.cs" />
+    <Compile Include="Proxy\SocialPostImage.cs" />
+    <Compile Include="Proxy\Subject.cs" />
+    <Compile Include="Proxy\Team.cs" />
+    <Compile Include="Proxy\TeamReplacement.cs" />
+    <Compile Include="Proxy\Tour.cs" />
+    <Compile Include="Proxy\Tournament.cs" />
+    <Compile Include="Proxy\TournamentCondition.cs" />
+    <Compile Include="Proxy\TournamentGroup.cs" />
+    <Compile Include="Proxy\Participant.cs" />
+    <Compile Include="Proxy\TournamentSocialPost.cs" />
+    <Compile Include="Proxy\User.cs" />
+    <Compile Include="Proxy\UserAward.cs" />
+    <Compile Include="Proxy\UserComment.cs" />
+    <Compile Include="Proxy\UserGame.cs" />
+    <Compile Include="Proxy\UserGroup.cs" />
+    <Compile Include="Proxy\UserGroupHistory.cs" />
+    <Compile Include="Proxy\UserRole.cs" />
+    <Compile Include="Proxy\UserRoleGame.cs" />
+    <Compile Include="Proxy\UserRoleGroup.cs" />
+    <Compile Include="Proxy\UserRoleTournament.cs" />
+    <Compile Include="Proxy\UserTeam.cs" />
+    <Compile Include="Proxy\UserVideo.cs" />
+    <Compile Include="Proxy\UserVideoComment.cs" />
+    <Compile Include="Proxy\Vendor.cs" />
+    <Compile Include="Proxy\Video.cs" />
+    <Compile Include="Proxy\VideoComment.cs" />
+    <Compile Include="Proxy\VideoSocialPost.cs" />
+    <Compile Include="SqlRepository\Award.cs" />
+    <Compile Include="SqlRepository\Background.cs" />
+    <Compile Include="SqlRepository\BalanceSiteMoney.cs" />
+    <Compile Include="SqlRepository\BannedWord.cs" />
+    <Compile Include="SqlRepository\Banner.cs" />
+    <Compile Include="SqlRepository\Blog.cs" />
+    <Compile Include="SqlRepository\BlogComment.cs" />
+    <Compile Include="SqlRepository\BlogSocialPost.cs" />
+    <Compile Include="SqlRepository\Camera.cs" />
+    <Compile Include="SqlRepository\Cart.cs" />
+    <Compile Include="SqlRepository\CartProduct.cs" />
+    <Compile Include="SqlRepository\Catalog.cs" />
+    <Compile Include="SqlRepository\Category.cs" />
+    <Compile Include="SqlRepository\ChatBannedUser.cs" />
+    <Compile Include="SqlRepository\ChatMessage.cs" />
+    <Compile Include="SqlRepository\ChatRoom.cs" />
+    <Compile Include="SqlRepository\ChatRoomLog.cs" />
+    <Compile Include="SqlRepository\Comment.cs" />
+    <Compile Include="SqlRepository\Distribution.cs" />
+    <Compile Include="SqlRepository\Forum.cs" />
+    <Compile Include="SqlRepository\ForumLog.cs" />
+    <Compile Include="SqlRepository\ForumMessage.cs" />
+    <Compile Include="SqlRepository\Friendship.cs" />
+    <Compile Include="SqlRepository\Game.cs" />
+    <Compile Include="SqlRepository\GlobalUnique.cs" />
+    <Compile Include="SqlRepository\Grade.cs" />
+    <Compile Include="SqlRepository\Group.cs" />
+    <Compile Include="SqlRepository\GroupRating.cs" />
+    <Compile Include="SqlRepository\League.cs" />
+    <Compile Include="SqlRepository\LeagueLevel.cs" />
+    <Compile Include="SqlRepository\LeagueParticipant.cs" />
+    <Compile Include="SqlRepository\LeagueSeason.cs" />
+    <Compile Include="SqlRepository\Mail.cs" />
+    <Compile Include="SqlRepository\MainCamera.cs" />
+    <Compile Include="SqlRepository\Match.cs" />
+    <Compile Include="SqlRepository\MatchComment.cs" />
+    <Compile Include="SqlRepository\MatchRoaster.cs" />
+    <Compile Include="SqlRepository\Message.cs" />
+    <Compile Include="SqlRepository\MoneyDetail.cs" />
+    <Compile Include="SqlRepository\MoneyFee.cs" />
+    <Compile Include="SqlRepository\MoneyNotify.cs" />
+    <Compile Include="SqlRepository\MoneyWithdraw.cs" />
+    <Compile Include="SqlRepository\New.cs" />
+    <Compile Include="SqlRepository\NewComment.cs" />
+    <Compile Include="SqlRepository\NewSocialPost.cs" />
+    <Compile Include="SqlRepository\NewType.cs" />
+    <Compile Include="SqlRepository\Notice.cs" />
+    <Compile Include="SqlRepository\NoticeAction.cs" />
+    <Compile Include="SqlRepository\NoticeDistribution.cs" />
+    <Compile Include="SqlRepository\Page.cs" />
+    <Compile Include="SqlRepository\Photo.cs" />
+    <Compile Include="SqlRepository\PhotoAlbum.cs" />
+    <Compile Include="SqlRepository\PhotoAlbumSocialPost.cs" />
+    <Compile Include="SqlRepository\PhotoComment.cs" />
+    <Compile Include="SqlRepository\Platform.cs" />
+    <Compile Include="SqlRepository\Poll.cs" />
+    <Compile Include="SqlRepository\PollItem.cs" />
+    <Compile Include="SqlRepository\PollVote.cs" />
+    <Compile Include="SqlRepository\Product.cs" />
+    <Compile Include="SqlRepository\ProductCode.cs" />
+    <Compile Include="SqlRepository\ProductImage.cs" />
+    <Compile Include="SqlRepository\ProductPrice.cs" />
+    <Compile Include="SqlRepository\ProductReview.cs" />
+    <Compile Include="SqlRepository\ProductVariation.cs" />
+    <Compile Include="SqlRepository\ProductVideo.cs" />
+    <Compile Include="SqlRepository\PromoAction.cs" />
+    <Compile Include="SqlRepository\PromoCode.cs" />
+    <Compile Include="SqlRepository\Rating.cs" />
+    <Compile Include="SqlRepository\RatingDetail.cs" />
+    <Compile Include="SqlRepository\Recharge.cs" />
+    <Compile Include="SqlRepository\Reputation.cs" />
+    <Compile Include="SqlRepository\Role.cs" />
+    <Compile Include="SqlRepository\Round.cs" />
+    <Compile Include="SqlRepository\SimilarProduct.cs" />
+    <Compile Include="SqlRepository\Social.cs" />
+    <Compile Include="SqlRepository\SocialGroup.cs" />
+    <Compile Include="SqlRepository\SocialPost.cs" />
+    <Compile Include="SqlRepository\SocialPostImage.cs" />
+    <Compile Include="SqlRepository\Subject.cs" />
+    <Compile Include="SqlRepository\Team.cs" />
+    <Compile Include="SqlRepository\TeamReplacement.cs" />
+    <Compile Include="SqlRepository\Tour.cs" />
+    <Compile Include="SqlRepository\Tournament.cs" />
+    <Compile Include="SqlRepository\TournamentCondition.cs" />
+    <Compile Include="SqlRepository\TournamentGroup.cs" />
+    <Compile Include="SqlRepository\Participant.cs" />
+    <Compile Include="SqlRepository\TournamentSocialPost.cs" />
+    <Compile Include="SqlRepository\User.cs" />
+    <Compile Include="SqlRepository\UserAward.cs" />
+    <Compile Include="SqlRepository\UserComment.cs" />
+    <Compile Include="SqlRepository\UserGame.cs" />
+    <Compile Include="SqlRepository\UserGroup.cs" />
+    <Compile Include="SqlRepository\UserGroupHistory.cs" />
+    <Compile Include="SqlRepository\UserRole.cs" />
+    <Compile Include="SqlRepository.cs" />
+    <Compile Include="SqlRepository\UserRoleGame.cs" />
+    <Compile Include="SqlRepository\UserRoleGroup.cs" />
+    <Compile Include="SqlRepository\UserRoleTournament.cs" />
+    <Compile Include="SqlRepository\UserTeam.cs" />
+    <Compile Include="SqlRepository\UserVideo.cs" />
+    <Compile Include="SqlRepository\UserVideoComment.cs" />
+    <Compile Include="SqlRepository\Vendor.cs" />
+    <Compile Include="SqlRepository\Video.cs" />
+    <Compile Include="SqlRepository\VideoComment.cs" />
+    <Compile Include="SqlRepository\VideoSocialPost.cs" />
+    <Compile Include="turniriDb.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>turniriDb.dbml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="script.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="CodeTemplates\Scaffolders\IRepository\IRepositoryItemTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\IRepository\IRepository.ps1" />
+    <None Include="CodeTemplates\Scaffolders\IRepository\IRepositoryTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\ProviderRepository\ProviderRepository.ps1" />
+    <None Include="CodeTemplates\Scaffolders\Proxy\ProxyLangTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Proxy\Proxy.ps1" />
+    <None Include="CodeTemplates\Scaffolders\Proxy\ProxyTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\SqlRepository\SqlRepositoryLangTemplate.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\SqlRepository\SqlRepository.ps1" />
+    <None Include="CodeTemplates\Scaffolders\SqlRepository\SqlRepositoryTemplate.cs.t4" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="turniriDb.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>turniriDb.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="turniriDb.dbml.layout">
+      <DependentUpon>turniriDb.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\turniri.Social\turniri.Social.csproj">
+      <Project>{1d3422d3-eff0-4795-8488-453817e09d91}</Project>
+      <Name>turniri.Social</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\turniri.Tools\turniri.Tools.csproj">
+      <Project>{ACACA979-4B2B-4EC8-8E4A-825C2A5377B1}</Project>
+      <Name>turniri.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

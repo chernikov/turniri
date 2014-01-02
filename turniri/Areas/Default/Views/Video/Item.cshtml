@@ -1,0 +1,101 @@
+﻿@model turniri.Model.Video
+@{
+    ViewBag.Title = Model.Header;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/create-comment.js"></script>
+}
+
+<div class="main-bootom">
+    <div class="box-news gamers-rating">
+        <div class="top-bar">
+            <h3>НАШЕ ТВ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="video-item-wrapper clear">
+            <div class="video">
+                <div class="preview-video">
+                    @Html.Raw(Model.VideoCode)
+                </div>
+                <div class="content">
+                    <div class="title">
+                        <h2>
+                            @Model.Header
+                        </h2>
+                    </div>
+                    <div class="text">
+                        @Html.Raw(Model.Text.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                    </div>
+                    <div class="info-wrapper clear">
+                        <div class="date">
+                            @Model.AddedDate.ToString("dd.MM.yyyy")
+                        </div>
+                         <div class="date">
+                             <a href="@Url.Action("Index", "User", new { login = Model.User.Login })">@Model.User.Login</a>
+                        </div>
+                        <div class="comment">
+                            @Model.CommentCount @Model.CommentCount.CountWord("комментарий", "комментария", "комментариев")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-wrapper">
+                @if (Model.CommentCount > 0)
+                {
+                    <div class="comment-list">
+                        <ul>
+                            @foreach (var comment in Model.SubComments)
+                            {
+                                <li id="Comment_@comment.ID">
+                                    <div class="comment-info clear">
+                                        <div class="preview-image">
+                                            <a href="@Url.Action("Index", "User", new { login = comment.User.Login })">
+                                                <img src="@comment.User.FullAvatarPath18" alt="userpic" />
+                                            </a>
+                                            @if (comment.User.IsOnline)
+                                            {
+                                                <div class="dot"></div>
+                                            }
+                                        </div>
+                                        <div class="name">
+                                            <a href="@Url.Action("Index", "User", new { login = comment.User.Login })">
+                                                @comment.User.Login
+                                            </a>
+                                        </div>
+                                        <div class="date-time">
+                                            |&nbsp;&nbsp;@comment.AddedDate.ToString("dd.MM.yyyy")&nbsp;&nbsp;|&nbsp;&nbsp;@comment.AddedDate.ToString("HH:mm")
+                                        </div>
+                                    </div>
+                                    <div class="text">
+                                        @comment.Text.NlToBr()
+                                        @if (!string.IsNullOrWhiteSpace(comment.ImagePath))
+                                        {
+                                            <br />
+                                            <img src="@comment.ImagePath" alt="image" />
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(comment.VideoCode))
+                                        {
+                                            <br />
+                                            @Html.Raw(comment.VideoCode)
+                                        }
+                                    </div>
+                                    @if (currentUser != null && currentUser.InRoles("admin"))
+                                    {
+                                        <div class="close"></div>    
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                <div id="CommentInput">
+                    @Html.Action("CreateComment", new { id = Model.ID })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

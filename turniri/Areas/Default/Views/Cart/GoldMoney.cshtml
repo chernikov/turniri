@@ -1,0 +1,34 @@
+﻿@model turniri.Model.Cart
+@{
+    ViewBag.Title = "ОПЛАТИТЬ";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+}
+<div class="main-bootom">
+    <div class="turnir long-box big-box">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_cart_1" class="current">ОПЛАТА ЗОЛОТЫМИ ТИ</li>
+            </ul>
+        </div>
+        <div class="turnirs-wrapper">
+            <div id="tab_cart_1_content" class="edit-main-profile switcher-content clear cart">
+                <div class="main-profile-wrapper money-wrapper">
+                    @using (Html.BeginForm("GoldMoney", "Cart", FormMethod.Post))
+                    {
+                        <div class="money-recharge">
+                            <div class="money-info">
+                                <div class="title">Оплата</div>
+                                <div class="value">@Model.TotalSum.ToString("0,0.00")</div>
+                                <div class="sprite icon-gold type-money"></div>
+                            </div>
+                        </div>
+                        <div class="form-button clear">
+                            <input class="blue-28-submit center" type="submit" value="ОПЛАТИТЬ">
+                        </div>
+        
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<turniri.Model.User>
+<div class="top-bar">
+    <h3>
+        ПОЛЬЗОВАТЕЛЕЙ ОНЛАЙН
+    </h3>
+    <div class="bar-arrow-down sprite">
+    </div>
+</div>
+<div class="forum-user-online forum-wrapper clear">
+    <div class="online-user-list">
+        @if (Model.Any()) {
+        foreach (var user in Model)
+        {
+            <a href="@Url.Action("Index", "User", new { login = user.Login })" class="@user.StatusColor">@user.Login</a>
+        }
+        } else {
+            <span>Никого </span>
+        }
+        @Html.Action("VisitersOnline", "Forum")
+        @if (!Model.Any())
+        {
+           <p><a href="@Url.Action("Register", "User")">Зарегистрируйтесь</a> - это несложно</p>
+        }
+    </div>
+    <div class="generally-info">
+        Сейчас онлайн:   @Html.Action("TotalCount", "Forum") <br />
+    </div>
+</div>

@@ -1,0 +1,18 @@
+﻿@model turniri.Model.Game
+<div class="box-stat box">
+    <div class="switcher clear">
+        <ul>
+            <li id="tab_stat_1" class="current">Недавние матчи</li>
+            <li id="tab_stat_2">Предстоящие матчи</li>
+        </ul>
+    </div>
+    <div class="box-wrapper box-wrapper-scroll">
+        @Html.Action("CurrentMatches", "Game", new {id = Model.ID})
+        @Html.Action("FutureMatches", "Game", new {id = Model.ID})
+     
+        <div class="bottom-gradient">
+        </div>
+    </div>
+    <div class="lable lable-stat sprite">
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model turniri.Model.Match
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@if (Model.Tournament == null || Model.Tournament.CountRound > 1)
+{
+    if (Model.Tournament != null && Model.Tournament.HostGuest)
+    {
+    <div class="game">
+        @if (Model.IsMatchPlayer(currentUser))
+        {
+            if (Model.Player1.UserID == currentUser.ID)
+            {
+            <text>ДОМА</text>
+            }
+            else
+            {
+            <text>В ГОСТЯХ</text>
+            }
+        }
+        else
+        {
+            <text>(Д) @Model.Player1.User.Login </text>
+        }
+    </div>
+    <div class="game">
+        @if (Model.IsMatchPlayer(currentUser))
+        {
+            if (Model.Player2.UserID == currentUser.ID)
+            {
+            <text>ДОМА</text>
+            }
+            else
+            {
+            <text>В ГОСТЯХ</text>
+            }
+        }
+        else
+        {
+            <text>(Д) @Model.Player2.User.Login </text>
+        }
+    </div>
+        if (Model.AdditionalRound != null)
+        {
+    <div class="game">
+        @Model.AdditionalRound.GameAdditionalMiddle
+    </div>
+        }
+    }
+    else
+    {
+    <div class="game">
+        Игра 1
+    </div>
+    <div class="game">
+        Игра 2
+    </div>
+        if (Model.AdditionalRound != null)
+        {
+    <div class="game">
+        Дополнительная игра
+    </div>
+        }
+    }
+}

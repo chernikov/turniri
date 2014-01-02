@@ -1,0 +1,40 @@
+﻿@model IEnumerable<turniri.Model.MoneyFee>
+
+@{
+    ViewBag.Title = "Проценты за переводы";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Проценты за переводы</h2>
+
+@Html.ActionLink("Создать", "Create", "MoneyFee", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Тип 
+            </th>
+            <th>Процент
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.TypeName
+            </td>
+            <td>
+                @item.PercentFee
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "MoneyFee", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "MoneyFee", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>

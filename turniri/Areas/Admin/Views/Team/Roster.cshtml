@@ -1,0 +1,57 @@
+﻿@model turniri.Model.Team
+@{
+    ViewBag.Title = "Ростер команды " + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    
+}
+@section header 
+{
+    <script type="text/javascript" src="/Media/scripts/admin/edit-roster.js"></script>
+}
+
+<h2>Ростер команды @Model.Name</h2>
+
+<a href="@Url.Action("Index", "Team", new { id = Model.Tournament.ID })">К списку</a>
+<br/>
+<a href="#newUserWrapper" role="button" class="btn" data-toggle="modal" id="AddUser">
+    Добавить</a>
+
+@Html.Hidden("ID", Model.ID)
+@Html.Hidden("GameID", Model.Tournament.GameID)
+<table class="table">
+   <thead>
+        <tr>
+            <th>
+                Логин
+            </th>
+            <th>
+                Юзерпик
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.SubUsers)
+    {
+        <tr>
+            <td>
+                @item.User.Login @(item.IsCaptain ? "(k)" : "")
+            </td>
+            <td>
+                <img src="@item.User.FullAvatarPath26" />
+            </td>
+            <td>
+                @if (!item.IsCaptain) {
+                    @Html.ActionLink("Удалить", "DeleteUserTeam", "Team", new { id = item.ID }, new { @class = "btn" })
+                }
+                @if (!item.Accepted)
+                {
+                    @Html.ActionLink("Принять", "SubmitUserTeam", "Team", new { id = item.ID }, new { @class = "btn" })    
+                }
+            </td>
+        </tr>
+    }
+</table>
+<div id="newUserWrapper" class="modal big" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+</div>

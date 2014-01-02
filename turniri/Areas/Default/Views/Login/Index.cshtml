@@ -1,0 +1,44 @@
+﻿@model turniri.Models.ViewModels.LoginViewModel
+@{
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Вход";
+}
+<div class="main-bootom">
+    <div class="box-registration box-forum-update box">
+        <div class="top-bar">
+            <h3>
+                ВХОД
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="registration-wrapper clear">
+            @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Логин*</div>
+                    <div class="input">
+                        @Html.TextBox("Login", Model.Login)
+                    </div>
+                    @Html.ValidationMessage("Login")
+                </div>
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Пароль*</div>
+                    <div class="input">
+                        @Html.Password("Password", Model.Password)
+                    </div>
+                    @Html.ValidationMessage("Password")
+                </div>
+                <div class="registration-button">
+                    <input class="blue-28-submit" type="submit" value="ВОЙТИ" />
+                    <div class="gray-28-button-wrapper">
+                         @Html.ActionLink("Забыли свой пароль?", "ForgotPassword", "Login")
+                    </div>
+                </div>
+                
+            }
+        </div>
+    </div>
+</div>

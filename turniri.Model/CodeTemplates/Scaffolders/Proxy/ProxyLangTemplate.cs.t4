@@ -1,0 +1,73 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="EnvDTE" #>
+<#@ Output Extension="cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+<# 
+    var modelType = (EnvDTE.CodeType)Model.LangModelType; 
+	var modelName = modelType.Name; 
+	var modelNameLower = modelName.ToLower();
+    var columns = modelType.VisibleMembers().OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Where(r => r.Name == "global::System.Data.Linq.Mapping.ColumnAttribute").Count() > 0);
+	var primaryColumn = columns.OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Where(r => r.Children.OfType<CodeElement>().Where(k => k.Name == "IsPrimaryKey").Count() > 0).Count() > 0).FirstOrDefault();
+#>
+
+namespace <#= Model.Namespace #>
+{ 
+    public partial class <#= Model.ModelType #>
+    {
+		private int _currentLang;
+
+        public int CurrentLang
+        {
+            get
+            {
+                return _currentLang;
+            }
+
+            set
+            {
+                _currentLang = value;
+
+                var currentLang = <#= Model.LangModelNamePlural #>.FirstOrDefault(p => p.LanguageID == value);
+                if (currentLang == null)
+                {
+                    IsCorrectLang = false;
+                    var anyLang = <#= Model.LangModelNamePlural #>.FirstOrDefault();
+                    if (anyLang != null)
+                    {
+                        SetLang(anyLang);
+                    }
+                }
+                else
+                {
+                    IsCorrectLang = true;
+                    SetLang(currentLang);
+                }
+            }
+        }
+
+        private void SetLang(<#= modelName #> <#= modelNameLower #>)
+        {
+<# foreach(var column in columns) { 
+	if (column.Name != primaryColumn.Name && column.Name != "LanguageID" && column.Name != Model.ModelType + "ID") { #>
+			<#= column.Name #> = <#= modelNameLower #>.<#= column.Name #>;
+<# } } #>
+        }
+
+        public bool IsCorrectLang { get; protected set; }
+<# foreach(var column in columns) { if (column.Name != primaryColumn.Name && column.Name != "LanguageID" && column.Name != Model.ModelType + "ID") { 
+	var @type = ((EnvDTE.CodeTypeRef)column.Type).AsString;
+	var pos = @type.LastIndexOf(".");
+	if (pos > -1) {
+		@type = @type.Substring(pos+1);
+	}
+#>
+
+		public <#= @type #> <#= column.Name #> {get; set; }
+<# } } #>
+	}
+}

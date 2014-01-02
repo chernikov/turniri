@@ -1,0 +1,54 @@
+﻿@model turniri.Models.ViewModels.AwardView
+@{
+    ViewBag.Title = "Награждение призом";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Награждение призом</h2>
+<p>
+</p>
+@using (Html.BeginForm("Award", "Award", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Hidden("_ID", Model._ID)
+    @Html.Hidden("TournamentID", Model.TournamentID)
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">
+                Наименование</label>
+            <div class="controls">
+                @Html.TextBox("Name", Model.Name, new { @class = "input-xlarge", disabled = "disabled" })
+            </div>
+        </div>
+         
+        <div class="control-group">
+            <label class="control-label">
+                Кол-во очков</label>
+            <div class="controls">
+                @Html.TextBox("Point", Model.Point, new { @class = "input-xlarge", disabled = "disabled" })
+            </div>
+        </div>
+       
+        
+        <div class="control-group">
+            <label class="control-label">
+                Иконка </label>
+            <div class="controls">
+                <img src="@Model.FullIconPath" alt="avatar" id="PreviewImage" />
+                <br />
+            </div>
+        </div>
+          
+        <div class="control-group">
+            <label class="control-label">
+                Игрок</label>
+            <div class="controls">
+                @Html.DropDownList("UserID", Model.UsersSelectList, new { @class = "input-xlarge" })
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Наградить</button>
+            @Html.ActionLink("Отменить", "Index", null, new { id = Model.TournamentID}, new { @class = "btn" })
+        </div>
+    </fieldset>
+}

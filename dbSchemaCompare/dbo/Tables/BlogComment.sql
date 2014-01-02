@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[BlogComment] (
+    [ID]        INT IDENTITY (1, 1) NOT NULL,
+    [BlogID]    INT NOT NULL,
+    [CommentID] INT NOT NULL,
+    CONSTRAINT [PK_BlogComment] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_BlogComment_Blog] FOREIGN KEY ([BlogID]) REFERENCES [dbo].[Blog] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT [FK_BlogComment_Comment] FOREIGN KEY ([CommentID]) REFERENCES [dbo].[Comment] ([ID]) ON DELETE CASCADE ON UPDATE CASCADE
+);
+

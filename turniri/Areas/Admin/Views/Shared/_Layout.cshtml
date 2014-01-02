@@ -1,0 +1,65 @@
+﻿@{
+    var config = ((turniri.Controllers.BaseController)ViewContext.Controller).Config;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/Media/css/bootstrap.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/Media/css/chosen.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/Media/css/admin.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/Media/css/jquery-ui-1.8.14.custom.css"
+        media="all" />
+    <script src="/Media/scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+
+    <script src="/Media/scripts/bootstrap.js" type="text/javascript"></script>
+    <script src="/Media/scripts/jquery-ui-1.8.14.custom.min.js" type="text/javascript"></script>
+    <script src="/Media/scripts/jquery.ui.datepicker-ru.js" type="text/javascript"></script>
+    <script src="/Media/scripts/chosen.jquery.min.js" type="text/javascript"></script>
+    <script src="/Media/scripts/ajax-chosen.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/Media/scripts/admin/common.js"></script>
+    <script type="text/javascript" src="/Media/scripts/admin/social-post.js"></script>
+  @*  <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?63"></script>
+    <script type="text/javascript">
+        $().ready(function() {
+            VK.init({
+                apiId: @(config.VkAppConfig.AppKey)
+                });
+        });
+    </script>
+  *@
+    @RenderSection("header", false)
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <div class="btn-group pull-right">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user">
+                    </i>
+                        @currentUser.Login<span class="caret"></span> </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/">На сайт</a></li>
+                        <li class="divider"></li>
+                        <li><a href="@Url.Action("Logout", "Login", new { area = "Default" })">Выход</a>
+                        </li>
+                    </ul>
+                </div>
+                <a class="brand" href="@Url.Action("Index", "Home")">Turniri</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        @Html.Action("AdminMenu", "Home")
+        <div class="span12">
+            @RenderBody()
+        </div>
+    </div>
+    <div id="socialWrapper" class="modal big" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true" style="display: none;">
+    </div>
+
+</body>
+</html>

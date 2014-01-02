@@ -1,0 +1,55 @@
+﻿@model IEnumerable<turniri.Model.ChatMessage>
+@{
+    var lastUpdateId = (int?)ViewBag.LastUpdateID;
+    var canAdd = (bool)ViewBag.CanAdd;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@Html.Hidden("CanAdd", canAdd)
+
+@if (Model != null)
+{
+    @Html.Hidden("LastUpdateIDNew", lastUpdateId)
+    foreach (var message in Model)
+    {
+        if (message.Type == (int)turniri.Model.ChatMessage.MessageType.Simple)
+        {
+    <li class="item" data-id="@message.ID">
+        @if (message.CanDelete(currentUser))
+        {
+            <div class="remove"></div>
+        }
+        <div class="time">@message.AddedDate.ForumDateNamed() &mdash;</div>
+        <div class="user" data-id="@message.UserID">
+            <div class="preview-image">
+                <a href="@Url.Action("Index", "User", new { login = message.User.Login })">
+                    <img src="@message.User.FullAvatarPath18" alt="userpic" />
+                </a>
+                @if (message.User.IsOnline)
+                {
+                    <div class="dot"></div>
+                }
+            </div>
+            @if (message.CanDelete(currentUser))
+            {
+                <div class="ban"></div>
+            }
+            <a href="@Url.Action("Index", "User", new { login = message.User.Login })" class="@message.StatusColor">@message.User.Login</a>
+            :
+        </div>
+        <div class="text">@Html.Raw(message.Message.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+        </div>
+    </li>
+        }
+        if (message.Type == (int)turniri.Model.ChatMessage.MessageType.System)
+        {
+    <li class="item" data-id="@message.ID">
+       
+        <div class="time">@message.AddedDate.ForumDateNamed() &mdash;</div>
+       
+        <div class="text system">@Html.Raw(message.Message.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+        </div>
+    </li>
+        }
+
+    }
+}

@@ -1,0 +1,73 @@
+﻿@model turniri.Model.Photo 
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="image-wrapper" data-id="@Model.ID">
+    <div class="left-arrow sprite"></div>
+    <div class="right-arrow sprite"></div>
+    <div class="image">
+        <img src="@Model.FilePath" alt="@Model.Name" width="@Model.Width" height="@Model.Height"/>
+    </div>
+    <div class="image-info clear">
+        <div class="text">
+            @Model.Description.NlToBr()
+        </div>
+        <div class="title">
+            Альбом: <span>@Model.PhotoAlbum.Name</span>
+        </div>
+        <div class="add-user">
+            Добавил: <span>@Model.User.Login</span>
+        </div>
+        <div class="add-date">
+            Дата добавления: <span>@Model.AddedDate.ToString("dd.MM.yyyy")</span>
+        </div>
+        <div class="like photo" data-id="@Model.ID">
+            <div class="sprite  icon @(currentUser != null ? (Model.IsLikedBy(currentUser) ? "selected active" : "active") : "") "></div> <div class="count">@Model.Likes</div>
+        </div>
+    </div>
+</div>
+<div class="comment-wrapper">
+    <ul>
+        @foreach (var comment in Model.SubComments)
+        {
+            <li>
+                <div class="top-info clear">
+                    <div class="preview-image">
+                        <a href="@Url.Action("Index", "User", new { login = comment.User.Login })">
+                            <img src="@comment.User.FullAvatarPath18" alt="@comment.User.Login" />
+                        </a>
+                        @if (comment.User.IsOnline)
+                        {
+                            <div class="dot"></div>
+                        }
+                    </div>
+                    <div class="name">
+                        <a href="@Url.Action("Index", "User", new { login = comment.User.Login })" class="user">
+                            @comment.User.Login
+                        </a>
+                    </div>
+                    <div class="date-time">
+                        |&nbsp; @comment.AddedDate.ToString("dd.MM.yyyy") &nbsp;|&nbsp; @comment.AddedDate.ToString("HH:mm")
+                    </div>
+
+                </div>
+                <div class="text">
+                    @comment.Text.NlToBr()
+                    @if (!string.IsNullOrWhiteSpace(comment.ImagePath))
+                    {
+                        <br />
+                        <img src="@comment.ImagePath" alt="image" />
+                    }
+                    @if (!string.IsNullOrWhiteSpace(comment.VideoCode))
+                    {
+                        <br />
+                        @Html.Raw(comment.VideoCode)
+                    }
+                </div>
+            </li>
+        }
+    </ul>
+    <div id="CommentInput">
+        @Html.Action("CreateComment", new { id = Model.ID })
+    </div>
+</div>

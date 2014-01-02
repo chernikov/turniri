@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[Group] (
+    [ID]           INT            IDENTITY (1, 1) NOT NULL,
+    [Name]         NVARCHAR (500) NOT NULL,
+    [Url]          NVARCHAR (500) NOT NULL,
+    [UserID]       INT            NOT NULL,
+    [GameID]       INT            NOT NULL,
+    [Description]  NVARCHAR (MAX) NULL,
+    [AddedDate]    DATETIME       NOT NULL,
+    [State]        INT            NOT NULL,
+    [LogoPath173]  NVARCHAR (150) NULL,
+    [LogoPath96]   NVARCHAR (150) NULL,
+    [LogoPath84]   NVARCHAR (150) NULL,
+    [LogoPath57]   NVARCHAR (150) NULL,
+    [LogoPath30]   NVARCHAR (150) NULL,
+    [LogoPath26]   NVARCHAR (150) NULL,
+    [LogoPath18]   NVARCHAR (150) NULL,
+    [VisitCount]   INT            NOT NULL,
+    [TotalRating]  INT            NOT NULL,
+    [Level]        INT            NOT NULL,
+    [MoneyGold]    FLOAT (53)     NOT NULL,
+    [MoneyWood]    FLOAT (53)     NOT NULL,
+    [MoneyCrystal] FLOAT (53)     NOT NULL,
+    CONSTRAINT [PK_Group] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_Group_Game] FOREIGN KEY ([GameID]) REFERENCES [dbo].[Game] ([ID]),
+    CONSTRAINT [FK_Group_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID])
+);
+

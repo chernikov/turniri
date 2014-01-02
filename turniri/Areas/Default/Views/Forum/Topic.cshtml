@@ -1,0 +1,67 @@
+﻿@model turniri.Model.Forum
+@{
+    int page = (int)ViewBag.Page;
+    ViewBag.Title = Model.Name;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+   
+}
+@section header 
+{
+    <script type="text/javascript" src="/Media/scripts/default/edit-forum-message.js"></script>
+    @if (Model.Poll != null)
+    {
+        <script type="text/javascript" src="/Media/scripts/default/poll.js"></script>
+   
+    }
+}
+@Html.Partial("UserMenu", "")
+<div class="top-photo-paging paging light-paging">
+    <div class="title">
+        Страницы:
+    </div>
+    <div class="paging-list">
+        @Html.PageLinksTurniri(page, Model.MessagesCountPage(), x => Url.Action("Index", new { page = x }))
+    </div>
+</div>
+
+
+<div class="main-bootom">
+    <div class="box-forum box-forum-update box">
+        <div class="top-bar">
+            <h3>
+                <a href="@Url.Action("Index", "Forum", new { url = string.Empty })">Форум</a> / @(Html.BreadChunks<turniri.Model.Forum>(Model, p => Url.Action("Index", "Forum", new { id = p.ID }), p => p.Name, p => p.ParentForum, " / "))
+                @Model.Name
+            </h3>
+        </div>
+        @Html.Hidden("ID", Model.ID)
+
+        <div class="forum-comment-wrapper clear">
+            <ul>
+                @if (Model.Poll != null)
+                {
+                    <li class="clear poll-item" id="PollWrapper">
+                        @Html.Partial("Poll", Model.Poll)
+                    </li>
+                }
+                @foreach (var item in Model.ForumMessagesPage(page))
+                {
+                    <li class="clear message-item" id="ForumMessage_@item.ID">
+                        @Html.Partial("Item", item)
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="box-forum box-forum-update box" id="MessageWrapper">
+        @Html.Action("CreateMessage", "Forum", new { id = Model.ID })
+    </div>
+    <div class="photo-paging paging light-paging">
+        <div class="title">
+            Страницы:
+        </div>
+        <div class="paging-list">
+            @Html.PageLinksTurniri(page, Model.MessagesCountPage(), x => Url.Action("Index", new { page = x }))
+        </div>
+    </div>
+</div>

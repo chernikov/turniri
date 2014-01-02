@@ -1,0 +1,118 @@
+﻿@model turniri.Model.LeagueSeason
+
+@{
+    ViewBag.Title = "Стыковые матчи " + Model.League.Name + " сезон: " + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var league = Model.League;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/admin/league-matches.js"></script>
+}
+
+@Html.ActionLink("← К лигам", "Index", "League", null, new { @class = "btn btn-mini" })
+
+@if (league.AnyPlayer)
+{
+    @Html.ActionLink("К Турнирам →", "Tournaments", "League", new { id = league.ID }, new { @class = "btn btn-mini" })
+}
+
+<h2>Стыковые матчи @Model.League.Name сезон: @Model.Name</h2>
+
+
+<table class="table matches">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Статус
+            </th>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Игрок 1
+            </th>
+            <th>
+                Игрок 2
+            </th>
+            <th>
+                Победитель
+            </th>
+            <th>
+                Выигр.
+            </th>
+            <th>
+                Проигр.
+            </th>
+            <th>
+                Кол-во игр
+            </th>
+            <th>Дейст.</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.SubMatches)
+    {
+        <tr>
+            <td>
+                <span title="@item.ID">@item.Number</span>
+            </td>
+            <td>
+                @item.MatchStatusName
+            </td>
+            <td>
+                @item.Name
+            </td>
+            @if (Model.Status == (int)turniri.Model.LeagueSeason.StatusEnum.PreparedOffMatches)
+            {
+                <td class="droppable" data-id="@item.ID" data-player1="true">
+                    <div class="draggable" data-id="@item.ID" data-player1="true">
+                        @(item.Participant1ID.HasValue ? item.Player1.ActualName : "-")
+                    </div>
+                </td>
+                <td class="droppable" data-id="@item.ID" data-player1="false">
+                    <div class="draggable" data-id="@item.ID" data-player1="false">
+                        @(item.Participant2ID.HasValue ? item.Player2.ActualName : "-")
+                    </div>
+                </td>
+            }
+            else
+            {
+                <td>
+                    @(item.Participant1ID.HasValue ? item.Player1.ActualName : "-")
+                </td>
+                <td>
+                    @(item.Participant2ID.HasValue ? item.Player2.User.Login : "-")
+                </td>
+            }
+            <td>
+                @if (item.WinnerID.HasValue)
+                {
+                    <text>@item.Winner.ActualName</text>
+
+                    if (item.Rating != null)
+                    {
+                        <span class="label">@item.Rating.Score </span>
+                    }
+                }
+            </td>
+            <td>
+                @(item.WinMatch != null ? item.WinMatch.Number.ToString() : "-")
+            </td>
+            <td>
+                @(item.LoseMatch != null ? item.LoseMatch.Number.ToString() : "-")
+            </td>
+            <td>
+                @item.CountRounds
+            </td>
+            <td>
+                @if (item.Status == (int)turniri.Model.Match.MatchStatusEnum.Submit && Model.Status != (int)turniri.Model.LeagueSeason.StatusEnum.Finished)
+                {
+                    <a href="@Url.Action("RollbackMatch", "League", new {id = item.ID})">Переиграть</a>
+                }
+            </td>
+        </tr>
+    }
+</table>

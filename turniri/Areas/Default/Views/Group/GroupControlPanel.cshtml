@@ -1,0 +1,107 @@
+﻿@model turniri.Model.Group
+@{
+    var controllerName = ViewContext.RequestContext.RouteData.Values["controller"] as string;
+    var actionName = ViewContext.RequestContext.RouteData.Values["action"] as string;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+@if (currentUser != null)
+{
+    <div class="controll-box box-forum-update box">
+        <div class="top-bar">
+            <h3>КОНТРОЛЬНАЯ ПАНЕЛЬ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="box-wrapper box-wrapper-scroll group">
+            @if (currentUser.IsLeaderOfGroup(Model))
+            {
+                <div class="content">
+                    @Html.Partial("InvoiceControlPart", Model)
+                    <div class="notification">
+                        <a href="@Url.Action("Notify", "Group", new { id = Model.ID })"  class="icon-notification sprite" title="Уведомления">
+                        </a>
+                    </div>
+
+                    <div class="buttons-wrapper">
+                        <div class="gray-28-button-wrapper @((controllerName == "Group" && actionName == "Edit") ? "gray-28-button-active-wrapper" : "")">
+                            @Html.ActionLink("Ред. команду", "Edit", "Group", new { id = Model.ID }, null)
+                        </div>
+                        <div class="gray-28-button-wrapper">
+                            @Html.ActionLink("Мои команды", "Group", "User")
+                        </div>
+                        <div class="gray-28-button-wrapper">
+                            @Html.ActionLink("Написать в блог", "Create", "Blog", new { groupID = Model.ID }, null)
+                        </div>
+                        <div class="gray-28-button-wrapper">
+                            @Html.ActionLink("Искать участников", "Gamers", "Game", new { platformUrl = Model.Game.Platform.Url, url = Model.Game.Url }, null)
+                        </div>
+                        <div class="gray-28-button-wrapper">
+                            @Html.ActionLink("Загрузить фото", "Create", "Photo", new { groupID = Model.ID }, null)
+                        </div>
+                        <div class="gray-28-button-wrapper">
+                            @Html.ActionLink("Загрузить видео", "Create", "UserVideo", new { groupID = Model.ID }, null)
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="content">
+
+                    <div class="buttons-wrapper">
+                        @if (!currentUser.InGroup(Model.ID))
+                        {
+                            if (currentUser.CanBeMemberOfGroup(Model))
+                            {
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Вступить в группу", "Enter", "Group", new { id = Model.ID }, null)
+                            </div>
+                            }
+                            if (currentUser.InPotentialGroup(Model.ID))
+                            {
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Отозвать заявку", "Leave", "Group", new { id = Model.ID }, null)
+                            </div>
+                            }
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Мои команды", "Group", "User")
+                            </div>
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Блог", "Group", "Blog", new { url = Model.Url }, null)
+                            </div>
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Фото", "Group", "Photo", new { url = Model.Url }, null)
+                            </div>
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Видео", "Group", "UserVideo", new { url = Model.Url }, null)
+                            </div>
+                        }
+                        else
+                        {
+                            <ul>
+                                <li class="send-money"><span>
+                                    <div class="icon-gold sprite"></div>
+                                    ПОСЛАТЬ ТИ</span></li>
+                            </ul>
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Выйти из группы", "Leave", "Group", new { id = Model.ID }, null)
+                            </div>
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Написать в блог", "Create", "Blog")
+                            </div>
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Загрузить фото", "Create", "GroupPhoto")
+                            </div>
+                            <div class="gray-28-button-wrapper">
+                                @Html.ActionLink("Загрузить видео", "Create", "UserVideo")
+                            </div>
+                        }
+                    </div>
+                </div>
+                    
+            }
+        </div>
+    </div>
+}

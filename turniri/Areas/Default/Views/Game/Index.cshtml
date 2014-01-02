@@ -1,0 +1,105 @@
+﻿@model turniri.Model.Game
+@{
+    ViewBag.Title = Model.Name;
+    ViewBag.Description = Model.MetaDescription;
+    ViewBag.Keywords = Model.Keywords;
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentPage = Request.Url.AbsoluteUri;
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/common-tournament.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/game.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/shop.js"></script>
+    @Html.Partial("_SocialLikesScripts")
+    <script type="text/javascript">
+        VK.Widgets.Like('vk_like', {
+            type: "mini",
+            width: 150,
+            pageTitle: '@Model.Name - turniri.ru',
+            pageUrl: '@currentPage',
+            pageImage: '@Model.ImagePath189'
+        });
+    </script>
+}
+
+@Html.Action("Menu", "Game", new { id = Model.ID })
+<div class="left">
+    <div class="about-game clear">
+        <div class="clear">
+            <div class="game-image">
+                <img src="@Model.ImagePath189" alt="preview" />
+            </div>
+            <div class="content">
+
+                <div class="title">
+                    <h2>ОБ ИГРЕ @Model.Name
+                    </h2>
+                </div>
+
+                <div class="scroll-pane">
+                    <div class="text">
+                        @Html.Raw(Model.Description.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+
+                        @if (!string.IsNullOrWhiteSpace(Model.HowToPlay))
+                        {
+                            <div class="how-to-play">
+                                <a href="@Url.Action("HowToPlay", "Game", new { id = Model.ID })">КАК ИГРАТЬ</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="likes clear">
+            <div class="facebook">
+                <div class="fb-like" data-href="@currentPage" data-send="false" data-layout="button_count" data-width="150" data-show-faces="true" data-font="arial">
+                </div>
+            </div>
+            <div class="vk">
+                <div id="vk_like"></div>
+            </div>
+            <div class="twitter">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru" data-hashtags="turniriru">
+                    Твитнуть</a>
+                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+            </div>
+            <div class="google">
+                <!-- Place this tag where you want the +1 button to render. -->
+                <div class="g-plusone" data-size="medium" data-annotation="inline" data-width="150">
+                </div>
+
+                <!-- Place this tag after the last +1 button tag. -->
+                <script type="text/javascript">
+                    window.___gcfg = { lang: 'ru' };
+
+                    (function () {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="gamers-rating">
+        <div class="top-bar">
+            <h3>ТОП 10 игроков @Model.Name
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        @Html.Action("UserRating", "Game", new { id = Model.ID })
+    </div>
+</div>
+<div class="right">
+    @Html.Partial("PartialMatches", Model)
+    @Html.Partial("PartialForumUpdate", Model)
+</div>
+@Html.Partial("PartialTournaments", Model)
+
+
+@if (Model.AnyGroups)
+{
+    @Html.Partial("PartialGroups", Model)
+}

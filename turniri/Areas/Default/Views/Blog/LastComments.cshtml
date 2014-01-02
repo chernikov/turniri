@@ -1,0 +1,57 @@
+﻿@model IEnumerable<turniri.Model.Comment>
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="right">
+    <div class="box-forum-update box">
+        <div class="top-bar">
+            <h3>ПОСЛЕДНИЕ КОММЕНТАРИИ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        @if (Model.Any())
+        {
+            <div class="comment-list">
+                <ul>
+                    @{
+            int i = 0;
+                    }
+                    @foreach (var comment in Model)
+                    {
+                        <li class="@(i % 2 == 0 ? "" : "second")">
+                            <div class="content">
+                                <div class="top-panel clear">
+                                    <div class="userpic">
+                                        <img src="@comment.User.FullAvatarPath18" alt="@comment.User.Login" />
+                                        @if (comment.User.IsOnline)
+                                        {
+                                            <div class="dot"></div>
+                                        }
+                                    </div>
+                                    <div class="name">
+                                        <a href="@Url.Action("Index", "User", new { login = comment.User.Login })" class="user">@comment.User.Login</a>
+                                    </div>
+                                    <div class="date-time">
+                                        @comment.AddedDate.ToString("dd.MM.yyyy") | @comment.AddedDate.ToString("HH:mm")
+                                    </div>
+                                </div>
+                                <div class="text">
+                                    @comment.Text.NlToBr()
+                                </div>
+                            </div>
+                        </li>
+                                        i++;
+                    }
+                    <div class="bottom-line">
+                    </div>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="empty">Нет комментариев</div>
+        }
+    </div>
+</div>
+

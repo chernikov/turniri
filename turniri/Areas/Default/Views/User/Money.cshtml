@@ -1,0 +1,117 @@
+﻿@model turniri.Model.User
+
+@{
+    ViewBag.Title = "Деньги";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var config = ((turniri.Controllers.BaseController)ViewContext.Controller).Config;
+}
+
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/index-user.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/friends.js"></script>
+    <script type="text/javascript">
+        //так надо 
+        var friends;
+        $().ready(function () {
+            friends = new Friends();
+        });
+    </script>
+    <script type="text/javascript" src="/Media/scripts/default/messages.js"></script>
+
+}
+@Html.Hidden("MatchID", (int?)ViewBag.MatchID)
+@Html.Partial("UserMenu", Model.Login)
+@Html.Hidden("ID", Model.ID)
+<div class="left">
+    <div class="main-profile gamers-rating">
+        <div class="top-bar">
+            <h3>
+                @(Model.IsOnline ? "Онлайн" : "Оффлайн")
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="main-profile-wrapper clear">
+            <div class="user-preview">
+                <div class="preview-image">
+                    <img src="@Model.FullAvatarPath173" alt="userpic" />
+                    @if (@Model.IsOnline)
+                    {
+                        <div class="online"></div>
+                    }
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="top-info">
+                    <div class="name">
+                        @Model.FirstName @Model.LastName
+                        <span class="gray">(@Model.Login)</span>
+                    </div>
+                    <div class="info-stat">
+                        Регистрация: @Model.AddedDate.ToString("dd.MM.yyyy") &nbsp;|&nbsp; Последний визит:
+                        @Model.LastVisitDate.ToString("dd.MM.yyyy") &nbsp;|&nbsp; Просмотров: @Model.VisitCount
+                    </div>
+                </div>
+                <div class="bottom-info">
+                    <div class="left-info">
+                        <ul>
+                            <li>Playstation ID: <span class="gray">@Model.PlaystationID</span></li>
+                            <li>XBOX Gametag: <span class="gray">@Model.XboxGametag</span></li>
+                            <li>EA Account: <span class="gray">@Model.EAAccount</span></li>
+                            <li>Steam Account: <span class="gray">@Model.SteamAccount</span></li>
+                            <li>Garena Account: <span class="gray">@Model.GarenaAccount</span></li>
+                        </ul>
+                    </div>
+                    <div class="right-info">
+                        <ul>
+                            <li>ICQ: <span class="gray">@Model.ICQ</span></li>
+                            <li>Skype: <span class="gray">@Model.Skype</span></li>
+                            <li>Vk: <span class="gray">@Model.Vk</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="right">
+    @Html.Partial("ControlPanel")
+</div>
+<a name="money"></a>
+<a name="charge"></a>
+<div class="main-bootom">
+    <div class="big-box turnirs">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_money_1" class="current">Баланс</li>
+                <li id="tab_money_2">Пополнение</li>
+                @if (Model.MoneyGold > config.MinWithdraw)
+                {
+                    <li id="tab_money_3">Вывод</li>
+                }
+            </ul>
+        </div>
+        <div class="money-wrapper">
+            <div id="tab_money_1_content" class="switcher-content">
+                <div id="MoneyListWrapper">
+                    @Html.Action("MoneyList", "User", new { page = 1 })
+                </div>
+            </div>
+            <div id="tab_money_2_content" class="switcher-content" style="display: none">
+                <div id="MoneyRechargeWrapper">
+                    @Html.Action("MoneyRecharge", "User")
+                </div>
+            </div>
+            @if (Model.MoneyGold > config.MinWithdraw)
+            {
+                <div id="tab_money_3_content" class="switcher-content" style="display: none">
+                    <div id="MoneyWithdrawWrapper">
+                        @Html.Action("MoneyWithdraw", "User")
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

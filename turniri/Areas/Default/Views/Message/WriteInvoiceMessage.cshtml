@@ -1,0 +1,71 @@
+﻿@model turniri.Models.ViewModels.InvoiceMessageView
+
+<div class="popup-window-big popup-window" style="display: block;">
+    <div class="top-bar">
+        <h3>Приглашение в команду
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    @using (Html.BeginForm("WriteMessage", "Message", FormMethod.Post, new { id = "WriteMessageForm" }))
+    {
+        @Html.Hidden("ReceiverID", Model.ReceiverID)
+
+        @Html.Hidden("InitedGroup", Model.InitedGroup)
+        @Html.Hidden("ReceiverLogin", Model.ReceiverLogin)
+        @Html.Hidden("GroupName", Model.GroupName)
+
+        <div class="popup-message popup-wrapper">
+            <div class="popup-input-item">
+                <div class="label-name">
+                    Кому
+                </div>
+                <div class="input">
+                    @Model.ReceiverLogin
+                </div>
+            </div>
+            @if (!Model.InitedGroup)
+            {
+                <div class="popup-input-item">
+                    <div class="label-name">
+                        Команда
+                    </div>
+                    <div class="input">
+                        @Html.DropDownList("GroupID", Model.GroupSelectList)
+                    </div>
+                </div>
+            }
+            else
+            {
+                @Html.Hidden("GroupID", Model.GroupID)
+                <div class="popup-input-item">
+                    <div class="label-name">
+                        Команда
+                    </div>
+                    <div class="input">
+                        @Model.GroupName
+                    </div>
+                </div>
+            }
+            <div class="popup-input-item">
+                <div class="label-name">
+                    Сообщение
+                </div>
+                <div class="input">
+                    @Html.ValidationMessage("Text")
+                    @Html.TextArea("Text", Model.Text)
+                </div>
+            </div>
+            <div class="massage-button clear">
+                <div class="gray-24-button-wrapper" id="WriteMessageButton">
+                    <span>ОТПРАВИТЬ</span>
+                </div>
+                <div class="gray-24-button-wrapper">
+                    <span class="popup-close">ОТМЕНА</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,32 @@
+﻿@model turniri.Model.Round
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="game" id="Result_@(Model.ID)_1">
+    @if (Model.Match.Status != (int)turniri.Model.Match.MatchStatusEnum.Created)
+    {
+        if (Model.IsRoundForScore)
+        {
+            if (Model.IsReadOnly(currentUser))
+            {
+        @Html.TextBox("Score1", Model.Score1Text, new { id = "Score_" + Model.ID.ToString() + "_1", @readonly = true, tabindex = 0 })
+            }
+            else
+            {
+        @Html.TextBox("Score1", Model.Score1Text, new { id = "Score_" + Model.ID.ToString() + "_1", tabindex = 1 })
+            }
+        }
+        else
+        {
+        @Html.Hidden("Score1", Model.Score1, new { id = "Score_" + Model.ID.ToString() + "_1" })
+        <div class="gray-16-button-wrapper @(Model.IsReadOnly(currentUser) ? "" : "set-winner")" id="Winner_@(Model.ID)_1">
+            <span>ПОБЕДА</span>
+        </div>
+            if (Model.Score1 > 0)
+            {
+        <div class="icon-medal-1 sprite">
+        </div>
+            }
+        }
+    }
+</div>

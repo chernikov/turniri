@@ -1,0 +1,37 @@
+﻿@model turniri.Model.Cart
+
+@{
+    ViewBag.Title = "Корзина покупок";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/shop.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/cart.js"></script>
+}
+
+<div class="main-bootom">
+    <div class="turnir long-box big-box">
+        <div class="switcher clear">
+            <ul>
+                <li id="tab_cart_1" class="current">Корзина</li>
+                @if (currentUser != null)
+                {
+                    <li id="tab_cart_2">История заказов</li>
+                }
+            </ul>
+        </div>
+        <div class="turnirs-wrapper">
+            <div id="tab_cart_1_content" class="switcher-content">
+                @Html.Action("Cart", "Cart")
+            </div>
+            @if (currentUser != null)
+            {
+                <div id="tab_cart_2_content" class="switcher-content hidden">
+                    @Html.Action("History", "Cart")
+                </div>
+            }
+        </div>
+    </div>
+</div>

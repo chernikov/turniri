@@ -1,0 +1,39 @@
+﻿@model turniri.Model.Round
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+<div class="game">
+    
+                            
+    &nbsp;
+    @if (Model.Match.Status != (int)turniri.Model.Match.MatchStatusEnum.Created)
+    {
+        if (Model.CanPublish(currentUser))
+        {
+        <div class="gray-16-button-wrapper">
+            <span class="PublishResult" id="Publish_@Model.ID">Опубликовать</span>
+        </div>
+        }
+        if (Model.CanSubmit(currentUser))
+        {
+        <div class="gray-16-button-wrapper">
+            <span class="SubmitResult" id="Submit_@Model.ID">Подтвердить</span>
+        </div>
+        }
+        if (Model.CanDispute(currentUser))
+        {          
+        <div class="gray-16-button-wrapper">
+            <span class="DisputeResult" id="Dispute_@Model.ID">Оспорить</span>
+        </div>
+        }
+        if (Model.Match.IsAdmin(currentUser) && Model.Status == (int)turniri.Model.Round.RoundStatusEnum.Submit)
+        {
+        <div class="button-rollback-wrapper gray-16-button-wrapper">
+            <div class="rollback-round" data-id="@Model.ID">
+                <span>Переиграть</span>
+            </div>
+        </div>
+        }
+    }
+</div>

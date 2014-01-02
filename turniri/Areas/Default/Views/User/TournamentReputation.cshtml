@@ -1,0 +1,25 @@
+﻿@model turniri.Model.User
+@{
+    var user = (turniri.Model.User)ViewBag.User;
+}
+<div class="reputation" id="User_@Model.ID">
+    <div class="user-sender" id="SenderUser_@user.ID"></div>
+    <div class="star-wrapper">
+        <div class="star-header">Честность</div>
+        <div class="stars" data-type="honest">
+            @Html.Partial("_ShowReputation", Model.ReputationHonestByUser(user))
+        </div>
+    </div>
+    <div class="star-wrapper">
+        <div class="star-header">Ответственность</div>
+        <div class="stars" data-type="responsibility">
+            @Html.Partial("_ShowReputation", Model.ReputationResponsibilityByUser(user))
+        </div>
+    </div>
+    <div class="star-wrapper">
+        <div class="star-header">Связь</div>
+        <div class="stars" data-type="connection">
+            @Html.Partial("_ShowReputation", Model.ReputationConnectionByUser(user))
+        </div>
+    </div>
+</div>

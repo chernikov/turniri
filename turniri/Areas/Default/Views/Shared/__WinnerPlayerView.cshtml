@@ -1,0 +1,55 @@
+﻿@model turniri.Model.Participant
+
+@if (Model != null && Model.IsTeam)
+{
+    if (Model.Team != null)
+    {
+    <div class="preview-image">
+        <a href="/show-team" class="show-team" data-id="@Model.TeamID">
+            <img src="@Model.Team.FullImagePath26" alt="userpic"/>
+        </a>
+    </div>
+    <div class="name">
+        @if (!string.IsNullOrWhiteSpace(Model.Name))
+        {
+            <a href="/show-team" class="show-team user double-line" data-id="@Model.TeamID">
+                @Model.Team.Name
+                <span class="avatar-name">@Model.Name</span>
+            </a>
+        }
+        else
+        {
+            <a href="/show-team" class="show-team user" data-id="@Model.TeamID">
+                @Model.Team.Name
+            </a>
+        }
+    </div>
+    }
+}
+else
+{
+    <div class="preview-image">
+        <a href="@Url.Action("Index", "User", new { login = Model.User.Login })">
+            <img src="@Model.FullImagePath30" alt="preview" title="@Model.User.Login"/>
+        </a>
+        @if (Model.User.IsOnline)
+        {
+            <div class="dot"></div>
+        }
+    </div>
+    <div class="name">
+        @if (!string.IsNullOrWhiteSpace(Model.Name))
+        {
+            <a href="@Url.Action("Index", "User", new { login = Model.User.Login })" class="user double-line">
+                @Model.User.Login
+                <span class="avatar-name">@Model.Name</span>
+            </a>
+        }
+        else
+        {
+            <a href="@Url.Action("Index", "User", new { login = Model.User.Login })" class="user">
+                @Model.User.Login
+            </a>
+        }
+    </div>
+}

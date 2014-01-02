@@ -1,0 +1,13 @@
+﻿@model turniri.Model.PhotoAlbum
+
+<ul class="thumbnails">
+    @foreach (var photo in Model.SubPhotos)
+    {
+        <li class="span2">
+            <div class="thumbnail image-item" id="Photo_@photo.ID">
+                <button class="close">&times;</button>
+                <img src="@photo.SmallPath" alt="" />
+            </div>
+        </li>
+    }
+</ul>

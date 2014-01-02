@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]D:\Projects\RepositoryMercurial\turniri\source\turniri\tests.nunit</TopNode>
+  <SelectedNode>[0-1048]D:\Projects\RepositoryMercurial\turniri\source\turniri\turniri.UnitTest\bin\Debug\turniri.UnitTest.dll</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]D:\Projects\RepositoryMercurial\turniri\source\turniri\tests.nunit" Expanded="true" />
+    <Node UniqueName="[0-1004]D:\Projects\RepositoryMercurial\turniri\source\turniri\turniri.IntegrationTest\bin\Debug\turniri.IntegrationTest.dll" Expanded="true" />
+    <Node UniqueName="[0-1005]turniri" Expanded="true" />
+    <Node UniqueName="[0-1001]turniri.IntegrationTest.IntegrationTestSetupFixture" Expanded="true" />
+    <Node UniqueName="[0-1002]turniri.IntegrationTest.DefaultUserControllerTest" Expanded="true" />
+    <Node UniqueName="[0-1048]D:\Projects\RepositoryMercurial\turniri\source\turniri\turniri.UnitTest\bin\Debug\turniri.UnitTest.dll" Expanded="true" />
+    <Node UniqueName="[0-1049]turniri" Expanded="true" />
+    <Node UniqueName="[0-1013]turniri.UnitTest.UnitTestSetupFixture" Expanded="true" />
+    <Node UniqueName="[0-1010]turniri.UnitTest.MailTemplateTest" Expanded="true" />
+    <Node UniqueName="[0-1014]turniri.UnitTest.MimeTypesTest" Expanded="true" />
+    <Node UniqueName="[0-1033]turniri.UnitTest.RegisterUserViewValidation" Expanded="true" />
+    <Node UniqueName="[0-1051]turniri.UnitTest.Test" Expanded="true" />
+    <Node UniqueName="[0-1007]turniri.UnitTest.Test.AdminHomeControllerTest" Expanded="true" />
+    <Node UniqueName="[0-1052]turniri.UnitTest.Test.Controller" Expanded="true" />
+    <Node UniqueName="[0-1016]turniri.UnitTest.Test.Controller.AdminUserControllerTest" Expanded="true" />
+    <Node UniqueName="[0-1018]turniri.UnitTest.Test.Controller.DefaultHomeControllerTest" Expanded="true" />
+    <Node UniqueName="[0-1020]turniri.UnitTest.Test.DefaultUserControllerTest" Expanded="true" />
+    <Node UniqueName="[0-1027]turniri.UnitTest.Test.MatchesMathLogicTest" Expanded="true" />
+    <Node UniqueName="[0-1053]turniri.UnitTest.Test.Model" Expanded="true" />
+    <Node UniqueName="[0-1031]turniri.UnitTest.Test.Model.RoundTest" Expanded="true" />
+    <Node UniqueName="[0-1024]turniri.UnitTest.Test.VideoHelperTest" Expanded="true" />
+  </Nodes>
+</VisualState>

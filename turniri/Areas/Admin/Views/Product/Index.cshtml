@@ -1,0 +1,136 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Product>
+@{
+    ViewBag.Title = "Товары";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Товары </h2>
+
+@Html.ActionLink("Добавить", "Create", "Product", null, new { @class = "btn" })
+<hr />
+@using (Html.BeginForm("Index", "Product", FormMethod.Post, new { @class = "well form-search" }))
+{
+    @Html.TextBox("search", ViewData["search"], new { @class = "input-medium search-query" })
+    <button type="submit" class="btn">Поиск</button> 
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Наименование
+            </th>
+            <th>Жанр
+            </th>
+            <th>Цены</th>
+            <th></th>
+            <th>Кол-во
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var product in Model.List)
+    {
+        <tr class="@(product.IsDeleted ? "deleted": "")">
+            <td>
+                @product.ID
+            </td>
+            <td>
+                @switch ((turniri.Model.Product.TypeEnum)product.Type)
+                {
+                    case turniri.Model.Product.TypeEnum.Code: 
+                    <span class="label label-info">код</span>
+                        break;
+                    case turniri.Model.Product.TypeEnum.GoldMoney: 
+                    <span class="label label-info">ти</span>
+                        break;
+                    case turniri.Model.Product.TypeEnum.RealGood: 
+                    <span class="label label-info">товар</span>
+                        break;
+                }
+                <img src="@product.Image?width=30&mode=crop&scale=both" />
+                <a href="@Url.Action("Index", "Product", new { path = product.Url, area = "Default" })">@product.Name</a>
+                @if (product.CategoryID.HasValue)
+                {
+                    <span class="label label-info">@product.Category.Name</span>
+                }
+            </td>
+            <td>
+                @product.SubCatalogsList
+            </td>
+            <td>
+                @foreach (var price in product.SubProductPrices)
+                {
+                    <span class="label @(price.Preorder ? "label-warning" : "label-success")">@(price.Platform != null ? price.Platform.Name + ":" : "")
+                        <strong>@price.Price.ToString("0,0.00")</strong> </span>
+                }
+            </td>
+            <td>
+                @if (product.IsAction)
+                {
+                    <span class="label label-info">Акция</span><br />
+                }
+                @if (product.IsNew)
+                {
+                    <span class="label label-info">Новый</span><br />
+                }
+                @if (product.IsPromo)
+                {
+                    <span class="label label-info">Вверху</span><br />
+                }
+            </td>
+            <td>
+                @if (product.PreOrder)
+                {
+                    <span class="label label-info">Предзаказ</span>
+                }
+                else
+                {
+                    var available = product.AvailableCodes;
+                    <span><span class="label  @(available == 0 ? "label-important" : (available < 3 ? "label-warning" : "label-info"))">@product.AvailableCodes</span>
+                        / <strong>@product.TotalCodes</strong></span>
+                }
+            </td>
+            <td>
+                <div class="btn-group pull-right">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Действия<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Html.ActionLink("Изменить", "Edit", "Product", new { id = product.ID }, new { @class = "" })
+                        </li>
+                        @if (product.Type == (int)turniri.Model.Product.TypeEnum.Code)
+                        {
+                            <li>
+                                @Html.ActionLink("Коды", "Codes", "Product", new { id = product.ID }, new { @class = "" })
+                            </li>
+                        }
+                        @if (product.Type == (int)turniri.Model.Product.TypeEnum.RealGood)
+                        {
+                            <li>
+                                @Html.ActionLink("Товары", "Codes", "Product", new { id = product.ID }, new { @class = "" })
+                            </li>
+                        }
+                        @if (product.IsDeleted)
+                        {
+                            <li>
+                                @Html.ActionLink("Восстановить", "Restore", "Product", new { id = product.ID }, new { @class = "" })
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                @Html.ActionLink("Удалить", "Delete", "Product", new { id = product.ID }, new { @class = "delete-action" })
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+<div class="pager">
+    @Html.PageLinks(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { page = x, search = ViewData["search"] }))
+</div>

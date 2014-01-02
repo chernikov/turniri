@@ -1,0 +1,58 @@
+﻿@model turniri.Model.MoneyDetail
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+    var action = (string)ViewBag.Action;
+}
+@Html.Hidden("Action", action)
+<div class="popup-window-big popup-window">
+    <div class="top-bar">
+        <h3>Возврат</h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper money-popup-wrapper">
+        @Model.Description
+        @using (Html.BeginForm("MoneyPay", "Money", FormMethod.Post, new { id = "MoneyPayForm" }))
+        {
+            @Html.Hidden("UserID", Model.UserID)
+            @Html.Hidden("GroupID", Model.GroupID)
+            @Html.Hidden("TournamentID", Model.TournamentID)
+            @Html.Hidden("SumGold", Model.SumGold)
+            @Html.Hidden("SumWood", Model.SumWood)
+            @Html.Hidden("SumCrystal", Model.SumCrystal)
+            @Html.Hidden("Description", Model.Description)
+        }
+        <ul class="money-list">
+            <li>
+                @if (Model.SumGold > 0 && Model.MoneyFee != null)
+                {
+                    <text>@Model.TotalSumGoldReturn <span class="real-money">(@Model.SumGold - @Model.MoneyFee.PercentFee%)</span>
+                    <span class="icon-gold sprite"></span></text>
+                }
+                else
+                {
+                    <text>@Model.SumGold <span class="icon-gold sprite"></span></text>
+                }
+            </li>
+            <li>
+                @Model.SumWood <span class="icon-wood sprite"></span>
+            </li>
+            <li>
+                @Model.SumCrystal <span class="icon-crystal sprite"></span>
+            </li>
+        </ul>
+
+        <div class="comment-wrapper">
+            <div class="massage-button clear">
+                <div class="gray-24-button-wrapper">
+                    <input type="submit" class="blue-28-submit" value="ВЕРНУТЬ" id="SubmitBtn"></input>
+                </div>
+                <div class="gray-24-button-wrapper">
+                    <span class="popup-close">ЗАКРЫТЬ</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

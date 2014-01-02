@@ -1,0 +1,164 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Tournament>
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="turnirs-list">
+    <ul>
+        @{
+            var i = 0;
+        }
+        @foreach (var tournament in Model.List)
+        {
+            <li class="@(i % 2 == 1 ? "second" : "") tournament-item" id="Tournament_@tournament.ID">
+                <div class="preview-image">
+                    <a href="@Url.Action("Index", "Tournament", new { platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">
+                        <img src="@tournament.FullImagePath" alt="preview" />
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="title">
+                        @if (tournament.MoneyType == (int)turniri.Model.Tournament.MoneyTypeEnum.Gold)
+                        {
+                            <span class="sprite icon-gold"></span>
+                        }
+                        @if (tournament.MoneyType == (int)turniri.Model.Tournament.MoneyTypeEnum.Wood)
+                        {
+                            <span class="sprite icon-wood"></span>
+                        }
+                        <h2>
+                            <a href="@Url.Action("Index", "Tournament", new { platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">
+                                @tournament.Name</a>
+                        </h2>
+
+                    </div>
+                    <div class="block-1">
+                        <ul>
+                            <li>статус: <span class="green">@tournament.StatusName</span></li>
+                            <li>игра: @tournament.Game.Name (@tournament.Game.Platform.Name)</li>
+                            <li>тип: @tournament.TournamentTypeName</li>
+                            <li>условия участия: <span class="red">@tournament.TakePartCondition</span></li>
+                            @if (tournament.Status == (int)turniri.Model.Tournament.StatusEnum.Created && tournament.MoneyType.HasValue && tournament.MoneyType != (int)turniri.Model.Tournament.MoneyTypeEnum.Free)
+                            {
+                                <li>взнос :
+                                @if (tournament.MoneyType == (int)turniri.Model.Tournament.MoneyTypeEnum.Gold)
+                                {
+                                    @tournament.Fee <span class="icon sprite icon-gold-mini"></span>
+                                }
+                                @if (tournament.MoneyType == (int)turniri.Model.Tournament.MoneyTypeEnum.Wood)
+                                {
+                                    @tournament.Fee <span class="icon sprite icon-wood-mini"></span>
+                                }
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="block-2">
+                        <div class="gamers">
+                            участники  <span class="Registered">@tournament.RegisteredPlayersCount</span> /
+                            @(tournament.MaxPlayersCount.HasValue ? tournament.MaxPlayersCount.ToString() : "--")
+                        </div>
+                        <ul>
+                            @if (tournament.FirstPlaceAward != null)
+                            {
+                                <li>приз за 1 место: <span class="green">@tournament.FirstPlaceAward.Point @tournament.FirstPlaceAward.Point.CountWord("очко", "очка", "очков")</span>
+                                @Html.Partial("MoneyAward", tournament.FirstPlaceAward)
+                                </li>    
+                            }
+                            @if (tournament.SecondPlaceAward != null)
+                            {
+                                <li>приз за 2 место: <span class="green">@tournament.SecondPlaceAward.Point @tournament.SecondPlaceAward.Point.CountWord("очко", "очка", "очков")</span>
+                                @Html.Partial("MoneyAward", tournament.SecondPlaceAward)
+                                </li>    
+                            }
+                            @if (tournament.ThirdPlaceAward != null)
+                            {
+                                <li>приз за 3 место: <span class="green">@tournament.ThirdPlaceAward.Point @tournament.ThirdPlaceAward.Point.CountWord("очко", "очка", "очков")</span>
+                                @Html.Partial("MoneyAward", tournament.ThirdPlaceAward)
+                                </li>    
+                            }
+                        </ul>
+                    </div>
+                    <div class="block-3">
+                        <div class="link-wrapper">
+                            @if (tournament.Forum != null)
+                            {
+                                <a href="@Url.Action("Index", "Forum", new { url = tournament.Forum.Url })">раздел
+                                на форуме</a><br />
+                            }
+                            <a href="@Url.Action("Index", "Tournament", new { platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url, rulesOn = true })">
+                                правила</a>
+                        </div>
+                        @if (currentUser != null && tournament.Status == (int)turniri.Model.Tournament.StatusEnum.Created)
+                        {
+                            if (tournament.IsGetPart(currentUser.ID))
+                            {
+                            <div class="gray-29-button-wrapper">
+                                <a class="get-part-tournament" href="/getPart">Снять заявку с участия</a>
+                            </div>
+                            }
+                            else if (currentUser.CanGetPart(tournament))
+                            {
+                                if (tournament.IsTeam)
+                                {
+                            <div class="gray-29-button-wrapper">
+                                <a class="register-team-tournament" href="@Url.Action("Index", "Tournament", new { platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">
+                                    Зарегистрировать команду</a>
+                            </div>
+                                }
+                                else
+                                {
+                            <div class="gray-29-button-wrapper">
+                                <a class="get-part-tournament" href="/getPart">Подать заявку на участие</a>
+                            </div>
+                                }
+                            }
+                            else
+                            {
+                            <div class="gray-29-button-wrapper">
+                                <a href="@Url.Action("Index", "Tournament", new { platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">
+                                    Смотреть турнир</a>
+                            </div>
+                            }
+                        }
+                        else
+                        {
+                            if (currentUser != null && tournament.IsGetPart(currentUser.ID))
+                            {
+                            <div class="gray-29-button-wrapper">
+                                <a href="@Url.Action("Index", "Tournament", new { platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">
+                                    К турниру</a>
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="gray-29-button-wrapper">
+                                <a href="@Url.Action("Index", "Tournament", new { platformUrl = tournament.Platform.Url, gameUrl = tournament.Game.Url, url = tournament.Url })">
+                                    Смотреть турнир</a>
+                            </div>
+                            }
+                        }
+                    </div>
+
+                    @if (tournament.Status == (int)turniri.Model.Tournament.StatusEnum.InGame)
+                    {
+                        var percent = tournament.PlayedMatchesCount * 100 / tournament.MatchesCount;
+                        <div class="bar-wrapper">
+                            <div class="bar @(percent >= 75 ? "green" : percent >= 50 ? "yellow" : percent >= 25 ? "orange" : "red")" style="width: @percent%">
+                            </div>
+                            <div class="percent">@percent%</div>
+                        </div>
+                    }
+                </div>
+            </li>
+                    i++;
+        }
+    </ul>
+</div>
+<div class="paging light-paging turnir-paging">
+    <div class="title">
+        Страницы:
+    </div>
+    <div class="paging-list">
+        @Html.PageLinksTurniri(Model.PageNo, Model.CountPage, x => Url.Action(Model.Action, new { type = ViewBag.Type, page = x }))
+    </div>
+</div>

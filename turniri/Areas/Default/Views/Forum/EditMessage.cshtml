@@ -1,0 +1,33 @@
+﻿@model turniri.Models.ViewModels.ForumMessageView
+
+<div class="popup-window-big popup-window">
+    <div class="top-bar">
+        <h3></h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="popup-wrapper edit-forum-comment">
+        @using (Html.BeginForm("EditMessage", "Forum", FormMethod.Post, new { @class = "form-horizontal", id = "EditMessageForm" }))
+        {
+            @Html.Hidden("_ID", Model._ID, new { id = "EditMessageID" })
+            @Html.Hidden("UserID", Model.UserID)
+            @Html.Hidden("ParentID", Model.ParentID)
+                
+            <div class="input-item clear">
+                <div class="lable-name">
+                    Сообщение*
+                </div>
+                <div class="input">
+                    @Html.TextArea("Message", Model.Message, new { id = "EditMessage", style = "width : 700px;" })
+                </div>
+                @Html.ValidationMessage("Message")
+            </div>
+            <div class="registration-button">
+                <input class="blue-28-submit" type="submit" id="EditMessageSubmit" value="ИЗМЕНИТЬ" />
+            </div>
+        }
+    </div>
+</div>
+

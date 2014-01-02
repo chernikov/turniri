@@ -1,0 +1,76 @@
+﻿@model turniri.Models.ViewModels.NoticeDistributionView
+
+@{
+    ViewBag.Title = "Уведомить участников команды";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    
+}
+@section header
+{
+    <script type="text/javascript" src="/Media/scripts/default/notify-group.js"></script>
+}
+@if (Model.ID > 0)
+{
+    @Html.Partial("GroupMenu", Model.ForeignUrl)
+}
+else
+{
+    @Html.Partial("UserMenu", "")
+}
+<div class="left">
+    @using (Html.BeginForm("Notify", "Group", FormMethod.Post))
+    {
+        @Html.Hidden("ID", Model.ID)
+        @Html.Hidden("UserID", Model.UserID)
+        @Html.Hidden("ForeignID", Model.ForeignID)
+        <div class="edit-main-profile main-profile gamers-rating">
+            <div class="top-bar">
+                <h3>УВЕДОМИТЬ УЧАСТНИКОВ КОМАНДЫ</h3>
+                <div class="bar-arrow-down sprite">
+                </div>
+            </div>
+            <div class="main-profile-wrapper clear">
+
+                <div class="input-block top-border-none bottom-border-none">
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Заголовок
+                        </div>
+                        <div class="input">
+                            @Html.TextBox("Caption", Model.Caption)
+                        </div>
+                        @Html.ValidationMessage("Caption")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                            Текст
+                        </div>
+                        <div class="input">
+                            @Html.TextArea("Text", Model.Text, new { @class = "" })
+                        </div>
+                        @Html.ValidationMessage("Text")
+                    </div>
+                    <div class="input-item clear">
+                        <div class="lable-name">
+                        </div>
+                        <div class="input">
+                            <label>
+                                @Html.CheckBox("IsCloseForRead", Model.IsCloseForRead)
+                                <span>Удалять после прочтения</span>
+                            </label>
+                        </div>
+                    </div>
+                     <div class="form-button">
+                    <input class="gray-24-submit" type="submit" value="РАЗОСЛАТЬ" />
+                </div>
+
+                </div>
+               
+            </div>
+        </div>
+    }
+</div>
+<div class="right">
+    @Html.Action("GroupControlPanel", "Group", Model.ForeignID)
+</div>
+

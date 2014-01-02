@@ -1,0 +1,58 @@
+﻿@model turniri.Model.NoticeDistribution
+@{
+    ViewBag.Title = "Подписчики уведомления " + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/notice.js"></script>
+}
+<h2>Подписчики уведомления "@Model.Name"</h2>
+
+   <a href="#addWrapper" role="button" class="btn" data-toggle="modal" id="Add">Добавить</a>
+    @Html.ActionLink("Очистить всё", "ClearAll", "Notice", new { id = Model.ID }, new { @class = "btn btn-danger" })
+
+@Html.Hidden("DistributionID", Model.ID)
+@if (Model.AnyNotices)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Имя
+                </th>
+                <td>Игры
+                </td>
+                <th>Прочитано
+                </th>
+                <th>Дата
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.SubNotices)
+        {
+            <tr>
+                <td>
+                    @item.User.Login
+                </td>
+                <td>
+                    @string.Join(", ", item.User.GameNames)
+                </td>
+                <td>
+                    @(item.ReadedDate.HasValue ? item.ReadedDate.Value.ToString("dd.MM.yyyy") : "")
+                </td>
+                <td>
+                    @item.AddedDate.ToString("dd.MM.yyyy")
+                </td>
+                <td>
+                    <div class="btn btn-danger remove-subscriber" data-id="@item.ID">Удалить</div>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+
+<div id="addWrapper" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+</div>
+

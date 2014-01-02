@@ -1,0 +1,48 @@
+﻿@model turniri.Model.Match
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+@if (Model.Tournament != null && (Model.Tournament.Status == (int)(turniri.Model.Tournament.StatusEnum.InGame) || Model.Tournament.Status == (int)(turniri.Model.Tournament.StatusEnum.PlayedOut)))
+{
+    switch ((turniri.Model.Match.MatchStatusEnum)Model.Status)
+    {
+        case turniri.Model.Match.MatchStatusEnum.Created:
+            @Html.Partial("_OK");
+            break;
+        case turniri.Model.Match.MatchStatusEnum.Submit:
+        @Html.Partial("ShowMatch", Model);
+                                         break;
+        case turniri.Model.Match.MatchStatusEnum.Empty:
+        @Html.Partial("_OK");
+                                          break;
+        case turniri.Model.Match.MatchStatusEnum.DefinedPlayers:
+                                          if (Model.CanPublish(currentUser))
+                                          {
+        @Html.Partial("PublishMatch", Model);
+                                          }
+                                          else
+                                          {
+        @Html.Partial("ShowMatch", Model);
+                                          }
+                                          break;
+    }
+} else {
+    switch ((turniri.Model.Match.MatchStatusEnum)Model.Status)
+    {
+        case turniri.Model.Match.MatchStatusEnum.Submit:
+            @Html.Partial("ShowMatch", Model);
+            break;
+        case turniri.Model.Match.MatchStatusEnum.Created:
+        case turniri.Model.Match.MatchStatusEnum.DefinedPlayers:
+            if (Model.CanPublish(currentUser))
+            {
+                @Html.Partial("PublishMatch", Model);
+            }
+            else
+            {
+                @Html.Partial("ShowMatch", Model);
+            }
+            break;
+    }   
+}

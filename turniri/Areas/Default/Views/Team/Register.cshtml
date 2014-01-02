@@ -1,0 +1,96 @@
+﻿@model turniri.Models.ViewModels.TeamView
+
+<div class="popup-window register-team" style="display: block;">
+    <div class="top-bar">
+        <h3>Зарегистрировать команду
+        </h3>
+        <div class="icon-close-popup9 sprite">
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    @using (Html.BeginForm("Register", "Team", FormMethod.Post, new { id = "RegisterTeamForm" }))
+    {
+        @Html.Hidden("TournamentID", Model.TournamentID)
+        @Html.Hidden("ImagePath18", Model.ImagePath18)
+        @Html.Hidden("ImagePath26", Model.ImagePath26)
+        @Html.Hidden("ImagePath30", Model.ImagePath30)
+        @Html.Hidden("CaptainLogin", Model.CaptainLogin)
+        @Html.Hidden("CaptainID", Model.CaptainID)
+        @Html.Hidden("GroupID", Model.GroupID)
+        @Html.Hidden("MoneyType", Model.MoneyType)
+        @Html.Hidden("Fee", Model.Fee)
+        <div class="popup-message popup-wrapper money-popup-wrapper">
+            <div class="popup-input-item">
+                <div class="label-name">
+                    Название
+                </div>
+                <div class="input">
+                    @Html.TextBox("Name", Model.Name)
+                    @Html.ValidationMessage("Name")
+                </div>
+            </div>
+
+            <div class="popup-input-item">
+                <div class="upload-image">
+                    Аватарка:
+                    <div class="UploadAvatar upload-image-button">загрузить</div>
+                    <div class="uploaded-image">
+                        @if (!string.IsNullOrWhiteSpace(Model.ImagePath30))
+                        {
+                            <img src="@Model.ImagePath30" />
+                        }
+
+                    </div>
+                    <div class="input">
+                        @Html.ValidationMessage("ImagePath30")
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.MoneyType != (int)turniri.Model.Tournament.MoneyTypeEnum.Free && Model.Fee > 0)
+            {
+                if (Model.MoneyType == (int)turniri.Model.Tournament.MoneyTypeEnum.Gold)
+                {
+                <ul class="money-list">
+                    <li>К Оплате
+                    </li>
+                    <li>
+                        @Model.Fee <span class="icon-gold sprite"></span>
+                    </li>
+                    <li>0 <span class="icon-wood sprite"></span>
+                    </li>
+                    <li>0 <span class="icon-crystal sprite"></span>
+                    </li>
+                </ul>
+                }
+                if (Model.MoneyType == (int)turniri.Model.Tournament.MoneyTypeEnum.Wood)
+                {
+                <ul class="money-list">
+                    <li>К Оплате
+                    </li>
+                    <li>0 <span class="icon-gold sprite"></span>
+                    </li>
+                    <li>@Model.Fee <span class="icon-wood sprite"></span>
+                    </li>
+                    <li>0 <span class="icon-crystal sprite"></span>
+                    </li>
+                </ul>
+                }
+            }
+            <div class="massage-button clear">
+                @if (Model.Disabled)
+                {
+                     <div class="info">Недостаточно ТИ</div>
+                } else {
+                <div class="gray-24-button-wrapper">
+                    <input type="submit" class="blue-28-submit" value="ЗАРЕГИСТРИРОВАТЬ" id="RegisterTeamButton"></input>
+                </div>
+                }
+                <div class="gray-24-button-wrapper">
+                    <span class="popup-close">ОТМЕНА</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

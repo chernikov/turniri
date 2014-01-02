@@ -1,0 +1,61 @@
+﻿@model turniri.Model.Subject
+@{
+    var page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="message-table long-gamers-rating gamers-rating">
+    <div class="top-bar">
+        <h3>ПЕРЕПИСКА C: &nbsp; <span>@Model.LastMessage.Companion(currentUser.ID).Login</span>
+        </h3>
+        <div class="title">
+            Тема: @Model.Name
+        </div>
+        <div class="bar-arrow-down sprite">
+        </div>
+    </div>
+    <div class="message-list">
+        <ul>
+            @{ var i = 0; }
+            @foreach (var message in Model.MessagesByUser(currentUser.ID, page))
+            {
+                <li class="@(i % 2 == 1 ? "second" : "")">
+                    <div class="preview-image">
+                        <a href="@Url.Action("Index", "User", new { login = message.Sender.Login })">
+                            <img src="@message.Sender.FullAvatarPath26" alt="title" />
+                        </a>
+                        @if (message.Sender.IsOnline)
+                        {
+                            <div class="online"></div>
+                        }
+                    </div>
+                    <div class="content">
+                        <div class="name">
+                            <a href="@Url.Action("Index", "User", new { login = message.Sender.Login })">
+                                @message.Sender.Login
+                            </a>
+                        </div>
+                        <div class="date-time">
+                            @message.AddedDate.ToString("dd.MM.yyyy")
+                            <span>&nbsp;|&nbsp; @message.AddedDate.ToString("HH:mm")</span>
+                        </div>
+                        <div class="text">
+                            @Html.Raw(message.Text.NlToBr())
+                        </div>
+                    </div>
+                </li>
+                        i++;
+            }
+        </ul>
+        <div class="paging">
+            <div class="title">
+                Страницы:
+            </div>
+            <div class="paging-list">
+                @Html.PageLinksTurniri(page, Model.CountMessagesPage(currentUser.ID), x => Url.Action("Messages", new { page = x }))
+            </div>
+        </div>
+    </div>
+</div>
+<div class="new-comment" id="ReplyMessageWrapper">
+    @Html.Action("ReplyMessage", "Message", new { id = Model.ID, idUser = Model.LastMessage.Companion(currentUser.ID).ID })
+</div>

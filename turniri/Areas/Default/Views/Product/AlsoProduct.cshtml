@@ -1,0 +1,19 @@
+﻿@model IEnumerable<turniri.Model.Product>
+@if (Model.Any())
+{
+    <div class="similar-products">
+        <div class="title">ПОХОЖИЕ ТОВАРЫ:</div>
+
+        <ul>
+            @foreach (var product in Model)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Product", new { path = product.Url })">
+                        <img src="@product.Image?width=120&height=172&mode=crop&scale=both" alt=""/>
+                        <span class="name">@product.Name</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}

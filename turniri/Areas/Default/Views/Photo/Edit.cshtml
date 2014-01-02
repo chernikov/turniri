@@ -1,0 +1,49 @@
+﻿@model turniri.Models.ViewModels.PhotoAlbumView
+
+@{
+    ViewBag.Title = (Model.ID == 0 ? "ДОБАВИТЬ" : "ИЗМЕНИТЬ") + " ФОТОАЛЬБОМ";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@Html.Partial("UserMenu", "")
+<div class="main-bootom">
+    <div class="box-registration box-forum-update box">
+        <div class="top-bar">
+            <h3>
+                @(Model.ID == 0 ? "ДОБАВИТЬ" : "ИЗМЕНИТЬ") ФОТОАЛЬБОМ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        <div class="registration-wrapper clear">
+            @using (Html.BeginForm("Edit", "Photo", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.Hidden("ID", Model.ID)
+                @Html.Hidden("UserID", Model.UserID)
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Наименование*
+                    </div>
+                    <div class="input">
+                        @Html.TextBox("Name", Model.Name)
+                    </div>
+                    @Html.ValidationMessage("Name")
+                </div>
+                if (currentUser.HasAnyGroup)
+                {
+                <div class="input-item clear">
+                    <div class="lable-name">
+                        Группа
+                    </div>
+                    <div class="input">
+                        @Html.DropDownList("GroupID", Model.SelectListGroups, new { @class = "input-xlarge" })
+                    </div>
+                </div>
+                }
+                <div class="registration-button">
+                    <input class="blue-28-submit" type="submit" value=" @(Model.ID == 0 ? "СОЗДАТЬ" : "ИЗМЕНИТЬ")" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

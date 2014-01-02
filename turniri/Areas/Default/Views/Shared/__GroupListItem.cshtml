@@ -1,0 +1,77 @@
+﻿@model turniri.Model.Group
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="preview-image">
+    <a href="@Url.Action("Index", "Group", new { id = Model.ID })">
+        <img src="@Model.LogoPath96" alt="preview" />
+    </a>
+</div>
+<div class="content">
+    <div class="title">
+        <h2>
+            <a href="@Url.Action("Item", "Group", new { url = Model.Url })">
+                @Model.Name
+            </a>
+        </h2>
+    </div>
+    <div class="block-1">
+        <ul>
+            <li>игра: @Model.Game.Name (@Model.Game.Platform.Name)</li>
+            @if (Model.State == (int)turniri.Model.Group.StateType.Live)
+            {
+                <li>дата регистрации: @Model.AddedDate.ToString("dd.MM.yyyy") </li>
+            }
+            else if (Model.State == (int)turniri.Model.Group.StateType.Registered)
+            {
+                <li>на модерации</li>
+            }
+            else
+            {
+                <li>удалена</li>
+            }
+            <li>лидер: <a href="@Url.Action("Index", "User", new { login = Model.User.Login })">@Model.User.Login</a>
+            </li>
+        </ul>
+    </div>
+    <div class="block-2">
+        <ul>
+            <li>кол-во участников : @Model.MembersCount
+            </li>
+            <li>рейтинг: @Model.TotalRating
+            </li>
+            <li>общий рейтинг игроков: @Model.TotalUserRating
+            </li>
+        </ul>
+    </div>
+    <div class="block-3">
+        @if (currentUser != null)
+        {
+            if (currentUser.InGroup(Model.ID) && currentUser.ID != Model.UserID)
+            {
+            <div class="gray-29-button-wrapper">
+                <a href="@Url.Action("Leave", "Group", new { id = Model.ID })">Выйти из команды</a>
+            </div>
+            }
+            else if (currentUser.InPotentialGroup(Model.ID))
+            {
+            <div class="gray-29-button-wrapper">
+                <a href="@Url.Action("Leave", "Group", new { id = Model.ID })">Отозвать заявку</a>
+            </div> 
+            }
+            else if (currentUser.CanBeMemberOfGroup(Model))
+            {
+            <div class="gray-29-button-wrapper">
+                <a  href="@Url.Action("Enter", "Group", new { id = Model.ID })">Подать вступительную
+                    заявку</a>
+            </div>
+            }
+            if (currentUser.IsLeaderOfGroup(Model))
+            {
+            <div class="gray-29-button-wrapper">
+                <a href="@Url.Action("Edit", "Group", new { id = Model.ID })">Редактировать</a>
+            </div>
+            }
+        }
+    </div>
+</div>

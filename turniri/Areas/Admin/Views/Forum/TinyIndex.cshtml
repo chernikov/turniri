@@ -1,0 +1,36 @@
+﻿@model IEnumerable<turniri.Model.Forum>
+@{
+    ViewBag.Title = "Форум";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<h2>Форум</h2>
+@Html.ActionLink("Добавить", "Create", "Forum", null, new { @class = "btn" })
+
+<div class="forum-list forumList">
+    @foreach (var item in Model)
+    {
+        if (item != null)
+        { 
+            <div class="item forumItem" data-id="@item.ID">
+                <div class="title @(item.IsEnd ? "is-end" : "")">
+                   @item.Name
+                </div>
+                <div class="actions">
+                    @Html.ActionLink("Добавить", "Create", "Forum", new { id = item.ID }, new { @class = "btn btn-mini" })
+                    @if (currentUser != null && item.CanEdit(currentUser))
+                    {
+                        @Html.ActionLink("Изменить", "Edit", "Forum", new { id = item.ID }, new { @class = "btn btn-mini" })
+                    }
+                    @if (currentUser != null &&  item.CanDelete(currentUser))
+                    {
+                        @Html.ActionLink("Удалить", "Delete", "Forum", new { id = item.ID }, new { @class = "btn btn-mini btn-danger" })
+                    }
+                </div>
+                <div class="sub-wrapper">
+                  @Html.Action("TinySubForum", "Forum", new { id = item.ID })
+                </div>
+            </div>
+        }
+    }
+</div>

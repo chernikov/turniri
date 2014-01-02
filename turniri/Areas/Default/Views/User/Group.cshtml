@@ -1,0 +1,47 @@
+﻿@model turniri.Model.User
+
+@{
+    ViewBag.Title = "Мои команды";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+
+@Html.Partial("UserMenu", Model.Login)
+
+@if (currentUser != null && currentUser.ID == Model.ID)
+{
+    <div class="photo-gallery-add-button gray-28-button-wrapper-nohover">
+        <a href="@Url.Action("Create", "Group")">Создать команду</a>
+    </div>
+}
+<div class="clear"></div>
+
+@if (Model.GroupsWhereImMember.Any())
+{
+    <div class="big-box group-wrapper">
+        <div class="groups-list">
+            <ul>
+                @{
+    var i = 0;
+                }
+                @foreach (var group in Model.GroupsWhereImMember.ToList())
+                {
+                    <li class="@(i % 2 == 1 ? "second" : "")">
+                        @Html.Partial("__GroupListItem", group)
+                    </li>
+                    i++;
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="video-wrapper long-main-news main-news">
+        <div class="news-wrapper">
+            <div class="empty">
+                Не участвует ни в одной из команд
+            </div>
+        </div>
+    </div>
+}

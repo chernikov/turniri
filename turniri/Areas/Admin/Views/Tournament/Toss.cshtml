@@ -1,0 +1,47 @@
+﻿@model turniri.Model.Tournament
+@{
+    ViewBag.Title = "Жеребьевка";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <script src="/Media/scripts/admin/toss.js" type="text/javascript"></script>
+}
+<h2>
+    Жеребьевка</h2>
+@Html.ActionLink("Матчи", "Matches", "Tournament", new { id = Model.ID }, new { @class = "btn" })
+<p>
+    Перемещайте мышкой drag&drop
+</p>
+@foreach (var group in Model.SubGroups)
+{
+    <h3>
+        Группа @group.Name</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Имя
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        @{ var i = 1; }
+        @foreach (var player in group.SubPlayers)
+        {
+            <tr>
+                <td>
+                    @i 
+                </td>
+                <td class="droppable" id="ParticipantPlace_@player.ID">
+                   <div class="draggable" id="Participant_@player.ID">@player.ID @player.User.Login</div> 
+                </td>
+            </tr>
+            i++;
+        }
+    </table>
+}

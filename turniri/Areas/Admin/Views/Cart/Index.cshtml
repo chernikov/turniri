@@ -1,0 +1,57 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Cart>
+
+@{
+    ViewBag.Title = "Заказы";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Заказы</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#			
+            </th>
+            <th>Дата			
+            </th>
+            <th>Пользователь
+            </th>
+            <th>Сумма
+            </th>
+            <th>Замечание
+            </th>
+            <th>Предзаказ
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.LastVisitDate.ToString("dd.MM.yyyy HH:mm")
+            </td>
+            <td>
+                @(item.UserID.HasValue ? item.Customer.Login : "")
+            </td>
+            <td>
+                @item.TotalSum
+            </td>
+            <td>
+                @item.Notice
+            </td>
+            <td>
+                @if (item.NeedToProcess)
+                {
+                    <span class="label label-important">Предзаказ!</span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Просмотреть", "Item", "Cart", new { id = item.ID }, new { @class = "btn" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<turniri.Model.NewType>
+@{
+    var id = (int)ViewBag.SelectedId;
+}
+<div class="main-news">
+    <div class="switcher clear">
+        <ul>
+            @foreach (var _type in Model)
+            {
+                <li id="tab_news_@(_type.ID)" class="@(id == _type.ID ? "selected" : "")">@_type.Name</li>
+            }
+            <li id="tab_news_100" class="@(id == 100 ? "selected" : "")">Новое в блогах</li>
+        </ul>
+    </div>
+    <div class="news-wrapper">
+        @foreach (var _type in Model)
+        {
+            <div class="news-type">
+                @Html.Action("NewsList", "Home", new { id = _type.ID, page = 1 })
+            </div>
+        }
+        <div class="news-type">
+            @Html.Action("BlogsList", "Home", new { page = 1 })
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+﻿@model turniri.Model.User
+@{
+    ViewBag.Title = "Комментарии игроков";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var page = (int)ViewBag.Page;
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header
+{
+    <script src="/Media/scripts/default/create-comment.js" type="text/javascript"></script>
+
+}
+@Html.Partial("UserMenu", Model.Login)
+<div class="main-bootom">
+
+    <div class="comment-table long-gamers-rating gamers-rating">
+        <div class="top-bar">
+            <h3>КОММЕНТАРИИ ИГРОКОВ
+            </h3>
+            <div class="bar-arrow-down sprite">
+            </div>
+        </div>
+        @if (Model.UserCommentCount > 0)
+        {
+            <div class="comment-list">
+                <ul>
+                    @{
+            int i = 0;
+                    }
+                    @foreach (var comment in Model.UserCommentPage(page))
+                    {
+                        <li class="@(i % 2 == 0 ? "" : "second")" id="Comment_@comment.ID">
+                            <div class="preview-image">
+                                <a href="@Url.Action("Index", "User", new { login = comment.User.Login })">
+                                    <img src="@comment.User.AvatarPath57" alt="@comment.User.Login" />
+                                </a>
+                            </div>
+                            <div class="content">
+                                <div class="name">
+                                    <a href="@Url.Action("Index", "User", new { login = comment.User.Login })" class="user">
+                                        @comment.User.Login
+                                    </a>
+                                </div>
+                                <div class="text">
+                                    @comment.Text
+                                </div>
+                                @if (currentUser != null && currentUser.InRoles("admin"))
+                                {
+                                    <div class="close"></div>    
+                                }
+                                <div class="bottom-wrapper clear">
+                                    <div class="date-time">
+                                        @comment.AddedDate.ToString("dd.MM.yyyy") <span>&nbsp;|&nbsp;  @comment.AddedDate.ToString("HH:mm")
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                                i++;
+                    }
+                </ul>
+                <div class="paging">
+                    <div class="title">
+                        Страницы:
+                    </div>
+                    <div class="paging-list">
+                        @Html.PageLinksTurniri(page, Model.UserCommentCountPage(), x => Url.Action("Index", new { page = x }))
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="empty">
+                Нет комментариев
+            </div>
+        }
+    </div>
+    @if (currentUser != null && currentUser.ID != Model.ID)
+    {
+        <div id="CommentInput">
+            @Html.Action("CreateComment", new { id = Model.ID })
+        </div>
+    }
+</div>

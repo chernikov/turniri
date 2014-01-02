@@ -1,0 +1,164 @@
+/*
+ * CSS Styles that are needed by jScrollPane for it to operate correctly.
+ *
+ * Include this stylesheet in your site or copy and paste the styles below into your stylesheet - jScrollPane
+ * may not operate correctly without them.
+ */
+
+.jspContainer
+{
+	overflow: hidden;
+	position: relative;
+}
+
+.jspPane
+{
+	position: absolute;
+}
+
+.jspVerticalBar
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 7px;
+	height: 99%;
+	background: #2e2e2e;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	border-right: solid 1px #595959;
+	border-bottom: solid 1px #595959;
+	border-top: solid 1px #1c1c1c;
+}
+
+.jspHorizontalBar
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 99%;
+	height: 7px;
+	display: block;
+	background: #2e2e2e;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	border-right: solid 1px #595959;
+	border-bottom: solid 1px #595959;
+	border-top: solid 1px #1c1c1c;
+}
+
+.jspVerticalBar *,
+.jspHorizontalBar *
+{
+	margin: 0;
+	padding: 0;
+}
+
+.jspCap
+{
+	display: none;
+}
+
+.jspHorizontalBar .jspCap
+{
+	float: left;
+}
+
+.jspTrack
+{
+	
+	position: relative;
+
+}
+
+.jspVerticalBar .jspDrag
+{
+	background : url("data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAIAAAB2XpiaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABRJREFUeNpibG1tffr0KQMYAAQYACa3BEC1pMvBAAAAAElFTkSuQmCC") repeat-y 0 0;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	position: relative;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+	width: 4px;
+	border: solid 1px #404040;
+}
+
+.jspHorizontalBar .jspDrag {
+	background : url("data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAIAAADAusJtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhJREFUeNpiaG1tZXr69CkTAwMDCAMEGAAw6ARF9X8UyQAAAABJRU5ErkJggg==") repeat-x 0 0;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	position: relative;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+	height: 4px;
+	border: solid 1px #404040;
+}
+
+.jspVerticalBar .jspDragCenter {
+	background : url("data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAGCAYAAADpJ08yAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABlJREFUeNpi1Da2smUAAsb/QABmECECEGAAeR8OeuUSntgAAAAASUVORK5CYII=") no-repeat 0 0;
+	width: 2px;
+	height: 6px;
+}
+
+.jspHorizontalBar .jspDragCenter {
+	background : url("data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAACCAYAAAB7Xa1eAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABdJREFUeNpi+A8E2sZWtug0EwMOABBgADDpDnbpPffqAAAAAElFTkSuQmCC") no-repeat 0 0;
+	width: 6px;
+	height: 2px;
+	margin: 1px auto;
+}
+
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag
+{
+	float: left;
+}
+
+.jspArrow
+{
+	background: #50506d;
+	text-indent: -20000px;
+	display: block;
+	cursor: pointer;
+}
+
+.jspArrow.jspDisabled
+{
+	cursor: default;
+	background: #80808d;
+}
+
+.jspVerticalBar .jspArrow
+{
+	height: 16px;
+}
+
+.jspHorizontalBar .jspArrow
+{
+	width: 16px;
+	float: left;
+	height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus
+{
+	outline: none;
+}
+
+.jspCorner
+{
+	background: #3d3d3d;
+	float: left;
+	height: 100%;
+}
+
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+* html .jspCorner
+{
+	margin: 0 -3px 0 0;
+}

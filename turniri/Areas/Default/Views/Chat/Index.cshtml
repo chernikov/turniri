@@ -1,0 +1,87 @@
+﻿@model turniri.Model.ChatRoom
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@Html.Hidden("ChatRoomID", Model.ID)
+<div class="chat">
+    <div class="top-bar">
+        <h3 class="left">Чат
+        </h3>
+        @if (currentUser != null)
+        {
+            <div id="InputWrapper" style="@(Model.CanAddMessage(currentUser) ? "" : "display:none")">
+                @using (Html.BeginForm("Write", "Chat", FormMethod.Post, new { id = "ChatMessageForm" }))
+                {
+                    <div class="top-bg">
+                        <div class="inner-input">
+                            <input type="text" class="text" id="ChatMessage" value="" />
+                            <input type="submit" class="icon-submit sprite" id="SubmitChatMessageButton" />
+                            <div class="icon-notice-chat sprite @(Model.IsNoticed(currentUser) ? "active" : "")" id="NoticeChatToggle" title="@(Model.IsNoticed(currentUser) ? "Отключить уведомления" : "Уведомлять о новых сообщениях чата")"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        <div class="bar-arrow-down sprite for-left">
+        </div>
+    </div>
+    <div class="list">
+        <div class="background"></div>
+        <div class="scroll-pane">
+            <ul id="ChatMessages">
+                @Html.Hidden("LastUpdateID", Model.LastIdUpdate)
+                @foreach (var message in Model.LastMessages)
+                {
+                    if (message.Type == (int)turniri.Model.ChatMessage.MessageType.Simple)
+                    {
+                    <li class="item" data-id="@message.ID">
+                        @if (message.CanDelete(currentUser))
+                        {
+                            <div class="remove"></div>
+                        }
+                        <div class="time">@message.AddedDate.ForumDateNamed() &mdash;</div>
+                        <div class="user" data-id="@message.UserID">
+                            <div class="preview-image">
+                                <a href="@Url.Action("Index", "User", new { login = message.User.Login })">
+                                    <img src="@message.User.FullAvatarPath18" alt="userpic" />
+                                </a>
+                                @if (message.User.IsOnline)
+                                {
+                                    <div class="dot"></div>
+                                }
+                            </div>
+                            @if (message.CanDelete(currentUser))
+                            {
+                                <div class="ban"></div>
+                            }
+                            <a href="@Url.Action("Index", "User", new { login = message.User.Login })" class="@message.StatusColor">@message.User.Login</a>
+                            :
+                        </div>
+                        <div class="text">@Html.Raw(message.Message.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                        </div>
+                    </li>
+                    }
+                    if (message.Type == (int)turniri.Model.ChatMessage.MessageType.System)
+                    {
+                    <li class="item" data-id="@message.ID">
+
+                        <div class="time">@message.AddedDate.ForumDateNamed() &mdash;</div>
+
+                        <div class="text system">@Html.Raw(message.Message.BBCodeToHTML().ReplaceSmiles((i, name) => Html.SetSmiles(i, name)))
+                        </div>
+                    </li>
+                    }
+                }
+            </ul>
+            @if (Model.More)
+            {
+                <div class="more">
+                    <div class="gray-16-button-wrapper" id="LoadChat" data-id="@Model.ID">
+                        <span>Еще...</span>
+                    </div>
+                </div>
+                <div class="loading" id="LoadingSign" style="display: none;"></div>
+            }
+        </div>
+    </div>
+</div>

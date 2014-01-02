@@ -1,0 +1,10 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+
+public static class <#= Model.ModelName #>Mapper
+{
+	public static void Init()
+	{
+		Mapper.CreateMap<<#= Model.ModelName #>, <#= Model.ModelName #>View>();
+		Mapper.CreateMap<<#= Model.ModelName #>View, <#= Model.ModelName #>>();
+	}
+}

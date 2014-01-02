@@ -1,0 +1,45 @@
+﻿@model IEnumerable<turniri.Model.Page>
+
+@{
+    ViewBag.Title = "Страницы";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    Страницы
+</h2>
+@Html.ActionLink("Создать", "Create", "Page", null, new { @class = "btn" })
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Url
+            </th>
+            <th>
+                Наименование
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Url
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", "Page", new { id = item.ID }, new { @class = "btn" })
+                @Html.ActionLink("Удалить", "Delete", "Page", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[Cart] (
+    [ID]               INT              IDENTITY (1, 1) NOT NULL,
+    [GlobalUniqueID]   UNIQUEIDENTIFIER NOT NULL,
+    [AddedDate]        DATETIME         NOT NULL,
+    [LastVisitDate]    DATETIME         NOT NULL,
+    [OrderType]        INT              NOT NULL,
+    [PaymentType]      INT              NOT NULL,
+    [UserID]           INT              NULL,
+    [ManagerID]        INT              NULL,
+    [PromoCodeID]      INT              NULL,
+    [Address]          NVARCHAR (MAX)   NULL,
+    [Phone]            NVARCHAR (50)    NULL,
+    [Email]            NVARCHAR (500)   NULL,
+    [DeliverTime]      DATETIME         NULL,
+    [Cashback]         INT              NULL,
+    [CreatedByManager] BIT              NOT NULL,
+    [DeliverCost]      FLOAT (53)       NULL,
+    [Notice]           NVARCHAR (MAX)   NULL,
+    [TotalPrice]       FLOAT (53)       NOT NULL,
+    CONSTRAINT [PK_Cart] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_Cart_GlobalUnique] FOREIGN KEY ([GlobalUniqueID]) REFERENCES [dbo].[GlobalUnique] ([ID]),
+    CONSTRAINT [FK_Cart_Manager] FOREIGN KEY ([ManagerID]) REFERENCES [dbo].[User] ([ID]),
+    CONSTRAINT [FK_Cart_PromoCode] FOREIGN KEY ([PromoCodeID]) REFERENCES [dbo].[PromoCode] ([ID]) ON DELETE SET NULL ON UPDATE SET NULL,
+    CONSTRAINT [FK_Cart_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID])
+);
+

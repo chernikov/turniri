@@ -1,0 +1,71 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="EnvDTE" #>
+<#@ Output Extension="cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+<# 
+    var modelType = (EnvDTE.CodeType)Model.ModelType; 
+	var modelName = modelType.Name; 
+    var modelNamePlural = Model.ModelTypePluralized; 
+    var columns = modelType.VisibleMembers().OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Where(r => r.Name == "global::System.Data.Linq.Mapping.ColumnAttribute").Count() > 0);
+	var primaryColumn = columns.OfType<CodeProperty>().Where(p => p.Attributes.OfType<CodeAttribute>().Where(r => r.Children.OfType<CodeElement>().Where(k => k.Name == "IsPrimaryKey").Count() > 0).Count() > 0).FirstOrDefault();
+#>
+
+namespace <#= Model.Namespace #>
+{
+	
+ public partial class SqlRepository
+    {
+        public IQueryable<<#= modelName #>> <#= modelNamePlural #>
+        {
+            get
+            {
+                return Db.<#= modelNamePlural #>;
+            }
+        }
+
+        public bool Create<#= modelName #>(<#= modelName #> instance)
+        {
+            if (instance.<#= primaryColumn.Name #> == 0)
+            {
+                Db.<#= modelNamePlural #>.InsertOnSubmit(instance);
+                Db.<#= modelNamePlural #>.Context.SubmitChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Update<#= modelName #>(<#= modelName #> instance)
+        {
+            var cache = Db.<#= modelNamePlural #>.FirstOrDefault(p => p.<#= primaryColumn.Name #> == instance.<#= primaryColumn.Name #>);
+            if (cache != null)
+            {
+<# foreach(var column in columns) { if(column.Name != primaryColumn.Name) { #>
+				cache.<#= column.Name #> = instance.<#= column.Name #>;
+<#} } #>
+                Db.<#= modelNamePlural #>.Context.SubmitChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Remove<#= modelName #>(int id<#= modelName #>)
+        {
+            <#= modelName #> instance = Db.<#= modelNamePlural #>.FirstOrDefault(p => p.<#= primaryColumn.Name #> == id<#= modelName #>);
+            if (instance != null)
+            {
+                Db.<#= modelNamePlural #>.DeleteOnSubmit(instance);
+                Db.<#= modelNamePlural #>.Context.SubmitChanges();
+                return true;
+            }
+            return false;
+        }
+    }
+}

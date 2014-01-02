@@ -1,0 +1,204 @@
+﻿@model turniri.Model.Tournament
+<div class="main-turnir-grid gamers-rating">
+    <div class="top-bar">
+        <h3 class="left">Турнирная сетка
+        </h3>
+        @if (ViewBag.PlayoffStage != null && (bool)ViewBag.PlayoffStage)
+        {
+            <div class="top-right">
+                <span id="GroupPartButton">Групповой этап</span>
+                <span id="PlayoffPartButton">Этап плей-офф</span>
+            </div>
+        }
+        <div class="bar-arrow-down for-left sprite">
+        </div>
+    </div>
+    <div class="gamers-list clear">
+        <div class="header-wrapper">
+            <div class="top-grid" style="width: 1170px;">
+                <div class="head-name">
+                    1/8
+                </div>
+                <div class="head-name">
+                    1/4
+                </div>
+                <div class="head-name">
+                </div>
+                <div class="head-name">
+                    1/2
+                </div>
+                <div class="head-name">
+                    финал
+                </div>
+                <div class="head-name">
+                    за 3-е место
+                </div>
+            </div>
+        </div>
+        <div class="viewport scroll-bars">
+            <div class="container" style="width: 1170px;">
+                <div class="main-table-wrapper gamers-scroll">
+                    <div class="col clear">
+                        <div class="tour1">
+                            @{
+                                Model.ResetMatch();
+                            }
+                            @Html.Partial("_GamePair0", Model.NextMatch)
+                            @Html.Partial("_GamePair0", Model.NextMatch)
+                            @Html.Partial("_GamePair0", Model.NextMatch)
+                            @Html.Partial("_GamePair0", Model.NextMatch)
+                            @Html.Partial("_GamePair0", Model.NextMatch)
+                            @Html.Partial("_GamePair0", Model.NextMatch)
+                            @Html.Partial("_GamePair0", Model.NextMatch)
+                            @Html.Partial("_GamePair0", Model.NextMatch)
+                            <div class="empty-cell">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col clear">
+                        <div class="tour3">
+                            <div class="empty-cell">
+                            </div>
+                            @Html.Partial("_GamePair1", Model.NextMatch)
+                            <div class="empty-cell">
+                            </div>
+                            <div class="empty-cell">
+                            </div>
+                            @Html.Partial("_GamePair1", Model.NextMatch)
+                            <div class="empty-cell">
+                            </div>
+                            <div class="empty-cell">
+                            </div>
+                            @Html.Partial("_GamePair1", Model.NextMatch)
+                            <div class="empty-cell">
+                            </div>
+                            <div class="empty-cell">
+                            </div>
+                            @Html.Partial("_GamePair1", Model.NextMatch)
+                            <div class="empty-cell">
+                            </div>
+                            <div class="empty-cell">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col clear">
+                        <div class="tour5">
+                            <div class="game">
+                                @for (int i = 0; i < 2; i++)
+                                {
+                                    <div class="empty-cell">
+                                    </div>
+                                }
+                                <div class="empty-cell">
+                                    <div class="game-arrow-up sprite">
+                                    </div>
+                                </div>
+                                @Html.Partial("_GamePair2", Model.NextMatch)
+                                <div class="empty-cell">
+                                    <div class="game-arrow-down sprite">
+                                    </div>
+                                </div>
+                                @for (int i = 0; i < 2; i++)
+                                {
+                                    <div class="empty-cell">
+                                    </div>
+                                }
+                            </div>
+                            <div class="game">
+                                @for (int i = 0; i < 2; i++)
+                                {
+                                    <div class="empty-cell">
+                                    </div>
+                                }
+                                <div class="empty-cell">
+                                    <div class="game-arrow-up sprite">
+                                    </div>
+                                </div>
+                                @Html.Partial("_GamePair2", Model.NextMatch)
+                                <div class="empty-cell">
+                                    <div class="game-arrow-down sprite">
+                                    </div>
+                                </div>
+                                @for (int i = 0; i < 3; i++)
+                                {
+                                    <div class="empty-cell">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col clear">
+                        <div class="tour9">
+                            <div class="game">
+                                @for (int i = 0; i < 4; i++)
+                                {
+                                    <div class="empty-cell">
+                                    </div>
+                                }
+                                <div class="empty-cell">
+                                    <div class="game-arrow-up sprite">
+                                    </div>
+                                    <div class="icon-medal-3 sprite" style="float: right">
+                                    </div>
+                                </div>
+                                <div class="empty-cell">
+                                    <div class="game-stripe sprite">
+                                    </div>
+                                </div>
+                                <div class="empty-cell">
+                                    <div class="game-stripe sprite">
+                                    </div>
+                                </div>
+                                @Html.Partial("_GamePair2", Model.NextMatch)
+                                <div class="empty-cell">
+                                    <div class="game-stripe sprite">
+                                    </div>
+                                </div>
+                                <div class="empty-cell">
+                                    <div class="game-stripe sprite">
+                                    </div>
+                                </div>
+                                <div class="empty-cell">
+                                    <div class="game-arrow-down sprite">
+                                    </div>
+                                </div>
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    <div class="empty-cell">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col clear">
+                        <div class="tour11">
+                            <div class="game">
+                                @for (int i = 0; i < 4; i++)
+                                {
+                                    <div class="empty-cell">
+                                    </div>
+                                }
+                                @Html.Partial("_GamePair0", Model.NextMatch)
+                                <div class="empty-cell">
+                                </div>
+                                <div class="empty-cell">
+                                    <div class="icon-medal-1 sprite">
+                                    </div>
+                                </div>
+                                <div class="empty-cell">
+                                    <div class="icon-medal-2 sprite">
+                                    </div>
+                                </div>
+                                @for (int i = 0; i < 8; i++)
+                                {
+                                    <div class="empty-cell">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

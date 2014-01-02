@@ -1,0 +1,61 @@
+﻿@model IQueryable<turniri.Model.Tournament>
+@{
+    ViewBag.Title = "Турниры";
+    Layout = "~/Areas/Default/Views/Shared/_Layout.cshtml";
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/default/common-tournament.js"></script>
+    <script type="text/javascript" src="/Media/scripts/default/live-tournament.js"></script>
+}
+<div class="main-bootom">
+    <div class="turnir long-box big-box">
+        <div class="switcher clear">
+            <ul>
+                @if (Model.Any(p => p.Status == (int)turniri.Model.Tournament.StatusEnum.Created || p.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated))
+                {
+                    <li id="tab_turnir_1">Предстоящие турниры</li>    
+                }
+                @if (Model.Any(p => p.Status == (int)turniri.Model.Tournament.StatusEnum.InGame))
+                {
+                    <li id="tab_turnir_2">Текущие турниры</li>
+                }
+                @if (Model.Any(p => p.Status == (int)turniri.Model.Tournament.StatusEnum.PlayedOut))
+                {
+                    <li id="tab_turnir_3">Завершенные турниры</li>
+                }
+                @if (currentUser != null && currentUser.HasTournament)
+                {
+                    <li id="tab_turnir_4">Мои турниры</li>
+                }
+            </ul>
+        </div>
+        <div class="turnirs-wrapper">
+            @if (Model.Any(p => p.Status == (int)turniri.Model.Tournament.StatusEnum.Created || p.Status == (int)turniri.Model.Tournament.StatusEnum.Allocated))
+            {
+                <div id="tab_turnir_1_content" class="switcher-content turnir-switcher-content">
+                    @Html.Action("List", "Tournament", new { type = 1 })
+                </div>
+            }
+            @if (Model.Any(p => p.Status == (int)turniri.Model.Tournament.StatusEnum.InGame))
+            {
+                <div id="tab_turnir_2_content" class="switcher-content turnir-switcher-content">
+                    @Html.Action("List", "Tournament", new { type = 2 })
+                </div>
+            }
+            @if (Model.Any(p => p.Status == (int)turniri.Model.Tournament.StatusEnum.PlayedOut))
+            {
+                <div id="tab_turnir_3_content" class="switcher-content turnir-switcher-content">
+                    @Html.Action("List", "Tournament", new { type = 3 })
+                </div>
+            }
+            @if (currentUser != null && currentUser.HasTournament)
+            {
+                <div id="tab_turnir_4_content" class="switcher-content turnir-switcher-content">
+                    @Html.Action("List", "Tournament", new { type = 4 })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

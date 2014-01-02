@@ -1,0 +1,75 @@
+@model turniri.Models.ViewModels.PollView
+@{
+    ViewBag.Title = Model.ID == 0 ? "Добавить голосование" : "Редактировать голосование";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/edit-poll.js"></script>
+}
+<h2>@(Model.ID == 0 ? "Добавить голосование" : "Редактировать голосование")</h2>
+<p>
+</p>
+@using (Html.BeginForm("Edit", "Poll", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.Hidden("ID", Model.ID)
+    @Html.Hidden("UserID", Model.UserID)
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">
+                Наименование</label>
+            <div class="controls">
+                @Html.TextBox("Name", Model.Name)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+                Тип</label>
+            <div class="controls">
+                @if (Model.CanUpdateItems) {
+                    @Html.DropDownList("PollType", Model.PollTypeSelectList)
+                } else {
+                    @Html.DropDownList("PollType", Model.PollTypeSelectList, new { @readonly = "true" })
+                }
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="IsClosed">
+                Голосование закрыто</label>
+            <div class="controls">
+                @Html.CheckBox("IsClosed", Model.IsClosed)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="IsClosed">
+                Пункты:</label>
+            <div class="controls">
+                @if (Model.CanUpdateItems) {
+                    <div class="btn " id="AddNewItem">Добавить</div>
+                }
+                <div class="poll-list" id="PollList">
+                    @foreach (var pollItem in Model.PollItems)
+                    {
+                        var guid = Guid.NewGuid();
+                        <div class="item">
+                            @Html.Hidden("PollItems.index", guid.ToString("N"))
+                            @if (Model.CanUpdateItems) {
+                                @Html.TextBox("PollItems[" + guid.ToString("N") + "].Description", pollItem.Description)
+                            } else {
+                                @Html.TextBox("PollItems[" + guid.ToString("N") + "].Description", pollItem.Description, new { @readonly = "true" })
+                            }
+                            @if (Model.CanUpdateItems) 
+                            {
+                                <div class="remove"></div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                Сохранить</button>
+            @Html.ActionLink("Отменить", "Index", null, null, new { @class = "btn" })
+        </div>
+    </fieldset>
+}

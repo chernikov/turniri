@@ -1,0 +1,18 @@
+﻿@model turniri.Model.PageableData<turniri.Model.Tournament>
+@{
+    var currentUser = ((turniri.Controllers.BaseController)ViewContext.Controller).CurrentUser;
+}
+<div class="turnirs-list">
+    <ul>
+        @{
+            var i = 0;
+        }
+        @foreach (var tournament in Model.List)
+        {
+            var viewData = new ViewDataDictionary();
+            viewData.Add("count", i);
+            @Html.Partial("TournamentItem", tournament, viewData);
+            i++;
+        }
+    </ul>
+</div>

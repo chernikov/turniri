@@ -1,0 +1,74 @@
+﻿@model IEnumerable<turniri.Model.User>
+@{
+    ViewBag.Title = "Роли пользователей";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    <script type="text/javascript" src="/Media/scripts/admin/roles.js"></script>
+}
+<h2>Роли пользователей</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#
+            </th>
+            <th>Пользователь
+            </th>
+            <th>Роли
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Login
+            </td>
+            <td>
+                <ul>
+                    @foreach (var role in item.SubUserRoles)
+                    {
+                        if (role.AnyUserRoleGames)
+                        {
+                            foreach (var gameUserRole in role.SubUserRoleGames)
+                            {
+                        <li class="role" data-id="@gameUserRole.ID">
+                            @role.Role.Name (@gameUserRole.Game.Platform.Name @gameUserRole.Game.Name)
+                                <i class="icon-remove game-role-remove"></i>
+                        </li>
+                            }
+                        }
+                        else if (role.AnyUserRoleTournaments)
+                        {
+                            foreach (var tournamentUserRole in role.SubUserRoleTournaments)
+                            {
+                        <li class="role" data-id="@tournamentUserRole.ID">
+                            @role.Role.Name (@tournamentUserRole.Tournament.Name)
+                                <i class="icon-remove tournament-role-remove"></i>
+                        </li>
+                            }
+                        }
+                        else if (role.Role.Code != "admin")
+                        {
+                        <li class="role" data-id="@role.ID">
+                            @role.Role.Name
+                            <i class="icon-remove role-remove"></i>
+                        </li>
+                        }
+                        else
+                        {
+                        <li class="role">
+                            @role.Role.Name
+                        </li>
+                        }
+                    }
+                </ul>
+            </td>
+
+        </tr>
+    }
+</table>
