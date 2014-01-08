@@ -159,5 +159,15 @@ namespace turniri.Model.Properties {
                 return ((string)(this["turniri_workConnectionString2"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SATURN\\MSSQL;Initial Catalog=turniri_real;Integrated Security=True")]
+        public string turniri_realConnectionString {
+            get {
+                return ((string)(this["turniri_realConnectionString"]));
+            }
+        }
     }
 }

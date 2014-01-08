@@ -45,6 +45,7 @@ namespace turniri.Model
                     cache.SingleWinPoint = instance.SingleWinPoint;
                     cache.SingleDrawPoint = instance.SingleDrawPoint;
                     cache.DoubleGoalInGuest = instance.DoubleGoalInGuest;
+                    cache.IsRoundForPoints = instance.IsRoundForPoints;
                 }
 				cache.Name = instance.Name;
                 cache.Url = instance.Url;

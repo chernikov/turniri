@@ -124,6 +124,8 @@ namespace turniri.Models.ViewModels
 
         public int? HotReplacement { get; set; }
 
+        public bool IsRoundForPoints { get; set; }
+
         public bool CanChangeTournamentData { get; set; }
 
         public LeagueView()

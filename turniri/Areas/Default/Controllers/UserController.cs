@@ -71,7 +71,6 @@ namespace turniri.Areas.Default.Controllers
                 {
                     var user = (User)ModelMapper.Map(userView, typeof(UserView), typeof(User));
                     Repository.UpdateUser(user);
-
                     return RedirectToAction("Index");
                 }
                 return View(userView);
@@ -207,10 +206,15 @@ namespace turniri.Areas.Default.Controllers
             return View();
         }
 
+        public ActionResult RedirectVerifyEmail()
+        {
+            return View("VerifyEmail");
+        }
+
         public ActionResult VerifyEmail(string id)
         {
             var user = Repository.Users.FirstOrDefault(p => string.Compare(p.ActivatedLink, id, true) == 0);
-            if (user != null)
+            if (user != null && (CurrentUser == null || CurrentUser.ID == user.ID))
             {
                 if (!user.ActivatedDate.HasValue)
                 {
@@ -223,6 +227,16 @@ namespace turniri.Areas.Default.Controllers
                         Submited = true
                     };
                     Repository.CreateMoneyDetail(moneyDetail, Guid.NewGuid());
+                }
+
+                if (!user.VerifiedEmail)
+                {
+                    Repository.VerifiedEmailUser(user);
+                }
+                if (CurrentUser == null)
+                {
+                    Auth.Login(user.Login);
+                    return RedirectToAction("RedirectVerifyEmail");
                 }
                 return View("VerifyEmail");
             }

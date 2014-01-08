@@ -427,6 +427,8 @@ namespace turniri.Model
 
         bool ActivateUser(User instance);
 
+        bool VerifiedEmailUser(User instance);
+
         bool ChangePassword(User instance);
 
         bool BanUser(User instance, bool ban);

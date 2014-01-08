@@ -939,6 +939,7 @@ namespace turniri.Areas.Admin.Controllers
                         ImagePath = leagueLevel.Image,
                         Status = (int)Tournament.StatusEnum.Created,
                         CountRound = league.CountRound,
+                        IsRoundForPoints = league.IsRoundForPoints,
                         Rules = league.Rules,
                         SingleDrawPoint = league.SingleDrawPoint,
                         SingleWinPoint = league.SingleWinPoint,

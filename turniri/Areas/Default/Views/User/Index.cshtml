@@ -56,11 +56,11 @@
                 <div class="bottom-info">
                     <div class="left-info">
                         <ul>
-                            <li>Playstation ID: <span class="gray">@Model.PlaystationID</span></li>
-                            <li>XBOX Gametag: <span class="gray">@Model.XboxGametag</span></li>
-                            <li>EA Account: <span class="gray">@Model.EAAccount</span></li>
-                            <li>Steam Account: <span class="gray">@Model.SteamAccount</span></li>
-                            <li>Garena Account: <span class="gray">@Model.GarenaAccount</span></li>
+                            <li>PS: <span class="gray">@Model.PlaystationID</span></li>
+                            <li>XBOX: <span class="gray">@Model.XboxGametag</span></li>
+                            <li>EA: <span class="gray">@Model.EAAccount</span></li>
+                            <li>Steam: <span class="gray">@Model.SteamAccount.ToSteamID()</span></li>
+                            <li>Garena: <span class="gray">@Model.GarenaAccount</span></li>
                         </ul>
                     </div>
                     <div class="right-info">

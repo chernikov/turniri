@@ -22,7 +22,7 @@ namespace turniri.Model
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="turniri_work")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="turniri_real")]
 	public partial class turniriDbDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -360,7 +360,7 @@ namespace turniri.Model
     #endregion
 		
 		public turniriDbDataContext() : 
-				base(global::turniri.Model.Properties.Settings.Default.turniri_workConnectionString2, mappingSource)
+				base(global::turniri.Model.Properties.Settings.Default.turniri_realConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -27721,7 +27721,7 @@ namespace turniri.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteamAccount", DbType="NVarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteamAccount", DbType="NVarChar(150)")]
 		public string SteamAccount
 		{
 			get
@@ -39447,6 +39447,8 @@ namespace turniri.Model
 		
 		private string _Url;
 		
+		private bool _IsRoundForPoints;
+		
 		private EntitySet<LeagueLevel> _LeagueLevels;
 		
 		private EntitySet<LeagueSeason> _LeagueSeasons;
@@ -39491,6 +39493,8 @@ namespace turniri.Model
     partial void OnDescriptionChanged();
     partial void OnUrlChanging(string value);
     partial void OnUrlChanged();
+    partial void OnIsRoundForPointsChanging(bool value);
+    partial void OnIsRoundForPointsChanged();
     #endregion
 		
 		public League()
@@ -39826,6 +39830,26 @@ namespace turniri.Model
 					this._Url = value;
 					this.SendPropertyChanged("Url");
 					this.OnUrlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsRoundForPoints", DbType="Bit NOT NULL")]
+		public bool IsRoundForPoints
+		{
+			get
+			{
+				return this._IsRoundForPoints;
+			}
+			set
+			{
+				if ((this._IsRoundForPoints != value))
+				{
+					this.OnIsRoundForPointsChanging(value);
+					this.SendPropertyChanging();
+					this._IsRoundForPoints = value;
+					this.SendPropertyChanged("IsRoundForPoints");
+					this.OnIsRoundForPointsChanged();
 				}
 			}
 		}

@@ -573,5 +573,29 @@ namespace turniri.Tools
         {
             return Math.Round(src, decimals);
         }
+
+        public static string ToSteamID(this string source)
+        {
+            if (source == null) 
+            {
+                return string.Empty;
+            }
+            if (source.StartsWith("http://") || source.IndexOf("steamcommunity.com") != -1)
+            {
+                if (source.IndexOf("7656119") != -1)
+                {
+                    return source.Substring(source.IndexOf("/profiles/") + "/profiles/".Length);
+                }
+                if (source.IndexOf("steamcommunity.com/id") != -1)
+                {
+                    return source.Substring(source.IndexOf("steamcommunity.com/id/") + "steamcommunity.com/id/".Length);
+                }
+            }
+            if (source.IndexOf("7656119") != -1)
+            {
+                return source.Substring(source.IndexOf("7656119"));
+            }
+            return source;
+        }
     }
 }

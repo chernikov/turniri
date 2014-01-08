@@ -129,6 +129,12 @@ namespace turniri.Areas.Default
                 new[] { "turniri.Areas.Default.Controllers" }
             );
 
+            context.MapRoute(
+                null,
+                "user/RedirectVerifyEmail",
+                new { controller = "User", action = "RedirectVerifyEmail" },
+                new[] { "turniri.Areas.Default.Controllers" }
+            );
 
             context.MapRoute(
                 null,

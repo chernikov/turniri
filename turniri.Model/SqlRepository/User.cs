@@ -169,6 +169,21 @@ namespace turniri.Model
             return false;
         }
 
+        public bool VerifiedEmailUser(User instance)
+        {
+            var cache = Db.Users.FirstOrDefault(p => p.ID == instance.ID);
+            if (cache != null)
+            {
+                cache.VerifiedEmail = true;
+                var notices = cache.Notices.Where(p => p.Type == (int)Notice.TypeEnum.Activate || p.Type == (int)Notice.TypeEnum.VerifiedEmail).ToList();
+                Db.Notices.DeleteAllOnSubmit(notices);
+                Db.Notices.Context.SubmitChanges();
+                Db.Users.Context.SubmitChanges();
+                return true;
+            }
+            return false;
+        }
+
         public bool ChangePassword(User instance)
         {
             var cache = Db.Users.FirstOrDefault(p => p.ID == instance.ID);
